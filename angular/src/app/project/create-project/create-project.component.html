@@ -1,0 +1,83 @@
+<mat-tab-group #tabGroup class="header-less-tabs">
+    <mat-tab label="First">
+        <mat-label>Choose type of project</mat-label>
+        <mat-form-field>
+            <mat-select [(ngModel)]="ProjectType" required>
+                <mat-option *ngFor="let option of options2" [value]="option">
+                    {{option}}
+                </mat-option>
+
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button (click)="tabGroup.selectedIndex=1">Next</button>
+    </mat-tab>
+    <mat-tab label="Second">
+        <div *ngIf="ProjectType == 'Project'; else PlanTemplate ">
+        <h1 mat-dialog-title>Create your new project </h1>
+        <div mat-dialog-content>
+            <p>Give me some information</p>
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput [(ngModel)]="data.title" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput [(ngModel)]="data.description"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Type</mat-label>
+                <mat-select [(ngModel)]="data.type">
+
+                    <mat-option *ngFor="let option of options" [value]="option">
+                        {{option}}
+                    </mat-option>
+
+                </mat-select>
+            </mat-form-field>
+
+            <ng-template [ngIf]="data.type ==''"></ng-template>
+            <ng-template [ngIf]="data.type =='Link'">
+                <mat-form-field>
+                    <mat-label>LinkURL</mat-label>
+                    <input matInput [(ngModel)]="data.linkURL" required>
+                </mat-form-field>
+            </ng-template>
+
+
+
+            <ng-template [ngIf]="data.type =='Input file'">
+
+
+                <input [(ngModel)]="data.linkURL" required type="file" (change)="handleFileInput($event.target.files)">
+
+            </ng-template>
+            <!-- <mat-label>LinkURL</mat-label>
+        <input matInput [(ngModel)]="data.linkURL" required> -->
+
+        </div>
+        <div mat-dialog-actions>
+            <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+            <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Ok</button>
+        </div>
+    </div>
+    <ng-template #PlanTemplate>
+        <h1 mat-dialog-title>Create your new plan </h1>
+        <div mat-dialog-content>
+            <p>Give me some information</p>
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput [(ngModel)]="data.title" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput [(ngModel)]="data.description"></textarea>
+            </mat-form-field>
+
+        </div>
+        <div mat-dialog-actions>
+            <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+            <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Go to Planning Site</button>
+        </div>
+    </ng-template>
+    </mat-tab>
+</mat-tab-group>

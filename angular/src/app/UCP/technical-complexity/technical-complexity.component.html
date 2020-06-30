@@ -1,0 +1,31 @@
+<!--component html goes here -->
+
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="40px">
+        <h5>Total Technical Factor (TFactor)</h5>
+
+        <div *ngFor="let Factor of Factors; let i =index">
+            <div [ngModelGroup]="i" #myModel="ngModelGroup">
+                <input name='name'[(ngModel)]='Factor.name' type='hidden'  readonly>
+                <input name='weight'[(ngModel)]='Factor.weight' type='hidden'  readonly>
+                
+                <h5>{{Factor.name}}</h5>
+                <div class="checkbox" *ngFor="let RV of Factor.rv ;let j = index">
+                    
+                    <label>
+                        {{1+(i*6)+j}} )
+                        <mat-checkbox [name]="'RV'+((i*6)+j)" (change)=onCheck(i,j) [checked]="RV.checked">
+                            {{RV.name}}
+
+                        </mat-checkbox>
+                        
+                    </label>
+                </div>
+                <input name='rv'[(ngModel)]='selectedOption[i]' type='hidden'  readonly>
+            </div>
+        </div>
+
+
+
+
+    </div>
+

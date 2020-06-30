@@ -1,0 +1,30 @@
+<!--component html goes here -->
+<div class="row">
+    <div class="card main-content">
+        <div class="header">
+            <h2> USC Unified CodeCount (UCC) result </h2>
+            <ul class="header-dropdown m-r--5">
+                <li>
+                    <div class="form-actions">
+                        <button type="button" [routerLink]="['/app/project',projectID]"
+                            class="btn bg-black waves-effect waves-light"><i class="fa fa-arrow-circle-left"></i> Back
+                            to Project Detail</button>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        <div class="body">
+            
+            <div *ngFor="let Block of BlockOfResult">
+                
+                <tr *ngFor="let Line of Block">
+                    <td *ngFor="let obj of Line">{{obj}}</td>
+                </tr>
+                <br>
+            </div>
+            
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<!--component html goes here -->
+
+<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="40px">
+    <h5>Unadjusted Use-Case Weight (UUCW)</h5>
+    <mat-form-field fxFlex="100">
+        <mat-label>Number of Simple Use Case</mat-label>
+        <input matInput placeholder="It has fewer or equal to 3 transactions" name="NSUC" ngModel>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Number of Average Use Case</mat-label>
+        <input matInput placeholder="It has from 4 to 7 transactions" name="NAUC" ngModel>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Number of Complex Use Case</mat-label>
+        <input matInput placeholder="It has more than 7 transactions" name="NCUC" ngModel>
+    </mat-form-field>
+    <!-- another -->
+    <h5>Unadjusted Actor Weight (UAW)</h5>
+    <mat-form-field fxFlex="100">
+        <mat-label>Number of Simple Actor</mat-label>
+        <input matInput placeholder="Ex: A System with defined API" name="NSA" ngModel>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Number of Average Actor</mat-label>
+        <input matInput placeholder="Ex: A System interacting through a Protocol" name="NAA" ngModel>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Number of Complex Actor</mat-label>
+        <input matInput placeholder="Ex: A User interacting through GUI" name="NCA" ngModel>
+    </mat-form-field>
+</div>
