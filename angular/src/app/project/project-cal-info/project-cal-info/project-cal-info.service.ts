@@ -30,12 +30,12 @@ export class ProjectCalInfoService implements OnInit
     };
 
     
-    CalculateSize(username: string, title: string){
+    ShowUCC(username: string, title: string){
         let body = new HttpParams()
         .set('username',username)
         .set("name",title)
     
-        return this.http.post<any>("http://hcthanh.ddns.net:3000/api/UCCUrlMac",
+        return this.http.post<any>("http://hcthanh.ddns.net:3000/api/GetResultUCC",
         body,
         {
             responseType:'json'

@@ -205,6 +205,279 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class PlanServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param plans (optional) 
+     * @return Success
+     */
+    createPlans(plans: PlanInput | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/CreatePlans";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(plans);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreatePlans(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreatePlans(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreatePlans(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getListProject(): Observable<ListResultDtoOfPlanListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetListProject";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListProject(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListProject(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfPlanListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfPlanListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListProject(response: HttpResponseBase): Observable<ListResultDtoOfPlanListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ListResultDtoOfPlanListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfPlanListDto>(<any>null);
+    }
+
+    /**
+     * @param plan (optional) 
+     * @return Success
+     */
+    updatePlanResult(plan: PlanUpdate | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/UpdatePlanResult";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(plan);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdatePlanResult(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdatePlanResult(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdatePlanResult(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    setUcp(input: UcpInput | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/SetUcp";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSetUcp(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSetUcp(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSetUcp(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param planID (optional) 
+     * @return Success
+     */
+    getOutputUcp(planID: string | null | undefined): Observable<UcpOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetOutputUcp?";
+        if (planID !== undefined)
+            url_ += "planID=" + encodeURIComponent("" + planID) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOutputUcp(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOutputUcp(<any>response_);
+                } catch (e) {
+                    return <Observable<UcpOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UcpOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOutputUcp(response: HttpResponseBase): Observable<UcpOutput> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UcpOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UcpOutput>(<any>null);
+    }
+}
+
+@Injectable()
 export class ProjectServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2197,6 +2470,432 @@ export class ChangeUiThemeInput implements IChangeUiThemeInput {
 
 export interface IChangeUiThemeInput {
     theme: string;
+}
+
+export class PlanInput implements IPlanInput {
+    title: string;
+    description: string | undefined;
+
+    constructor(data?: IPlanInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): PlanInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["description"] = this.description;
+        return data; 
+    }
+
+    clone(): PlanInput {
+        const json = this.toJSON();
+        let result = new PlanInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanInput {
+    title: string;
+    description: string | undefined;
+}
+
+export class ListResultDtoOfPlanListDto implements IListResultDtoOfPlanListDto {
+    items: PlanListDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfPlanListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(PlanListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfPlanListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfPlanListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfPlanListDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfPlanListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfPlanListDto {
+    items: PlanListDto[] | undefined;
+}
+
+export class PlanListDto implements IPlanListDto {
+    title: string | undefined;
+    description: string | undefined;
+    uucPoint: number | undefined;
+    tfPoint: number | undefined;
+    efPoint: number | undefined;
+    useCasePoint: number | undefined;
+    isEvaluated: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: string | undefined;
+
+    constructor(data?: IPlanListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.uucPoint = _data["uucPoint"];
+            this.tfPoint = _data["tfPoint"];
+            this.efPoint = _data["efPoint"];
+            this.useCasePoint = _data["useCasePoint"];
+            this.isEvaluated = _data["isEvaluated"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): PlanListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["uucPoint"] = this.uucPoint;
+        data["tfPoint"] = this.tfPoint;
+        data["efPoint"] = this.efPoint;
+        data["useCasePoint"] = this.useCasePoint;
+        data["isEvaluated"] = this.isEvaluated;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PlanListDto {
+        const json = this.toJSON();
+        let result = new PlanListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanListDto {
+    title: string | undefined;
+    description: string | undefined;
+    uucPoint: number | undefined;
+    tfPoint: number | undefined;
+    efPoint: number | undefined;
+    useCasePoint: number | undefined;
+    isEvaluated: boolean | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: string | undefined;
+}
+
+export class PlanUpdate implements IPlanUpdate {
+    id: string | undefined;
+    title: string | undefined;
+    description: string | undefined;
+    uucp: number | undefined;
+    tf: number | undefined;
+    ef: number | undefined;
+    ucp: number | undefined;
+
+    constructor(data?: IPlanUpdate) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.uucp = _data["uucp"];
+            this.tf = _data["tf"];
+            this.ef = _data["ef"];
+            this.ucp = _data["ucp"];
+        }
+    }
+
+    static fromJS(data: any): PlanUpdate {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanUpdate();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["uucp"] = this.uucp;
+        data["tf"] = this.tf;
+        data["ef"] = this.ef;
+        data["ucp"] = this.ucp;
+        return data; 
+    }
+
+    clone(): PlanUpdate {
+        const json = this.toJSON();
+        let result = new PlanUpdate();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanUpdate {
+    id: string | undefined;
+    title: string | undefined;
+    description: string | undefined;
+    uucp: number | undefined;
+    tf: number | undefined;
+    ef: number | undefined;
+    ucp: number | undefined;
+}
+
+export class UcpInput implements IUcpInput {
+    planID: string | undefined;
+    uucp: number[] | undefined;
+    tf: number[] | undefined;
+    ef: number[] | undefined;
+
+    constructor(data?: IUcpInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.planID = _data["planID"];
+            if (Array.isArray(_data["uucp"])) {
+                this.uucp = [] as any;
+                for (let item of _data["uucp"])
+                    this.uucp.push(item);
+            }
+            if (Array.isArray(_data["tf"])) {
+                this.tf = [] as any;
+                for (let item of _data["tf"])
+                    this.tf.push(item);
+            }
+            if (Array.isArray(_data["ef"])) {
+                this.ef = [] as any;
+                for (let item of _data["ef"])
+                    this.ef.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): UcpInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UcpInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["planID"] = this.planID;
+        if (Array.isArray(this.uucp)) {
+            data["uucp"] = [];
+            for (let item of this.uucp)
+                data["uucp"].push(item);
+        }
+        if (Array.isArray(this.tf)) {
+            data["tf"] = [];
+            for (let item of this.tf)
+                data["tf"].push(item);
+        }
+        if (Array.isArray(this.ef)) {
+            data["ef"] = [];
+            for (let item of this.ef)
+                data["ef"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): UcpInput {
+        const json = this.toJSON();
+        let result = new UcpInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUcpInput {
+    planID: string | undefined;
+    uucp: number[] | undefined;
+    tf: number[] | undefined;
+    ef: number[] | undefined;
+}
+
+export class UcpOutput implements IUcpOutput {
+    planID: string | undefined;
+    uucp: number[] | undefined;
+    ef: number[] | undefined;
+    tf: number[] | undefined;
+    createTime: string | undefined;
+
+    constructor(data?: IUcpOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.planID = _data["planID"];
+            if (Array.isArray(_data["uucp"])) {
+                this.uucp = [] as any;
+                for (let item of _data["uucp"])
+                    this.uucp.push(item);
+            }
+            if (Array.isArray(_data["ef"])) {
+                this.ef = [] as any;
+                for (let item of _data["ef"])
+                    this.ef.push(item);
+            }
+            if (Array.isArray(_data["tf"])) {
+                this.tf = [] as any;
+                for (let item of _data["tf"])
+                    this.tf.push(item);
+            }
+            this.createTime = _data["createTime"];
+        }
+    }
+
+    static fromJS(data: any): UcpOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new UcpOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["planID"] = this.planID;
+        if (Array.isArray(this.uucp)) {
+            data["uucp"] = [];
+            for (let item of this.uucp)
+                data["uucp"].push(item);
+        }
+        if (Array.isArray(this.ef)) {
+            data["ef"] = [];
+            for (let item of this.ef)
+                data["ef"].push(item);
+        }
+        if (Array.isArray(this.tf)) {
+            data["tf"] = [];
+            for (let item of this.tf)
+                data["tf"].push(item);
+        }
+        data["createTime"] = this.createTime;
+        return data; 
+    }
+
+    clone(): UcpOutput {
+        const json = this.toJSON();
+        let result = new UcpOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUcpOutput {
+    planID: string | undefined;
+    uucp: number[] | undefined;
+    ef: number[] | undefined;
+    tf: number[] | undefined;
+    createTime: string | undefined;
 }
 
 export class ProjectInput implements IProjectInput {

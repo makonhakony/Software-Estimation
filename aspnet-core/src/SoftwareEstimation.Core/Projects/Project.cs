@@ -9,7 +9,7 @@ namespace SoftwareEstimation.Projects
     [Table("AppProjects")]
     public class Project : FullAuditedEntity<Guid>
     {
-        public virtual long UserID { get; set; }
+        
         public virtual string Title { get; protected set; }
         public virtual string Description { get; protected set; }
         public virtual string Type { get; protected set; }
@@ -22,11 +22,11 @@ namespace SoftwareEstimation.Projects
 
         }
 
-        public static Project CreateWithLink (long userid, string title, string description, string type, string linkURL)
+        public static Project CreateWithLink ( string title, string description, string type, string linkURL)
         {
             var @project = new Project
             {
-                UserID = userid,
+                
                 Title = title,
                 Description = description,
                 Type = type,

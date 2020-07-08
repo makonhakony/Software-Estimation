@@ -57,26 +57,27 @@
         </div>
         <div mat-dialog-actions>
             <button mat-raised-button (click)="onNoClick()">No Thanks</button>
-            <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Ok</button>
+            <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Create Project</button>
         </div>
     </div>
+    <!-- PLAN TAB -->
     <ng-template #PlanTemplate>
         <h1 mat-dialog-title>Create your new plan </h1>
         <div mat-dialog-content>
             <p>Give me some information</p>
             <mat-form-field>
                 <mat-label>Title</mat-label>
-                <input matInput [(ngModel)]="data.title" required>
+                <input matInput [(ngModel)]="data2.title" required>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <textarea matInput [(ngModel)]="data.description"></textarea>
+                <textarea matInput [(ngModel)]="data2.description"></textarea>
             </mat-form-field>
 
         </div>
         <div mat-dialog-actions>
             <button mat-raised-button (click)="onNoClick()">No Thanks</button>
-            <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Go to Planning Site</button>
+            <button mat-raised-button color="warn" cdkFocusInitial (click)="savePlan()">Create Plan</button>
         </div>
     </ng-template>
     </mat-tab>

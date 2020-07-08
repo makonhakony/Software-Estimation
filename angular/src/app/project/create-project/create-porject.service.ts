@@ -79,6 +79,20 @@ export class CreateProjectService {
         return this.a
     }
 
+    CalculateSize(username: string, title: string){
+        let body = new HttpParams()
+        .set('username',username)
+        .set("name",title)
+    
+        return this.http.post<any>("http://hcthanh.ddns.net:3000/api/UCCUrlMac",
+        body,
+        {
+            responseType:'json'
+        }
+        )
+        .pipe(catchError(this.handleError))
+    }
+
     // test() {
     //     // const xhr = new XMLHttpRequest();
     //     // xhr.open('POST', 'https://bar.other/resources/post-here/');

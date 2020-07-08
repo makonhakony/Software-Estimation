@@ -13,6 +13,7 @@ namespace SoftwareEstimation.EntityFrameworkCore
         /* Define a DbSet for each entity of the application */
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
+        public virtual DbSet<UCPoint> UCPoints { get; set; }
         public SoftwareEstimationDbContext(DbContextOptions<SoftwareEstimationDbContext> options)
             : base(options)
         {

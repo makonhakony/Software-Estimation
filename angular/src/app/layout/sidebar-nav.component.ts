@@ -21,7 +21,7 @@ export class SideBarNavComponent extends AppComponentBase {
             new MenuItem(this.l('My Storage'),'','','/app/project'),
             new MenuItem(this.l('Estimation'),'','','',[
                 new MenuItem(this.l('Use Case Point'),'','','/app/ucp'),
-                new MenuItem(this.l('Schedule and Effort'),'','',''),
+                new MenuItem(this.l('Schedule and Effort'),'','','/app/SnEpoint'),
             ]),
         ]),
 

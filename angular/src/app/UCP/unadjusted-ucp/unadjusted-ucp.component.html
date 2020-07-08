@@ -4,28 +4,28 @@
     <h5>Unadjusted Use-Case Weight (UUCW)</h5>
     <mat-form-field fxFlex="100">
         <mat-label>Number of Simple Use Case</mat-label>
-        <input matInput placeholder="It has fewer or equal to 3 transactions" name="NSUC" ngModel>
+        <input matInput placeholder="It has fewer or equal to 3 transactions" type="number" name ="NSUC" [(ngModel)]="NSUC">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Number of Average Use Case</mat-label>
-        <input matInput placeholder="It has from 4 to 7 transactions" name="NAUC" ngModel>
+        <input matInput placeholder="It has from 4 to 7 transactions" type="number" name ="NAUC" [(ngModel)]="NAUC">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Number of Complex Use Case</mat-label>
-        <input matInput placeholder="It has more than 7 transactions" name="NCUC" ngModel>
+        <input matInput placeholder="It has more than 7 transactions" type="number" name ="NCUC" [(ngModel)]="NCUC" >
     </mat-form-field>
     <!-- another -->
     <h5>Unadjusted Actor Weight (UAW)</h5>
     <mat-form-field fxFlex="100">
         <mat-label>Number of Simple Actor</mat-label>
-        <input matInput placeholder="Ex: A System with defined API" name="NSA" ngModel>
+        <input matInput placeholder="Ex: A System with defined API" type="number" name ="NSA" [(ngModel)]="NSA">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Number of Average Actor</mat-label>
-        <input matInput placeholder="Ex: A System interacting through a Protocol" name="NAA" ngModel>
+        <input matInput placeholder="Ex: A System interacting through a Protocol" type="number" name ="NAA" [(ngModel)]="NAA" >
     </mat-form-field>
     <mat-form-field>
         <mat-label>Number of Complex Actor</mat-label>
-        <input matInput placeholder="Ex: A User interacting through GUI" name="NCA" ngModel>
+        <input matInput placeholder="Ex: A User interacting through GUI" type="number" name ="NCA" [(ngModel)]="NCA" >
     </mat-form-field>
 </div>

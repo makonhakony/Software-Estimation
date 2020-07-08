@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, Output, EventEmitter, Injector, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { ModalDirective } from 'ngx-bootstrap';
-import { ProjectInput, ProjectServiceProxy, UserServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ProjectInput, ProjectServiceProxy, UserServiceProxy, PlanServiceProxy, PlanInput } from '@shared/service-proxies/service-proxies';
 import { finalize, catchError } from 'rxjs/operators';
 
 import * as _ from "lodash";
@@ -23,7 +23,9 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         injector: Injector,
         public dialogRef: MatDialogRef<CreateProjectComponent>,
         private _projectService: ProjectServiceProxy,
+        private _planService : PlanServiceProxy,
         @Inject(MAT_DIALOG_DATA) public data: ProjectInput,
+        @Inject(MAT_DIALOG_DATA) public data2: PlanInput,
         private http: HttpClient,
         private internalService: CreateProjectService,
 
@@ -61,7 +63,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         if (this.data.type == "Link") {
             this.internalService.Clonegit(this.userID.toString(), this.data.title, this.data.linkURL).subscribe((result: any) => {
                 console.log("after post:", result)
-                this._projectService.createWithLink(this.data).subscribe(async () => {
+                this._projectService.createWithLink(this.data).subscribe(() => {
 
                     console.log("this data: ", this.data)
                     this.notify.info(this.l('SavedSuccessfully'));
@@ -69,14 +71,15 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
                     // this.internalService.test().subscribe((result:any)=>{
                     //     console.log("test func: ",result)
                     // })
-
-
                     console.log(this.userID)
-
-
                     this.close();
 
                 });
+
+                //START UCC HERE
+                this.internalService.CalculateSize(this.userID, this.data.title).subscribe((result)=>{
+                    console.log(result)
+                })
             })
 
         }
@@ -111,5 +114,15 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
 
     close(): void {
         this.dialogRef.close({data:this.data})
+    }
+
+    //-------------------PLAN-------------------------
+    savePlan(){
+        this._planService.createPlans(this.data2).subscribe(async () => {
+            console.log("this data: ", this.data2)
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.close();
+
+        });
     }
 }

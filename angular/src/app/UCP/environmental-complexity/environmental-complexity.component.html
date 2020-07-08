@@ -12,7 +12,7 @@
             <div class="checkbox" *ngFor="let RV of Factor.rv ;let j = index">
                 <label>
                     {{1+(i*6)+j}} )
-                    <mat-checkbox [name]="'RV'+((i*6)+j)" [checked]="RV.checked" (change)=onCheck(i,j)>
+                    <mat-checkbox [name]="'RV'+((i*6)+j)" [(checked)]="RV.checked" (change)=onCheck(i,j)>
                         {{RV.name}}
 
                     </mat-checkbox>

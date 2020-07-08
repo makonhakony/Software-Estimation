@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     moduleId: module.id,
@@ -11,5 +12,9 @@ export class CalUcpComponent {
     @Input() UCP:number
     @Input() TF:number
     @Input()EF :number
+    
+    
+
+    
 
 }

@@ -3,18 +3,18 @@
 <mat-horizontal-stepper [linear]=true #stepper>
     <mat-step #UUCP="ngModelGroup" ngModelGroup="UUCP" label="step 1"> 
         <h4>Unadjusted Use-Case Points</h4>
-        <unadjusted-ucp  modelGroupName="UUCP"></unadjusted-ucp>
+        <unadjusted-ucp  modelGroupName="UUCP" [InitValue] ="InitUUCP" ></unadjusted-ucp>
         <button mat-raised-button matStepperNext >Next</button>
     </mat-step>
     <mat-step #TF="ngModelGroup" ngModelGroup="TF" label="step 2"> 
         <h4>Adjust For Technical Complexity</h4>
-        <technical-complexity modelGroupName="TF"></technical-complexity>
+        <technical-complexity modelGroupName="TF" [InitValue] ="InitTF" [status]="status" ></technical-complexity>
         <button mat-raised-button matStepperPrevious>Back</button>
         <button mat-raised-button matStepperNext >Next</button>
     </mat-step>
     <mat-step #EF="ngModelGroup" ngModelGroup="EF" label="step 3"> 
         <h4>Adjust For Environmental Complexity</h4>
-        <environmental-complexity modelGroupName="EF"></environmental-complexity>
+        <environmental-complexity modelGroupName="EF" [InitValue] ="InitEF" [status]="status" ></environmental-complexity>
         <button mat-raised-button matStepperPrevious>Back</button>
         <button mat-raised-button matStepperNext (click)="onClick(f)">Next</button>
     </mat-step>
@@ -22,6 +22,12 @@
         
         <h4>Calculate Adjusted Use-Case Points</h4>
         <cal-ucp [UUCP]='UUCPs' [TF]="TFs" [EF]="EFs"[UCP]="UCP"></cal-ucp>
+        <div *ngIf="state; else savenew">
+            <button mat-raised-button color="accent" (click)="Update()">Update Result</button>
+        </div>
+        <ng-template #savenew>
+            <button mat-raised-button color="accent" (click)="SaveNew() " >Save this to my stuff</button>
+        </ng-template>
     </mat-step>
 </mat-horizontal-stepper>
 </form>

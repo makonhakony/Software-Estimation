@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareEstimation.EntityFrameworkCore;
 
 namespace SoftwareEstimation.Migrations
 {
     [DbContext(typeof(SoftwareEstimationDbContext))]
-    partial class SoftwareEstimationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200702045203_add-EF-missing")]
+    partial class addEFmissing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1115,82 +1117,11 @@ namespace SoftwareEstimation.Migrations
 
                     b.Property<float>("UseCasePoint");
 
-                    b.Property<bool>("isEvaluated");
+                    b.Property<long>("UserID");
 
                     b.HasKey("Id");
 
                     b.ToTable("AppPlans");
-                });
-
-            modelBuilder.Entity("SoftwareEstimation.Plans.UCPoint", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<string>("PlanId");
-
-                    b.Property<int>("e0");
-
-                    b.Property<int>("e1");
-
-                    b.Property<int>("e2");
-
-                    b.Property<int>("e3");
-
-                    b.Property<int>("e4");
-
-                    b.Property<int>("e5");
-
-                    b.Property<int>("e6");
-
-                    b.Property<int>("e7");
-
-                    b.Property<int>("t0");
-
-                    b.Property<int>("t1");
-
-                    b.Property<int>("t10");
-
-                    b.Property<int>("t11");
-
-                    b.Property<int>("t12");
-
-                    b.Property<int>("t2");
-
-                    b.Property<int>("t3");
-
-                    b.Property<int>("t4");
-
-                    b.Property<int>("t5");
-
-                    b.Property<int>("t6");
-
-                    b.Property<int>("t7");
-
-                    b.Property<int>("t8");
-
-                    b.Property<int>("t9");
-
-                    b.Property<int>("u0");
-
-                    b.Property<int>("u1");
-
-                    b.Property<int>("u2");
-
-                    b.Property<int>("u3");
-
-                    b.Property<int>("u4");
-
-                    b.Property<int>("u5");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UCPoints");
                 });
 
             modelBuilder.Entity("SoftwareEstimation.Projects.Project", b =>
@@ -1219,6 +1150,8 @@ namespace SoftwareEstimation.Migrations
                     b.Property<string>("Title");
 
                     b.Property<string>("Type");
+
+                    b.Property<long>("UserID");
 
                     b.HasKey("Id");
 

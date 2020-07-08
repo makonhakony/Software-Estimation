@@ -1,4 +1,4 @@
-import { Component, Input, SkipSelf, ViewChild, OnInit, Output } from '@angular/core';
+import { Component, Input, SkipSelf, ViewChild, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 export interface RV{
@@ -24,7 +24,8 @@ export class TechnicalComplexityComponent implements OnInit {
     selectedValues: number;
     selectedOption:any[] = []
     @ViewChild('ref') ref
-
+    @Input() InitValue :number[]
+    @Input() status: boolean
     ngOnInit(){
         for(let i=0;i<13;i++){
             let rate:RV[]=[
@@ -41,11 +42,26 @@ export class TechnicalComplexityComponent implements OnInit {
         this.Factors.forEach((value,index)=>{
             
             this.Factors[index].rv = this.listRV[index]
-            this.Factors[index].rv[0].checked=true
+            if (!this.status){
+                this.Factors[index].rv[0].checked=true
+                }
         })
-        
-        console.log(this.Factors)
+        //debugger
+        //console.log(this.Factors)
     }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['InitValue'].currentValue) {
+
+            if (this.InitValue.length !=0){
+          console.log(this.status, this.InitValue)
+            this.Factors.forEach((a,index)=>{
+                //console.log(a.rv)
+                a.rv[this.InitValue[index]].checked=true
+            })
+        }
+        }
+      }
     value:any
     listRV:any[13]=[]
     
@@ -73,7 +89,7 @@ export class TechnicalComplexityComponent implements OnInit {
         const checkedOptions = this.Factors[i].rv.filter(x => x.checked);
         this.selectedValues = checkedOptions.map(x => x.value);
         //this.selectedWeight= checkedOptions.map(x=>x.weight)
-        this.selectedOption[i]= this.selectedValues
+        this.selectedOption[i]= this.selectedValues[0]
         console.log("select: ",this.selectedOption[i])
         
     }

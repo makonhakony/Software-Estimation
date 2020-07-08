@@ -1,6 +1,6 @@
 import { Component, ViewChild, Injector, OnInit } from '@angular/core';
 import { CreateProjectComponent } from './create-project/create-project.component';
-import { ProjectServiceProxy, ProjectInput, ListResultDtoOfProjectListDto, ProjectListDto } from '@shared/service-proxies/service-proxies';
+import { ProjectServiceProxy, ProjectInput, ListResultDtoOfProjectListDto, ProjectListDto, PlanServiceProxy, ListResultDtoOfPlanListDto, PlanListDto } from '@shared/service-proxies/service-proxies';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { MatDialog } from '@angular/material';
 import { PagedRequestDto } from '@shared/paged-listing-component-base';
@@ -8,6 +8,8 @@ import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { InternalProjectService } from './project.service';
+import { Router } from '@angular/router';
+import { title } from 'process';
 
 @Component({
     templateUrl: 'project.component.html',
@@ -20,9 +22,11 @@ export class ProjectComponent implements OnInit {
     constructor(
         injector: Injector,
         private _projectService: ProjectServiceProxy,
+        private _planService : PlanServiceProxy,
         public dialog: MatDialog,
         private http:HttpClient,
-        private _internalService: InternalProjectService
+        private _internalService: InternalProjectService,
+        private _router : Router,
     ) {
         //super(injector);
     }
@@ -37,6 +41,10 @@ export class ProjectComponent implements OnInit {
     
     project: ProjectInput
     projectList: ProjectListDto[] = [];
+    planList: PlanListDto[] = [];
+
+    panelOpenState1:boolean[]=[];
+    panelOpenState2:boolean[]=[];
     createProject():void {
         this.project = new ProjectInput()
         
@@ -61,6 +69,15 @@ export class ProjectComponent implements OnInit {
                 this.projectList = result.items;
                 //console.log("inside: ",this.projectList)
             });
+
+        this._planService.getListProject()
+        .subscribe((result: ListResultDtoOfPlanListDto) => {
+            this.planList = result.items;
+            this.planList.forEach(()=>{
+                this.panelOpenState1.push(false)
+                this.panelOpenState2.push(false)
+            })
+        });
     }
     compare:boolean = false
     dataTrigger(){
@@ -129,5 +146,10 @@ export class ProjectComponent implements OnInit {
         })
         
               
+    }
+
+    EstimateUCP(id,status,tit,des){
+        this._router.navigate(['/app/ucp'], {queryParams: {id:id, status: status, title: tit, description : des}}) //router query param not param!
+           
     }
 }

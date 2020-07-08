@@ -32,7 +32,7 @@ namespace SoftwareEstimation.Projects
         }
         public async void CreateWithLink(ProjectInput Projects)
         {
-            var @project = Project.CreateWithLink(AbpSession.GetUserId(), Projects.Title, Projects.Description, Projects.Type, Projects.LinkURL);
+            var @project = Project.CreateWithLink( Projects.Title, Projects.Description, Projects.Type, Projects.LinkURL);
             await _projectRespository.InsertAsync(@project);
         }
 
@@ -40,7 +40,7 @@ namespace SoftwareEstimation.Projects
         {
             var projects = await _projectRespository
                 .GetAll()
-                .Where( e => (e.UserID== AbpSession.GetUserId()))
+                .Where( e => (e.CreatorUserId== AbpSession.GetUserId()))
                 //.OrderByDescending(e => e.CreationTime)
                 //.Take(64)
                 .ToListAsync();

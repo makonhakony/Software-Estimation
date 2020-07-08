@@ -52,6 +52,7 @@ import { UnadjustedUcpComponent } from './UCP/unadjusted-ucp/unadjusted-ucp.comp
 import { TechnicalComplexityComponent } from './UCP/technical-complexity/technical-complexity.component';
 import { EnvironmentalComplexityComponent } from './UCP/environmental-complexity/environmental-complexity.component';
 import { CalUcpComponent } from './UCP/cal-ucp/cal-ucp.component';
+import { CocomoComponent } from './project/cocomo/cocomo.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { CalUcpComponent } from './UCP/cal-ucp/cal-ucp.component';
     UnadjustedUcpComponent,
     TechnicalComplexityComponent,
     EnvironmentalComplexityComponent,
-    CalUcpComponent
+    CalUcpComponent,
+    CocomoComponent,
   ],
   imports: [
     CommonModule,
