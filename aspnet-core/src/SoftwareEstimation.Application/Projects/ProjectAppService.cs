@@ -30,10 +30,12 @@ namespace SoftwareEstimation.Projects
         {
             _projectRespository = projectRepository;
         }
-        public async void CreateWithLink(ProjectInput Projects)
+        public async Task<Guid> CreateWithLink(ProjectInput Projects)
         {
+            
             var @project = Project.CreateWithLink( Projects.Title, Projects.Description, Projects.Type, Projects.LinkURL);
             await _projectRespository.InsertAsync(@project);
+            return project.Id;
         }
 
         public async Task<ListResultDto<ProjectListDto>> GetListProject()
@@ -78,6 +80,40 @@ namespace SoftwareEstimation.Projects
             long a = AbpSession.GetUserId();
 
             return a;
+        }
+
+        public void ModifySlocValue(string Id, int Sloc)
+        {
+            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
+            //Create SQL conection to your database here
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // Open your connection
+                conn.Open();
+                // Create the Command and Parameter objects.
+                // Here change the columnames and table names as per you table
+                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.AppProjects SET [Sloc]=@Sloc, [isReady]=1 WHERE [Id]=@ProjectId", conn))
+                {
+                    // Provide the query string with a parameter placeholder.
+                    //Change the control name as per your design
+                    cmd.Parameters.AddWithValue("@projectId", Id);
+                    cmd.Parameters.AddWithValue("@Sloc", Sloc);
+                    
+                    // Execute the Query
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public async Task<ListResultDto<ProjectSlocDetail>> GetListSlocDetail()
+        {
+            var project = await _projectRespository
+                .GetAll()
+                .Where(p => p.CreatorUserId == AbpSession.GetUserId() && p.isReady)
+                //.Where(p => p.isReady == true)
+                .ToListAsync();
+
+            return new ListResultDto<ProjectSlocDetail>(project.MapTo<List<ProjectSlocDetail>>());
         }
     }
 }

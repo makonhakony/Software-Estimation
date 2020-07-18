@@ -8,11 +8,90 @@
                 </h2>
             </div>
             <div class="body">
-                
-                
-                
 
-                
+                <mat-form-field appearance="fill">
+                    <mat-label>Select a project</mat-label>
+                    <mat-select [(ngModel)]="selectedProject" name="projectSelected" (selectionChange)="ChangeModel()">
+                        <mat-option *ngFor="let project of projects" [value]="project">
+                            {{project.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <p>Sloc Estimate: {{selectedProject.sloc}}</p>
+
+            </div>
+        </div>
+        <div class="card" *ngIf="state">
+            <div class="body">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select a Estimation Mode</mat-label>
+                    <mat-select [(ngModel)]='selectedMode' value="Mode" (selectionChange)="ChangeModel2()">
+                        <mat-option *ngFor="let option of options" [value]="option">
+                            {{option.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <p>{{selectedMode.description}}</p>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="state2">
+            <div class="body">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select a COCOMO Model</mat-label>
+                    <mat-select [(ngModel)]='selectedModel' value="Model" (selectionChange)="ChangeModel3()">
+                        <mat-option *ngFor="let option of options2" [value]="option">
+                            {{option.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <p>{{selectedModel.description}}</p>
+            </div>
+        </div>
+        <div class="card" *ngIf="state3">
+            <div class="body">
+                <div *ngIf="selectedModel.type==0; else Intermediate">
+                    <mat-horizontal-stepper [linear]=true #stepper>
+                        <mat-step label="step 1">
+                            <button mat-raised-button matStepperNext (click)="CalculateBasic()">Calculate this</button>
+                        </mat-step>
+                        <mat-step label="step 2">
+
+                            <h4>Effort Estimation: {{EffortResult}}</h4>
+                            <h4>Time Estimation: {{TimeResult}}</h4>
+                            <h4>Number of staffs required: {{StaffResult}}</h4>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+                </div>
+                <!-- Intermediate COCOMO -->
+                <ng-template #Intermediate>
+
+                    <mat-horizontal-stepper [linear]=true #stepper>
+                        <mat-step label="step 1">
+
+                            <div *ngFor="let att of Attribute; let i =index">
+                                <h4>{{att.name}}</h4>
+
+                                <mat-radio-group class="example-radio-group" required [(ngModel)]='selectedOption[i]'
+                                    [name]="'select'+i">
+                                    <mat-radio-button class="example-radio-button"
+                                        *ngFor="let opt of att.option ;let j = index" [name]="'opt'+((i*6)+j)"
+                                        [value]="opt.value">
+                                        {{opt.name}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <button mat-raised-button matStepperNext (click)="CalculateInter()">Calculate
+                                this</button>
+                        </mat-step>
+                        <mat-step label="step 2">
+                            <h4>Effort Estimation: {{EffortResult}}</h4>
+                            <h4>Time Estimation: {{TimeResult}}</h4>
+                            <h4>Number of staffs required: {{StaffResult}}</h4>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+
+                </ng-template>
             </div>
         </div>
     </div>

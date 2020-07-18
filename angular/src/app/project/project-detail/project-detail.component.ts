@@ -3,7 +3,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectServiceProxy, ProjectDetailOutput, UserServiceProxy } from '@shared/service-proxies/service-proxies';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { ProjectDetailService } from './project-detail.service';
+import { ProjectDetailService, Pending, Status } from './project-detail.service';
 import { promises } from 'dns';
 
 @Component({
@@ -26,7 +26,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
         super(injector)
     }
     show: boolean = false
-
+    readonly Status = Status;
     projectId: any
     projectDetail: any
     userID: any
@@ -41,8 +41,8 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
                     this._internalService.GetInfo(this.userID.toString(), this.project.title).subscribe((result: any) => {
                         this.projectDetail = result
                     })
-                    console.log(this.userID)
-                    console.log(this.project.title)
+                    
+                    console.log(this.project.isReady)
                 })
 
 
@@ -86,6 +86,19 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
 
     EditProject(){
         
+    }
+    DoCocomo(){
+        this._router.navigate(['app/SnEpoint'],{queryParams: {id:this.project.id}})
+    }
+    projectload: Pending<any>;
+    isCalculating:boolean=false
+    UccAgain(){
+        this.projectload = this._internalService.load(this.userID, this.project.title)
+        if (this.projectload){
+            this.projectload.request.subscribe(()=>{
+                this.isCalculating=true
+            })
+        }
     }
 
 

@@ -79,12 +79,13 @@ export class CreateProjectService {
         return this.a
     }
 
-    CalculateSize(username: string, title: string){
+    
+    GetSloc(username: string, title: string){
         let body = new HttpParams()
         .set('username',username)
         .set("name",title)
     
-        return this.http.post<any>("http://hcthanh.ddns.net:3000/api/UCCUrlMac",
+        return this.http.post<any>("http://hcthanh.ddns.net:3000/api/GetSloc",
         body,
         {
             responseType:'json'
@@ -92,6 +93,7 @@ export class CreateProjectService {
         )
         .pipe(catchError(this.handleError))
     }
+
 
     // test() {
     //     // const xhr = new XMLHttpRequest();

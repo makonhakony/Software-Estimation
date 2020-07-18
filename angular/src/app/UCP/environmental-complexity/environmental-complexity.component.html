@@ -3,24 +3,24 @@
 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="40px">
     <h5>Total Environmental Factor (EFactor)</h5>
 
-    <div *ngFor="let Factor of Factors; let i =index">
-        <div [ngModelGroup]="i" #myModel="ngModelGroup">
-            <input name='name' [(ngModel)]='Factor.name' type='hidden' readonly>
-            <input name='weight' [(ngModel)]='Factor.weight' type='hidden' readonly>
+    <div *ngFor="let Factor2 of Factors; let m =index">
+        <div [ngModelGroup]="m" #myModel="ngModelGroup">
+            <input name='name' [(ngModel)]='Factor2.name' type='hidden' readonly>
+            <input name='weight' [(ngModel)]='Factor2.weight' type='hidden' readonly>
 
-            <h5>{{Factor.name}}</h5>
-            <div class="checkbox" *ngFor="let RV of Factor.rv ;let j = index">
-                <label>
-                    {{1+(i*6)+j}} )
-                    <mat-checkbox [name]="'RV'+((i*6)+j)" [(checked)]="RV.checked" (change)=onCheck(i,j)>
-                        {{RV.name}}
+            <h5>{{Factor2.name}}</h5>
 
-                    </mat-checkbox>
-                </label>
-            </div>
-            <input name='rv' [(ngModel)]='selectedOption[i]' type='hidden' readonly>
+            <mat-radio-group class="example-radio-group-2" required [(ngModel)]='selectedOption2[m]' [name]="'select2'+m">
+                <mat-radio-button class="example-radio-button" *ngFor="let RV2 of Factor2.rv ;let n = index"
+                    [name]="'RV2'+((m*6)+n)" [value]="RV2.value">
+                    {{RV2.name}}
+                </mat-radio-button>
+            </mat-radio-group>
+            
+            <input name='rv' [(ngModel)]='selectedOption2[m]' type='hidden' readonly>
         </div>
-
     </div>
+
+    
 
 </div>

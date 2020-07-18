@@ -8,10 +8,12 @@ namespace SoftwareEstimation.Projects
 {
     public interface IProjectAppService: IApplicationService
     {
-        void CreateWithLink(ProjectInput Projects);
+        Task<Guid> CreateWithLink(ProjectInput Projects);
         Task<ListResultDto<ProjectListDto>> GetListProject();
         Task<ProjectDetailOutput> GetProjectDetail(EntityDto<Guid> input);
         Task Delete(EntityDto<Guid> input);
         long GetUserID();
+        void ModifySlocValue(string Id, int Sloc);
+        Task<ListResultDto<ProjectSlocDetail>> GetListSlocDetail();
     }
 }

@@ -14,6 +14,9 @@ namespace SoftwareEstimation.Projects
         public virtual string Description { get; protected set; }
         public virtual string Type { get; protected set; }
         public virtual string LinkURL { get; protected set; }
+        public virtual int Sloc { get; protected set; }
+        public virtual bool isReady { get; protected set; }
+        
 
         public const int MaxTitleLength = 100;
         public const int MaxDescriptionLength = 2000;

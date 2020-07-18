@@ -12,11 +12,12 @@
           <i class="material-icons">compare</i>
         </button>
       </div>
+      
     </div>
     <div class="row">
       <mat-tab-group mat-align-tabs="center">
         <mat-tab label="My Current Projects">
-          <div class="col-md-6" *ngFor="let proj of projectList">
+          <div class="col-md-12" *ngFor="let proj of projectList">
 
             <div class="card">
               <div class="block-header row">
@@ -38,14 +39,42 @@
                     <small class="project-description">{{proj.description}}</small>
                     <h4>Your link: {{proj.linkURL}}</h4>
                     <div class="col-md-6 text-right">
+
                       <button type="button" class="btn bg-pink waves-effect btn-sm"
                         [routerLink]="['/app/project', proj.id]">
                         <span>Details</span>
                         <i class="fa fa-arrow-circle-right"></i>
                       </button>
                     </div>
+                    <div class="col-md-6 text-center">
+                      <!-- <section *ngIf="projectload.data | async as user">
+                        <h3>{{projectload.name}}</h3>
+                        <p>Height: {{projectload.height}}</p>
+                        <p>Mass: {{projectload.mass}}</p>
+                        <p>Homeworld: {{projectload.homeworld}}</p>
+                      </section> -->
+                      <div *ngIf = "proj.isReady; else CalculatingState">
+                        <span>Calculated!</span>
+                      </div>
+                      <ng-template #CalculatingState>
+                        <div *ngIf="isCalculating; else FailState ">
+                          <section [ngSwitch]="projectload.status | async">
+  
+                            <span *ngSwitchCase="Status.LOADING">Calculating...</span>
+                            <span *ngSwitchCase="Status.ERROR">Fail to Calculate this</span>
+                            <span *ngSwitchCase="Status.SUCCESS">Calculated</span>
+                          </section>
+                        </div>
+                        <ng-template #FailState>
+                          <span>Fail to evaluate...</span>
+                        </ng-template>
+                      </ng-template>
+                      
+                      
+                    </div>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -81,7 +110,8 @@
                       </div>
                       <ng-template #estimatethis>
                         <button mat-raised-button color='warn' style="left:-10px"
-                          (click)="EstimateUCP(plan.id,plan.isEvaluated,plan.title,plan.description)">Estimate this</button>
+                          (click)="EstimateUCP(plan.id,plan.isEvaluated,plan.title,plan.description)">Estimate
+                          this</button>
                       </ng-template>
                     </div>
                   </mat-expansion-panel-header>

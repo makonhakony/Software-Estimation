@@ -55,7 +55,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         this.dialogRef.close();
     }
 
-
+    projectId:string
     save(): void {
 
         // this.event.date = moment($('#datetime').val());
@@ -63,9 +63,9 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         if (this.data.type == "Link") {
             this.internalService.Clonegit(this.userID.toString(), this.data.title, this.data.linkURL).subscribe((result: any) => {
                 console.log("after post:", result)
-                this._projectService.createWithLink(this.data).subscribe(() => {
-
-                    console.log("this data: ", this.data)
+                this._projectService.createWithLink(this.data).subscribe((result) => {
+                    this.projectId =result
+                    console.log("this data: ", result)
                     this.notify.info(this.l('SavedSuccessfully'));
 
                     // this.internalService.test().subscribe((result:any)=>{
@@ -76,10 +76,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
 
                 });
 
-                //START UCC HERE
-                this.internalService.CalculateSize(this.userID, this.data.title).subscribe((result)=>{
-                    console.log(result)
-                })
+                
             })
 
         }
@@ -101,6 +98,8 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
                         this.close();
 
                     });
+                   //START UCC HERE
+                
             })
 
         }
@@ -113,7 +112,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     }
 
     close(): void {
-        this.dialogRef.close({data:this.data})
+        this.dialogRef.close({data:this.data, projectId:this.projectId})
     }
 
     //-------------------PLAN-------------------------

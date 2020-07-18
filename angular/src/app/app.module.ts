@@ -39,7 +39,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
 import { ProjectComponent } from './project/project.component';
 import { CreateProjectComponent } from './project/create-project/create-project.component';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS, MatFormFieldModule, MatInputModule, MatRadioModule } from '@angular/material';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { CreateProjectService } from './project/create-project/create-porject.service';
 import { ProjectDetailService } from './project/project-detail/project-detail.service';
@@ -53,6 +53,8 @@ import { TechnicalComplexityComponent } from './UCP/technical-complexity/technic
 import { EnvironmentalComplexityComponent } from './UCP/environmental-complexity/environmental-complexity.component';
 import { CalUcpComponent } from './UCP/cal-ucp/cal-ucp.component';
 import { CocomoComponent } from './project/cocomo/cocomo.component';
+import { CocomoService } from './project/cocomo/cocomo.service';
+import { TestRadioComponent } from './project/test-radio/test-radio.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,7 @@ import { CocomoComponent } from './project/cocomo/cocomo.component';
     EnvironmentalComplexityComponent,
     CalUcpComponent,
     CocomoComponent,
+    TestRadioComponent
   ],
   imports: [
     CommonModule,
@@ -109,12 +112,15 @@ import { CocomoComponent } from './project/cocomo/cocomo.component';
     MatFormFieldModule,
     MatInputModule,
     MatStepperModule,
+    MatRadioModule,
+    
   ],
   providers: [
     CreateProjectService,
     ProjectDetailService,
     ProjectCalInfoService,
     InternalProjectService,
+    CocomoService,
     {provide: MatDialogRef, useValue: {}},
     {provide:MAT_DIALOG_DATA, useValue:{}}
     

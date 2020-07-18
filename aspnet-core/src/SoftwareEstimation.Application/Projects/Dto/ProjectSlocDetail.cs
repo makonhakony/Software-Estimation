@@ -7,13 +7,11 @@ using System.Text;
 namespace SoftwareEstimation.Projects.Dto
 {
     [AutoMapFrom(typeof(Project))]
-    public class ProjectDetailOutput : FullAuditedEntityDto<Guid>
+    public class ProjectSlocDetail
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
-        public string Type { get; set; }
-        public string LinkURL { get; set; }
-        public string isReady { get; set; }
-
+        public int Sloc { get; set; }
+        public bool isReady { get; set; }
     }
 }

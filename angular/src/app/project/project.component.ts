@@ -7,10 +7,13 @@ import { PagedRequestDto } from '@shared/paged-listing-component-base';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { InternalProjectService } from './project.service';
+import { InternalProjectService, Status, Pending } from './project.service';
 import { Router } from '@angular/router';
 import { title } from 'process';
 
+export interface ProjectListLoad extends ProjectListDto{
+    isCalculating : boolean
+} 
 @Component({
     templateUrl: 'project.component.html',
     
@@ -18,7 +21,9 @@ import { title } from 'process';
 })
 export class ProjectComponent implements OnInit {
     @ViewChild('createProjectModal') createProjectModal: CreateProjectComponent;
-
+    readonly Status = Status;
+    projectload: Pending<any>;
+    
     constructor(
         injector: Injector,
         private _projectService: ProjectServiceProxy,
@@ -29,10 +34,14 @@ export class ProjectComponent implements OnInit {
         private _router : Router,
     ) {
         //super(injector);
+        
     }
+    userID :string
     ngOnInit(){
         this.loadProject()
-        
+        this._projectService.getUserID().subscribe((result: any) => {
+            this.userID = result
+        })
         //")
     }
     // ProjectInputChecked(): ProjectListDto & { checked: boolean} {
@@ -42,20 +51,39 @@ export class ProjectComponent implements OnInit {
     project: ProjectInput
     projectList: ProjectListDto[] = [];
     planList: PlanListDto[] = [];
+    projectListLoad: ProjectListLoad[] =[]
 
     panelOpenState1:boolean[]=[];
     panelOpenState2:boolean[]=[];
-    createProject():void {
+    projectId:string =''
+
+    isCalculating:boolean =false
+    createProject() {
         this.project = new ProjectInput()
         
         const dialogRef = this.dialog.open(CreateProjectComponent, {
             width: '550px',
-            data: {title: this.project.title, description:this.project.description, type:this.project.type, linkURL:this.project.linkURL}
+            data: {title: this.project.title, description:this.project.description, type:this.project.type, linkURL:this.project.linkURL, ProjectId:this.projectId}
         });
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe(async result => {
             
-            console.log("load Project NOW!!!!!!!!!")
+            console.log('after close:',result)
+            this.projectId=result.projectId
+            //START UCC HERE
+            this.projectload = await this._internalService.load(this.userID, result.data.title)
+            this.isCalculating = true
+            debugger
+            if (this.projectload){
+            this.projectload.request.subscribe((result2)=>{
+                
+                this._projectService.modifySlocValue(this.projectId,result2.SLOC).subscribe(()=>{
+                    console.log(this.projectId,result2.SLOC)
+                })
+                
+            })
             this.loadProject()
+            
+        }
         });
     }
     protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
@@ -66,7 +94,9 @@ export class ProjectComponent implements OnInit {
     loadProject() {
         this._projectService.getListProject()
             .subscribe((result: ListResultDtoOfProjectListDto) => {
+                
                 this.projectList = result.items;
+                
                 //console.log("inside: ",this.projectList)
             });
 

@@ -10,15 +10,18 @@ namespace SoftwareEstimation.Plans
     public class Plan : FullAuditedEntity<Guid>
     {
         
-        public virtual string Title { get; set; }
-        public virtual string Description { get; set;}
-        public virtual float UUCPoint { get; set; }
-        public virtual float TFPoint { get; set; }
-        public virtual float EFPoint { get; set; }
-        public virtual float UseCasePoint { get; set; }
+        public virtual string Title { get; protected set; }
+        public virtual string Description { get; protected set;}
+        
+        public virtual float SEPoint { get; protected set; }
+        public virtual float FPoint { get; protected set; }
+        public virtual float UCPoint { get; protected set; }
+        public virtual float UseCasePoint { get; protected set; }
+        public virtual float EFPoint { get; protected set; }
+        public virtual float TFPoint { get; protected set; }
+        public virtual float UUCPoint { get; protected set; }
+        public virtual bool isEvaluated { get; protected set; }
 
-        public virtual bool isEvaluated { get; set; }
-         
 
         protected Plan()
         {

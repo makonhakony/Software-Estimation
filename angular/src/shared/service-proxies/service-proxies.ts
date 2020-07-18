@@ -492,7 +492,7 @@ export class ProjectServiceProxy {
      * @param projects (optional) 
      * @return Success
      */
-    createWithLink(projects: ProjectInput | null | undefined): Observable<void> {
+    createWithLink(projects: ProjectInput | null | undefined): Observable<string> {
         let url_ = this.baseUrl + "/api/services/app/Project/CreateWithLink";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -504,6 +504,7 @@ export class ProjectServiceProxy {
             responseType: "blob",			
             headers: new HttpHeaders({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -514,14 +515,14 @@ export class ProjectServiceProxy {
                 try {
                     return this.processCreateWithLink(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
+                    return <Observable<string>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<void>><any>_observableThrow(response_);
+                return <Observable<string>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreateWithLink(response: HttpResponseBase): Observable<void> {
+    protected processCreateWithLink(response: HttpResponseBase): Observable<string> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -530,14 +531,17 @@ export class ProjectServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<void>(<any>null);
+        return _observableOf<string>(<any>null);
     }
 
     /**
@@ -744,6 +748,110 @@ export class ProjectServiceProxy {
             }));
         }
         return _observableOf<number>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @param sloc (optional) 
+     * @return Success
+     */
+    modifySlocValue(id: string | null | undefined, sloc: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Project/ModifySlocValue?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        if (sloc !== undefined)
+            url_ += "Sloc=" + encodeURIComponent("" + sloc) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModifySlocValue(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModifySlocValue(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModifySlocValue(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getListSlocDetail(): Observable<ListResultDtoOfProjectSlocDetail> {
+        let url_ = this.baseUrl + "/api/services/app/Project/GetListSlocDetail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListSlocDetail(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListSlocDetail(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfProjectSlocDetail>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfProjectSlocDetail>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListSlocDetail(response: HttpResponseBase): Observable<ListResultDtoOfProjectSlocDetail> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ListResultDtoOfProjectSlocDetail.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfProjectSlocDetail>(<any>null);
     }
 }
 
@@ -3009,6 +3117,7 @@ export class ProjectListDto implements IProjectListDto {
     description: string | undefined;
     type: string | undefined;
     linkURL: string | undefined;
+    isReady: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -3033,6 +3142,7 @@ export class ProjectListDto implements IProjectListDto {
             this.description = _data["description"];
             this.type = _data["type"];
             this.linkURL = _data["linkURL"];
+            this.isReady = _data["isReady"];
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
@@ -3057,6 +3167,7 @@ export class ProjectListDto implements IProjectListDto {
         data["description"] = this.description;
         data["type"] = this.type;
         data["linkURL"] = this.linkURL;
+        data["isReady"] = this.isReady;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -3081,6 +3192,7 @@ export interface IProjectListDto {
     description: string | undefined;
     type: string | undefined;
     linkURL: string | undefined;
+    isReady: boolean | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -3096,6 +3208,7 @@ export class ProjectDetailOutput implements IProjectDetailOutput {
     description: string | undefined;
     type: string | undefined;
     linkURL: string | undefined;
+    isReady: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -3120,6 +3233,7 @@ export class ProjectDetailOutput implements IProjectDetailOutput {
             this.description = _data["description"];
             this.type = _data["type"];
             this.linkURL = _data["linkURL"];
+            this.isReady = _data["isReady"];
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
@@ -3144,6 +3258,7 @@ export class ProjectDetailOutput implements IProjectDetailOutput {
         data["description"] = this.description;
         data["type"] = this.type;
         data["linkURL"] = this.linkURL;
+        data["isReady"] = this.isReady;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -3168,6 +3283,7 @@ export interface IProjectDetailOutput {
     description: string | undefined;
     type: string | undefined;
     linkURL: string | undefined;
+    isReady: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -3176,6 +3292,112 @@ export interface IProjectDetailOutput {
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: string | undefined;
+}
+
+export class ListResultDtoOfProjectSlocDetail implements IListResultDtoOfProjectSlocDetail {
+    items: ProjectSlocDetail[] | undefined;
+
+    constructor(data?: IListResultDtoOfProjectSlocDetail) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ProjectSlocDetail.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfProjectSlocDetail {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfProjectSlocDetail();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfProjectSlocDetail {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfProjectSlocDetail();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfProjectSlocDetail {
+    items: ProjectSlocDetail[] | undefined;
+}
+
+export class ProjectSlocDetail implements IProjectSlocDetail {
+    id: string | undefined;
+    title: string | undefined;
+    sloc: number | undefined;
+    isReady: boolean | undefined;
+
+    constructor(data?: IProjectSlocDetail) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.sloc = _data["sloc"];
+            this.isReady = _data["isReady"];
+        }
+    }
+
+    static fromJS(data: any): ProjectSlocDetail {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectSlocDetail();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["sloc"] = this.sloc;
+        data["isReady"] = this.isReady;
+        return data; 
+    }
+
+    clone(): ProjectSlocDetail {
+        const json = this.toJSON();
+        let result = new ProjectSlocDetail();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProjectSlocDetail {
+    id: string | undefined;
+    title: string | undefined;
+    sloc: number | undefined;
+    isReady: boolean | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {

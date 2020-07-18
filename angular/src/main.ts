@@ -32,3 +32,4 @@ if (environment.hmr) {
 } else {
     bootstrap(); // Regular bootstrap
 }
+

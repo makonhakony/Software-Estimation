@@ -1,4 +1,4 @@
-import { Component, SkipSelf, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, SkipSelf, Input, OnInit, SimpleChanges, AfterViewInit, ChangeDetectorRef, AfterViewChecked, AfterContentInit } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
 export interface RV {
     value: number
@@ -16,14 +16,21 @@ export interface RV {
     }]
 })
 export class EnvironmentalComplexityComponent implements OnInit {
-
-    selectedOption: any[] = []
+    constructor(
+        private cdr: ChangeDetectorRef
+    ) { 
+        
+    }
+    selectedOption2: any[] = []
     selectedValue: number
 
-    @Input("InitValue") InitValueEF: number[]
+    @Input() InitValue: number[]
     @Input() status: boolean
-    isDisabled:boolean
+    isDisabled: boolean
+    initialize: boolean = false
     ngOnInit() {
+        
+        //this.cdr.detectChanges()
         for (let i = 0; i < 8; i++) {
             let rate: RV[] = [
                 { value: 0, name: "irrelevant", checked: false },
@@ -34,30 +41,35 @@ export class EnvironmentalComplexityComponent implements OnInit {
                 { value: 5, name: "very important", checked: false },
             ]
             this.listRV.push(rate)
-            this.selectedOption.push(0)
+            this.selectedOption2.push(0)
         }
 
         this.Factors.forEach((value, index) => {
             this.Factors[index].rv = this.listRV[index]
             if (!this.status) {
+
                 this.Factors[index].rv[0].checked = true
             }
         })
-
-        //console.log(this.Factors)
+        this.initialize = true
+       
 
     }
-
+    
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['InitValueEF'].currentValue) {
-            if (this.InitValueEF.length != 0) {
-                console.log(this.status, this.InitValueEF)
-                this.Factors.forEach((a, index) => {
-                    //console.log(a.rv)
-                    a.rv[this.InitValueEF[index]].checked = true
-                })
+        if (this.initialize) {
+            //debugger
+            if (changes['InitValue'].currentValue) {
+                if (this.InitValue.length != 0) {
+                    //this.cdr.reattach()
+                    console.log(this.status, this.InitValue)
+                    this.selectedOption2 = this.InitValue
+                    // this.cdr.detectChanges()
+                }
             }
+            
         }
+        
     }
     value: any
     listRV: any[8] = []
@@ -73,25 +85,16 @@ export class EnvironmentalComplexityComponent implements OnInit {
         { name: 'Difficult programing language', weight: -1.0, rv: undefined },
     ]
     onCheck(i: any, j: any) {
-        const prevCheckedOptions = this.Factors[i].rv.filter(x => x.checked);
-        const prevChecdedValue = prevCheckedOptions.map(x => x.value)
-        if (prevChecdedValue != j) {
-            //this.isDisabled =false
-            console.log(prevChecdedValue)
-            this.Factors[i].rv.forEach((x: any) => {
-                x.checked = false
-            })
-            this.Factors[i].rv[j].checked = true
-            const checkedOptions = this.Factors[i].rv.filter(x => x.checked);
-            this.selectedValue = checkedOptions.map(x => x.value);
-            //this.selectedWeight= checkedOptions.map(x=>x.weight)
-            this.selectedOption[i] = this.selectedValue[0]
-            console.log("select: ", this.selectedOption[i])
-        }
-        else{
-            //this.isDisabled =true
-            this.selectedOption[i] = prevChecdedValue
-            console.log(this.Factors[i].rv)
-        }
+        // console.log('test:', i, ',', j)
+        // this.Factors[i].rv.forEach((x: any) => {
+        //     x.checked = false
+        // })
+        // this.Factors[i].rv[j].checked = true
+        // const checkedOptions = this.Factors[i].rv.filter(x => x.checked);
+        // this.selectedValue = checkedOptions.map(x => x.value);
+        // //this.selectedWeight= checkedOptions.map(x=>x.weight)
+        // this.selectedOption[i] = this.selectedValue[0]
+        // console.log("select: ", this.selectedOption[i])
+
     }
 }

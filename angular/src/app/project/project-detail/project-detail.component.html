@@ -3,42 +3,72 @@
     <div class="card main-content">
         <div class="header">
             <h1>{{project.title}}</h1>
-            <ul class="header-dropdown m-r--5">
+            <ul class="header-dropdown m-r--12">
                 <li>
                     <div class="form-actions">
                         <button type="button" [routerLink]="['/app/project']"
-                            class="btn bg-black waves-effect waves-light"><i class="fa fa-arrow-circle-left"></i> Back
-                            to Project List</button>
+                            class="btn bg-black waves-effect waves-light"><i class="fa fa-arrow-circle-left"></i> Back</button>
+
+
                         <button type="button" class="btn bg-green waves-effect waves-light"
-                            (click)="EditProject()"><i class="fa fa-pencil"></i> Edit Project</button>
+                            (click)="EditProject()"><i class="fa fa-pencil"></i> Edit</button>
+
+                        <span *ngIf="project.isReady=='True'; else Failcase">
+                            <button type="button" class="btn bg-pink waves-effect waves-light" (click)="DoCocomo()"><i
+                                    class="fa fa-calculator"></i> Calculate </button>
+                        </span>
+                        <ng-template #Failcase>
+                            <button type="button" class="btn bg-blue waves-effect waves-light" (click)="UccAgain()"><i
+                                    class="fa fa-repeat"></i> Retry </button>
+                        </ng-template>
+
                         <button type="button" class="btn bg-orange waves-effect waves-light"
-                            (click)="calculateProject()" [routerLink]="['/app/project', projectId,'detail',userID,project.title]"><i class="fa fa-calculator" ></i> Calculating the Project
-                            Size</button>
+                            (click)="calculateProject()"
+                            [routerLink]="['/app/project', projectId,'detail',userID,project.title]"><i
+                                class="fa fa-info"></i> Print Sloc detail</button>
                         <button type="button" class="btn bg-red waves-effect waves-light" (click)="deleteProject()"><i
-                                class="fa fa-remove"></i>Delete this link</button>
+                                class="fa fa-remove"></i>Delete</button>
                     </div>
+                    <div *ngIf="project.isReady=='True'; else Failcase2">
+                        
+                            <i><small>*Being able to calculate Schedule and Effort of the project</small></i>
+                        
+                        
+                    </div>
+                    <ng-template #Failcase2 class="text-center">
+                        <i style="color:red"><small>*Cannot calculate the Sloc of this project</small></i>
+                    </ng-template>
+                    <div *ngIf="isCalculating">
+                        <section [ngSwitch]="projectload.status | async">
+
+                          <span *ngSwitchCase="Status.LOADING">Calculating...</span>
+                          <span *ngSwitchCase="Status.ERROR">Fail to Calculate this</span>
+                          <span *ngSwitchCase="Status.SUCCESS">Calculated</span>
+                        </section>
+                      </div>
+                    
                 </li>
             </ul>
-            
-            
-        </div>
-        <div class ="body">
-            <p>some information about this link:</p> <pre>{{projectDetail}}</pre>
-            <h5>link:<a href="{{project.linkURL}}" >{{project.linkURL}}</a></h5>
-            <button mat-raised-button color="warn" (click) = "toggle()"> Show list of file</button>
-            
-        </div>
 
+
+        </div>
+        <div class="body">
+            <p>some information about this link:</p>
+            <pre>{{projectDetail}}</pre>
+            <h5>link:<a href="{{project.linkURL}}">{{project.linkURL}}</a></h5>
+            <button mat-raised-button color="warn" (click)="toggle()"> Show list of file</button>
+
+        </div>
         
+
     </div>
 
     <div class="card main-content" *ngIf="show">
-        <div class = "header">
+        <div class="header">
             <h2>This file list : </h2>
         </div>
-        <div class = "body">
+        <div class="body">
             <pre>{{listfile}}</pre>
-    </div>
-   
-</div>
+        </div>
 
+    </div>

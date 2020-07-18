@@ -13,6 +13,7 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
 import { ProjectCalInfoComponent } from './project/project-cal-info/project-cal-info/project-cal-info.component';
 import { UcpComponent } from './UCP/ucp.component';
 import { CocomoComponent } from './project/cocomo/cocomo.component';
+import { TestRadioComponent } from './project/test-radio/test-radio.component';
 
 @NgModule({
     imports: [
@@ -32,6 +33,7 @@ import { CocomoComponent } from './project/cocomo/cocomo.component';
                     { path: 'update-password', component: ChangePasswordComponent },
                     { path: 'ucp', component:  UcpComponent},
                     { path: 'SnEpoint', component:  CocomoComponent},
+                    {path:'test',component: TestRadioComponent}
                 ]
             }
         ])
