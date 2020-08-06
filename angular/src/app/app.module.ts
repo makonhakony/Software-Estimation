@@ -55,6 +55,13 @@ import { CalUcpComponent } from './UCP/cal-ucp/cal-ucp.component';
 import { CocomoComponent } from './project/cocomo/cocomo.component';
 import { CocomoService } from './project/cocomo/cocomo.service';
 import { TestRadioComponent } from './project/test-radio/test-radio.component';
+import { EstimationComponent } from './estimation/estimation.component';
+import { CreateEstimationComponent } from './estimation/create-estimation/create-estimation.component';
+import { AddEstimatingValueComponent } from './estimation/add-estimating-value/add-estimating-value.component';
+import { EstimationDetailComponent } from './estimation/estimation-detail/estimation-detail.component';
+import { SaveNewEstimationComponent } from './estimation/save-new-estimation/save-new-estimation.component';
+import { CyclomaticComponent } from './cyclomatic/cyclomatic.component';
+import { CyclomaticService } from './cyclomatic/cyclomatic.service';
 
 @NgModule({
   declarations: [
@@ -94,7 +101,15 @@ import { TestRadioComponent } from './project/test-radio/test-radio.component';
     EnvironmentalComplexityComponent,
     CalUcpComponent,
     CocomoComponent,
-    TestRadioComponent
+    TestRadioComponent,
+    //Estimation
+    EstimationComponent,
+    CreateEstimationComponent,
+    AddEstimatingValueComponent,
+    EstimationDetailComponent,
+    SaveNewEstimationComponent,
+    //Clyclomatic
+    CyclomaticComponent
   ],
   imports: [
     CommonModule,
@@ -121,6 +136,7 @@ import { TestRadioComponent } from './project/test-radio/test-radio.component';
     ProjectCalInfoService,
     InternalProjectService,
     CocomoService,
+    CyclomaticService,
     {provide: MatDialogRef, useValue: {}},
     {provide:MAT_DIALOG_DATA, useValue:{}}
     
@@ -137,7 +153,11 @@ import { TestRadioComponent } from './project/test-radio/test-radio.component';
     EditUserDialogComponent,
     ResetPasswordDialogComponent,
     //project
-    CreateProjectComponent
+    CreateProjectComponent,
+    //Estimation
+    CreateEstimationComponent,
+    AddEstimatingValueComponent,
+    SaveNewEstimationComponent
   ],
   
 })

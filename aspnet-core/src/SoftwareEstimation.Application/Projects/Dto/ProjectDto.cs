@@ -11,7 +11,6 @@ namespace SoftwareEstimation.Projects.Dto
     {
         public long UserID { get; set; }
         public string Title { get; protected set; }
-        public string Description { get; protected set; }
         public string Type { get; protected set; }
         public string LinkURL { get; protected set; }
     }

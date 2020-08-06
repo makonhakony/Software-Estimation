@@ -11,8 +11,7 @@ namespace SoftwareEstimation.Projects.Dto
         [StringLength(Project.MaxTitleLength)]
         public string Title { get; set; }
 
-        [StringLength(Project.MaxDescriptionLength)]
-        public string Description { get; set; }
+        
 
         public string Type { get; set; }
 

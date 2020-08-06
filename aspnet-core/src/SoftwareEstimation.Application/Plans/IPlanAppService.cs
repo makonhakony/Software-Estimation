@@ -8,10 +8,13 @@ namespace SoftwareEstimation.Plans
 {
     public interface IPlanAppService : IApplicationService
     {
-        void CreatePlans(PlanInput Plans);
-        Task<ListResultDto<PlanListDto>> GetListProject();
-        void UpdatePlanResult(PlanUpdate plan);
+        Task<Guid> CreatePlans(PlanInput Plans);
+        Task<ListResultDto<PlanListDto>> GetListPlan();
+        //void UpdatePlanResult(string Id, float Ucpoint);
         void SetUcp(UcpInput input);
-        Task<UcpOutput> GetOutputUcp(string planID);
+        Task<UcpOutput> GetOutputUcp(Guid planID);
+        void SetSep(SepInput input);
+        Task<SepOutput> GetSepOutput(Guid planID);
+
     }
 }

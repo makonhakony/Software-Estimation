@@ -17,30 +17,16 @@ export class SideBarNavComponent extends AppComponentBase {
         new MenuItem(this.l('Roles'), 'Pages.Roles', 'local_offer', '/app/roles'),
         new MenuItem(this.l('About'), '', 'info', '/app/about'),
         //new MenuItem(this.l('My project'),'','important_devices','/app/project'),
-        new MenuItem(this.l('Software Project'),'','important_devices','',[
-            new MenuItem(this.l('My Storage'),'','','/app/project'),
-            new MenuItem(this.l('Estimation'),'','','',[
-                new MenuItem(this.l('Use Case Point'),'','','/app/ucp'),
-                new MenuItem(this.l('Schedule and Effort'),'','','/app/SnEpoint'),
-            ]),
+        new MenuItem(this.l('Cloned Project Storage'), '', 'cloud_done', '/app/project'),
+        new MenuItem(this.l('Estimation'), '', 'mediation', '', [
+            new MenuItem(this.l('Estimating Result Storage'), '', 'folder', '/app/estimation'),
+            new MenuItem(this.l('Use Case Point'), '', 'accessibility_new', '/app/ucp'),
+            new MenuItem(this.l('Function Point'), '', 'functions', '/app/fp'),
+            new MenuItem(this.l('Schedule and Effort'), '', 'av_timer', '/app/SnEpoint'),
         ]),
+        new MenuItem(this.l('Cyclomatic Complexity Evaluation'), '', 'emoji_objects', '/app/CCEva'),
+        
 
-        new MenuItem(this.l('MultiLevelMenu'), '', 'menu', '', [
-            new MenuItem('ASP.NET Boilerplate', '', '', '', [
-                new MenuItem('Home', '', '', 'https://aspnetboilerplate.com/?ref=abptmpl'),
-                new MenuItem('Templates', '', '', 'https://aspnetboilerplate.com/Templates?ref=abptmpl'),
-                new MenuItem('Samples', '', '', 'https://aspnetboilerplate.com/Samples?ref=abptmpl'),
-                new MenuItem('Documents', '', '', 'https://aspnetboilerplate.com/Pages/Documents?ref=abptmpl')
-            ]),
-            new MenuItem('ASP.NET Zero', '', '', '', [
-                new MenuItem('Home', '', '', 'https://aspnetzero.com?ref=abptmpl'),
-                new MenuItem('Description', '', '', 'https://aspnetzero.com/?ref=abptmpl#description'),
-                new MenuItem('Features', '', '', 'https://aspnetzero.com/?ref=abptmpl#features'),
-                new MenuItem('Pricing', '', '', 'https://aspnetzero.com/?ref=abptmpl#pricing'),
-                new MenuItem('Faq', '', '', 'https://aspnetzero.com/Faq?ref=abptmpl'),
-                new MenuItem('Documents', '', '', 'https://aspnetzero.com/Documents?ref=abptmpl')
-            ])
-        ])
     ];
 
     constructor(

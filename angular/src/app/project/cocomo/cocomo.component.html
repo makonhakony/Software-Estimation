@@ -4,19 +4,20 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    About This Template
+                    Schedule and Effort estimation
                 </h2>
             </div>
             <div class="body">
-
+                <div *ngIf="!disableProject">
                 <mat-form-field appearance="fill">
                     <mat-label>Select a project</mat-label>
-                    <mat-select [(ngModel)]="selectedProject" name="projectSelected" (selectionChange)="ChangeModel()">
+                    <mat-select [(ngModel)]="selectedProject" name="projectSelected" (selectionChange)="ChangeModel()" [disabled] = 'disableWhenCal' >
                         <mat-option *ngFor="let project of projects" [value]="project">
                             {{project.title}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
                 <p>Sloc Estimate: {{selectedProject.sloc}}</p>
 
             </div>
@@ -25,7 +26,7 @@
             <div class="body">
                 <mat-form-field appearance="fill">
                     <mat-label>Select a Estimation Mode</mat-label>
-                    <mat-select [(ngModel)]='selectedMode' value="Mode" (selectionChange)="ChangeModel2()">
+                    <mat-select [(ngModel)]='selectedMode' value="Mode" (selectionChange)="ChangeModel2()" [disabled] = 'disableWhenCal'>
                         <mat-option *ngFor="let option of options" [value]="option">
                             {{option.value}}
                         </mat-option>
@@ -39,7 +40,7 @@
             <div class="body">
                 <mat-form-field appearance="fill">
                     <mat-label>Select a COCOMO Model</mat-label>
-                    <mat-select [(ngModel)]='selectedModel' value="Model" (selectionChange)="ChangeModel3()">
+                    <mat-select [(ngModel)]='selectedModel' value="Model" (selectionChange)="ChangeModel3()" [disabled] = 'disableWhenCal'>
                         <mat-option *ngFor="let option of options2" [value]="option">
                             {{option.value}}
                         </mat-option>
@@ -60,6 +61,12 @@
                             <h4>Effort Estimation: {{EffortResult}}</h4>
                             <h4>Time Estimation: {{TimeResult}}</h4>
                             <h4>Number of staffs required: {{StaffResult}}</h4>
+                            <div *ngIf='existed; else NewCreate'>
+                                <button mat-raised-button (click)='UpdateEstimation()'>Save this to my Estimation</button>
+                            </div>
+                            <ng-template #NewCreate>
+                                <button mat-raised-button (click)='SaveToEstimation()'>Save/Create Estimation</button>
+                            </ng-template>
                         </mat-step>
                     </mat-horizontal-stepper>
                 </div>
@@ -85,9 +92,16 @@
                                 this</button>
                         </mat-step>
                         <mat-step label="step 2">
-                            <h4>Effort Estimation: {{EffortResult}}</h4>
-                            <h4>Time Estimation: {{TimeResult}}</h4>
-                            <h4>Number of staffs required: {{StaffResult}}</h4>
+                            <h4>Effort Estimation: {{EffortResult | number:2}}</h4>
+                            <h4>Time Estimation: {{TimeResult | number:2}}</h4>
+                            <h4>Number of staffs required: {{StaffResult | number:2}}</h4>
+                            <div *ngIf='existed; else NewCreate'>
+                                <button mat-raised-button (click)='UpdateEstimation()'>Save this to my Estimation</button>
+                            </div>
+                            <ng-template #NewCreate>
+                                <button mat-raised-button (click)='SaveNew()'>Save/Create Estimation</button>
+                            </ng-template>
+                            
                         </mat-step>
                     </mat-horizontal-stepper>
 

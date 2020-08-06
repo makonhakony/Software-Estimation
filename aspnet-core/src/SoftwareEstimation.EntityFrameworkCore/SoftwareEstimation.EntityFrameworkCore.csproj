@@ -18,6 +18,19 @@
     <Compile Remove="Migrations\20200703091043_add-plan-isevaluated.cs" />
     <Compile Remove="Migrations\20200703094614_add-plan-isevaluated.cs" />
     <Compile Remove="Migrations\20200703100533_edit-entity-significant.cs" />
+    <Compile Remove="Migrations\20200718171209_udateProjectModel.cs" />
+    <Compile Remove="Migrations\20200726123122_add-sep-plan.cs" />
+    <Compile Remove="Migrations\20200726123941_add-sep-plan.cs" />
+    <Compile Remove="Migrations\20200726124348_add-sep-plan.cs" />
+    <Compile Remove="Migrations\20200726124951_add-sep-plan2.cs" />
+    <Compile Remove="Migrations\20200728023832_test.cs" />
+    <Compile Remove="Migrations\20200728024444_test.cs" />
+    <Compile Remove="Migrations\20200728025801_significant-change-ucp-sep-plan.cs" />
+    <Compile Remove="Migrations\20200728030331_Initial.cs" />
+    <Compile Remove="Migrations\20200728031026_test.cs" />
+    <Compile Remove="Migrations\20200728031424_test.cs" />
+    <Compile Remove="Migrations\20200728032258_test2.cs" />
+    <Compile Remove="Migrations\20200728032549_Initial.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />

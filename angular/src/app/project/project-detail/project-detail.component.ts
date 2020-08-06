@@ -38,8 +38,9 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
                 this.project =result
                 this._projectService.getUserID().subscribe((result: any) => {
                     this.userID = result
-                    this._internalService.GetInfo(this.userID.toString(), this.project.title).subscribe((result: any) => {
+                    this._internalService.GetInfo(this.userID.toString(), this.projectId).subscribe((result: any) => {
                         this.projectDetail = result
+                        
                     })
                     
                     console.log(this.project.isReady)
@@ -57,7 +58,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
     }
 
     deleteProject() {
-        this._internalService.DeletGit(this.userID, this.project.title).subscribe((result: any) => {
+        this._internalService.DeletGit(this.userID, this.projectId).subscribe((result: any) => {
             console.log(result)
             this._projectService.delete(this.projectId).subscribe(() => {
                 abp.notify.info('Successfully delete the link');
@@ -78,7 +79,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
     listfile:any
     toggle() {
         this.show = !(this.show)
-        this._internalService.GetListFile(this.userID,this.project.title).subscribe((result:any)=>{
+        this._internalService.GetListFile(this.userID,this.projectId).subscribe((result:any)=>{
             this.listfile=result
         })
 
@@ -93,7 +94,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
     projectload: Pending<any>;
     isCalculating:boolean=false
     UccAgain(){
-        this.projectload = this._internalService.load(this.userID, this.project.title)
+        this.projectload = this._internalService.load(this.userID, this.projectId)
         if (this.projectload){
             this.projectload.request.subscribe(()=>{
                 this.isCalculating=true

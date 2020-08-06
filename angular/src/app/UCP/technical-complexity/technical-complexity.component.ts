@@ -47,7 +47,7 @@ export class TechnicalComplexityComponent implements OnInit {
                 { value: 5, name: "very important"},
             ]
             this.listRV.push(rate)
-            console.log('nah')
+            
             this.selectedOption.push(0)
         }
         this.Factors.forEach((value, index) => {

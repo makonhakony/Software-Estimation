@@ -11,10 +11,10 @@ namespace SoftwareEstimation.Plans.Dto
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public float UUCPoint { get; set; }
-        public float TFPoint { get; set; }
-        public float EFPoint { get; set; }
-        public float UseCasePoint { get; set; }
-        public bool isEvaluated { get; set; }
+        
+        public float FPoint { get; set; }
+        public UCPoint UcpLatest { get; set; }
+        public SEPoint SepLatest { get; set; }
+
     }
 }

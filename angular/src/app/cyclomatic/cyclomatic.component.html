@@ -1,0 +1,67 @@
+<!--component html goes here -->
+<!--component html goes here -->
+<div class="row clearfix" [@routerTransition]>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Cyclomatic Complexity
+                </h2>
+            </div>
+            <div class="body">
+                <div>
+                    <h4>Cyclomatic complexity (CYC) is a metric for software quality. It was developed by Thomas J.
+                        McCabe Sr. in 1976. </h4>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class='card'>
+            <div class='body'>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select a project</mat-label>
+                    <mat-select [(ngModel)]="selectedProject" name="projectSelected">
+                        <mat-option *ngFor="let project of projects" [value]="project">
+                            {{project.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf='selectedProject'>
+                    <button mat-raised-button color='warn' (click)='CalCyclomatic()'>
+                        Evaluate the Code Quality
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" *ngIf='showGraph'>
+            <div class='row'>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="header">
+                            <h2>File chart</h2>
+
+                        </div>
+                        <div class="body">
+                            <div id="file_chart" class="dashboard-donut-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Function chart</h2>
+
+                        </div>
+                        <div class="body">
+                            <div id="function_chart" class="dashboard-donut-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

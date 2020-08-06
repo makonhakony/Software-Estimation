@@ -1,9 +1,11 @@
 import { Component, OnInit, SkipSelf, Injector } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { ProjectServiceProxy, ProjectSlocDetail } from '@shared/service-proxies/service-proxies';
+import { ProjectServiceProxy, ProjectSlocDetail, PlanServiceProxy, SepInput } from '@shared/service-proxies/service-proxies';
 import { CocomoService } from './cocomo.service';
 import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { SaveNewEstimationComponent } from '@app/estimation/save-new-estimation/save-new-estimation.component';
 
 export interface SelectedValue {
     value: string
@@ -28,7 +30,10 @@ export class CocomoComponent implements OnInit {
 
         private _projectService: ProjectServiceProxy,
         private internalService: CocomoService,
-        private activatedroute: ActivatedRoute
+        private activatedroute: ActivatedRoute,
+        private _planService: PlanServiceProxy,
+        private route: Router,
+        private dialog: MatDialog
     ) {
 
     }
@@ -37,7 +42,7 @@ export class CocomoComponent implements OnInit {
     selectedModel: SelectedValue
     projects: ProjectSlocDetail[] = []
     state: boolean = false
-
+    disableProject: boolean = false
     options2 = [
         { value: 'Basic COCOMO Model', description: 'Basic COCOMO can be used for quick and slightly rough calculations of Software Costs. Its accuracy is somewhat restricted due to the absence of sufficient factor considerations.', type: 0 },
         { value: 'Intermediate COCOMO Model', description: 'Intermediate COCOMO can be used for more accurated calculations of Software Costs. It takes these Cost Drivers into account.', type: 1 },
@@ -48,7 +53,8 @@ export class CocomoComponent implements OnInit {
         { value: 'Organic Mode', description: 'Relatively small, simple software projects in which small teams with good application experience work to a set of less than rigid requirements.', type: 0 },
         { value: 'Semi-detached Mode', description: 'An intermediate, (in size and complexity), software project in which teams with mixed experience levels must meet a mix of rigid and less than rigid requirements.', type: 1 },
         { value: ' Embedded Mode', description: ' A software project that must be developed within a set of tight hardware, software and operation constraints.', type: 2 }]
-   
+    existed: boolean = false
+    planID: string
     ngOnInit() {
         this.selectedMode = {} as SelectedValue
         this.selectedModel = {} as SelectedValue
@@ -57,16 +63,25 @@ export class CocomoComponent implements OnInit {
             this.projects = result.items
             console.log(this.projects)
             if (this.activatedroute.snapshot.queryParams['id']) {
+                this.existed = true
                 //do your stuff. example: console.log('id: ', this.route.snapshot.queryParams['id']);
                 this.activatedroute.queryParams.subscribe((data: any) => {
-                    this.projects.forEach((project)=>{
-                        if (project.id == data.id){
-                            this.selectedProject = project
-                            this.state =true
-                        }
-                    })
+                    this.planID = data.id
+                    if (data.type == 'archived') {
+                        this.projects.forEach((project) => {
+                            if (project.id == data.idP) {
+                                this.selectedProject = project
+                                this.state = true
+                            }
+                        })
+                    } else if (data.type == 'custom') {
+                        this.selectedProject.title = 'Custom Sloc Value'
+                        this.selectedProject.sloc = data.sloc
+                        this.disableProject = true
+                        this.state = true
+                    }
                 })
-                
+
             }
         })
     }
@@ -88,20 +103,12 @@ export class CocomoComponent implements OnInit {
         console.log(this.selectedModel)
         this.state3 = true
     }
+    SEP: SepInput
+    EffortResult: number = 0
+    TimeResult: number = 0
+    StaffResult: number = 0
 
-    EffortResult: string = 'Waiting...'
-    TimeResult: string = 'Waiting...'
-    StaffResult: string = 'Waiting...'
 
-    CalculateBasic() {
-
-        this.internalService.BasicCocomo(this.selectedMode.type, this.selectedProject.sloc).subscribe((result) => {
-            this.EffortResult = result.effort
-            this.TimeResult = result.time
-            this.StaffResult = result.staff
-            console.log(result)
-        })
-    }
 
 
     selectedOption: any[] = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
@@ -131,13 +138,65 @@ export class CocomoComponent implements OnInit {
         { name: 'Use of Software Tool', option: this.option },
         { name: 'Require Development Schedule', option: this.option },
     ]
-    CalculateInter() {
 
-        this.internalService.InterCocomo(this.selectedMode.type, this.selectedOption, this.selectedProject.sloc).subscribe((result) => {
-            this.EffortResult = result.effort
-            this.TimeResult = result.time
-            this.StaffResult = result.staff
+    disableWhenCal: boolean = false
+    CalculateBasic() {
+        this.disableWhenCal = true
+        this.internalService.BasicCocomo(this.selectedMode.type, this.selectedProject.sloc).subscribe((result) => {
+            this.EffortResult = result.effort.toFixed(1)
+            this.TimeResult = result.time.toFixed(1)
+            this.StaffResult = result.staff.toFixed(1)
             console.log(result)
         })
+    }
+    CalculateInter() {
+        this.disableWhenCal = true
+        this.internalService.InterCocomo(this.selectedMode.type, this.selectedOption, this.selectedProject.sloc).subscribe((result) => {
+            this.EffortResult = result.effort.toFixed(1)
+            this.TimeResult = result.time.toFixed(1)
+            this.StaffResult = result.staff.toFixed(1)
+            console.log(result)
+        })
+    }
+
+
+    UpdateEstimation() {
+        this.SEP = new SepInput()
+        this.SEP.planID = this.planID
+        this.SEP.effort = this.EffortResult
+        this.SEP.time = this.TimeResult
+        this.SEP.staff = this.StaffResult
+        this.SEP.mode = this.selectedMode.type
+        this.SEP.model = this.selectedModel.type
+        this.SEP.sloc = this.selectedProject.sloc
+
+
+        this._planService.setSep(this.SEP).subscribe(() => {
+            this.route.navigate(['app/estimation'])
+        })
+    }
+
+    SaveNew() {
+        const dialogRef = this.dialog.open(SaveNewEstimationComponent, {
+            width: '550px',
+            data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result)
+            this.SEP = new SepInput()
+            this.SEP.planID = result.planID
+            this.SEP.effort = this.EffortResult
+            this.SEP.time = this.TimeResult
+            this.SEP.staff = this.StaffResult
+            this.SEP.mode = this.selectedMode.type
+            this.SEP.model = this.selectedModel.type
+            this.SEP.sloc = this.selectedProject.sloc
+
+
+            this._planService.setSep(this.SEP).subscribe(() => {
+                this.route.navigate(['app/estimation'])
+            })
+
+        });
     }
 }

@@ -7,8 +7,12 @@ namespace SoftwareEstimation.Plans
 {
     public class UCPoint: CreationAuditedEntity
     {
-        public virtual string PlanId { get; set; }
-        
+        public virtual Guid PlanId { get; set; }
+        public virtual float UCP { get; set; }
+        public virtual float UUCP { get; set; }
+        public virtual float TF { get; set; }
+        public virtual float EF { get; set; }
+
         public virtual int u0 { get; set; }
         public virtual int u1 { get; set; }
         public virtual int u2 { get; set; }
@@ -44,7 +48,7 @@ namespace SoftwareEstimation.Plans
 
         }
 
-        public static UCPoint SetValue(string planID,int[] uucp, int[] tf, int[] ef)
+        public static UCPoint SetValue(Guid planID,int[] uucp, int[] tf, int[] ef,float ucpR, float uucpR, float tfR , float efR)
         {
             var @ucp = new UCPoint {
                 PlanId = planID,
@@ -78,7 +82,11 @@ namespace SoftwareEstimation.Plans
                 e5 = ef[5],
                 e6 = ef[6],
                 e7 = ef[7],
-                
+                UCP = ucpR,
+                UUCP = uucpR,
+                TF =tfR,
+                EF =efR
+
             };
             return @ucp;
         }

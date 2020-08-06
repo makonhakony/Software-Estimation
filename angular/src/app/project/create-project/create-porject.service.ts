@@ -27,57 +27,57 @@ export class CreateProjectService {
     };
 
     a: any
-    Clonegit(username: string, title: string, link: string) {
-        // var params= [{"username": username,
-        //             "name": title,
-        //             "url": link}]
-        let body = new HttpParams()
-            .set('username', username)
-            .set('name', title)
-            .set('url', link)
+    // Clonegit(username: string, title: string, link: string) {
+    //     // var params= [{"username": username,
+    //     //             "name": title,
+    //     //             "url": link}]
+    //     let body = new HttpParams()
+    //         .set('username', username)
+    //         .set('name', title)
+    //         .set('url', link)
 
-        console.log("clonegit body: ", body)
-        // let _headers = new HttpHeaders({
-        //     'Content-Type': 'application/x-www-form-urlencoded',
-        //     'Access-Control-Allow-Origin': '*',
-        //     'Access-Control-Allow-Credentials': 'true'
-        // })
+    //     console.log("clonegit body: ", body)
+    //     // let _headers = new HttpHeaders({
+    //     //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     //     'Access-Control-Allow-Origin': '*',
+    //     //     'Access-Control-Allow-Credentials': 'true'
+    //     // })
 
-        // let options = {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*',
-        //         'Access-Control-Allow-Credentials': 'true'
-        //     }
-        // };
+    //     // let options = {
+    //     //     headers: {
+    //     //         'Content-Type': 'application/json',
+    //     //         'Access-Control-Allow-Origin': '*',
+    //     //         'Access-Control-Allow-Credentials': 'true'
+    //     //     }
+    //     // };
 
-        this.a = this.http.post<any>("http://hcthanh.ddns.net:3000/api/CloneGit",
-            body
+    //     this.a = this.http.post<any>("http://hcthanh.ddns.net:3000/api/CloneGit",
+    //         body
 
-        )
-        .pipe(
-            catchError(this.handleError),
-        )
-        console.log("test: ", this.a)
-        return this.a
-    }
+    //     )
+    //     .pipe(
+    //         catchError(this.handleError),
+    //     )
+    //     console.log("test: ", this.a)
+    //     return this.a
+    // }
 
-    UploadProject(username: string, title: string, file: File) {
-        let formData = new FormData()
-        formData.append("username",username)
-        formData.append("name",title)
-        formData.append("file",file)
+    // UploadProject(username: string, title: string, file: File) {
+    //     let formData = new FormData()
+    //     formData.append("username",username)
+    //     formData.append("name",title)
+    //     formData.append("file",file)
 
 
-        this.a = this.http.post<any>("http://hcthanh.ddns.net:3000/api/UploadProject",
-            formData
+    //     this.a = this.http.post<any>("http://hcthanh.ddns.net:3000/api/UploadProject",
+    //         formData
 
-        ).pipe(
-            catchError(this.handleError),
-        )
-        console.log("test: ", this.a)
-        return this.a
-    }
+    //     ).pipe(
+    //         catchError(this.handleError),
+    //     )
+    //     console.log("test: ", this.a)
+    //     return this.a
+    // }
 
     
     GetSloc(username: string, title: string){

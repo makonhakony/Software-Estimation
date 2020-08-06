@@ -1,0 +1,50 @@
+<!--component html goes here -->
+<!--component html goes here -->
+
+<h1 mat-dialog-title>Choose an estimation option </h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Select Model</mat-label>
+        <mat-select [(ngModel)]="SelectedValue" name='model'>
+            <mat-option *ngFor="let option of options" [value]='option'>
+                {{option.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngIf='SelectedValue.value == "SEP"'>
+        <mat-form-field>
+            <mat-label>Choose type of Sloc input</mat-label>
+            <mat-select [(ngModel)]="SelectedValue2" name='model'>
+                <mat-option value='custom'> Custom Sloc value </mat-option>
+                <mat-option value='archived'> Choose existed project cloned </mat-option>
+            </mat-select>
+
+        </mat-form-field>
+    </div>
+    <div *ngIf='SelectedValue2=="custom"'>
+        <mat-form-field>
+            <mat-label>Input your customed Sloc Value</mat-label>
+            <input matInput type="number" [(ngModel)]="SlocValue">
+        </mat-form-field>
+    </div>
+    <div *ngIf='SelectedValue2=="archived"'>
+        <mat-form-field>
+            <mat-label>Choose cloned project</mat-label>
+            <mat-select [(ngModel)]="SelectedProject" name='sloc'>
+                <mat-option *ngFor="let project of projects" [value]='project'>
+                    {{project.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p>Your estimated sloc: {{SelectedProject.sloc}}</p>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <div *ngIf='SelectedValue.point ==0 ; else UpdateCost'>
+        <button mat-raised-button color="warn" cdkFocusInitial (click)="GotoEstimation()">Go to calculation</button>
+    </div>
+    <ng-template #UpdateCost>
+        <button mat-raised-button color="primary" cdkFocusInitial (click)="GotoEstimation()">Update This</button>
+    </ng-template>
+</div>

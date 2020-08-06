@@ -1,0 +1,19 @@
+<!--component html goes here -->
+
+<h1 mat-dialog-title>Create your new plan </h1>
+<div mat-dialog-content>
+    <p>Give me some information</p>
+    <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="data.title" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="data.description"></textarea>
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button color="warn" cdkFocusInitial (click)="savePlan()">Create Plan</button>
+</div>

@@ -14,6 +14,7 @@ namespace SoftwareEstimation.Projects
         Task Delete(EntityDto<Guid> input);
         long GetUserID();
         void ModifySlocValue(string Id, int Sloc);
+        void ModifySizeValue(string Id, float Size);
         Task<ListResultDto<ProjectSlocDetail>> GetListSlocDetail();
     }
 }

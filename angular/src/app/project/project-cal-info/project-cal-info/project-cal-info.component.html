@@ -16,13 +16,16 @@
         </div>
         <div class="body">
             
-            <div *ngFor="let Block of BlockOfResult">
+            <div *ngFor="let Block of BlockOfResult" style="text-align: center; width: 100%;
+            overflow-x: auto;
+            white-space: nowrap">
                 
                 <tr *ngFor="let Line of Block">
-                    <td *ngFor="let obj of Line">{{obj}}</td>
+                    <td *ngFor="let obj of Line" style="border: 1px solid black;">{{obj}}</td>
                 </tr>
                 <br>
-            </div>
+            
+        </div>
             
         </div>
 

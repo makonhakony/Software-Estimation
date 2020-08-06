@@ -2,6 +2,9 @@
 <div class="row clearfix" [@routerTransition]>
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="align-items: flex-start;">
     <div class="block-header row">
+      <div class='col-md-6 text-left'>
+        <h3> Project List</h3>
+      </div>
       <div class="col-md-6 text-right">
         <button type="button" data-toggle="modal"
           class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="createProject()">
@@ -26,34 +29,30 @@
                     <h2 class="project-title">
                       {{proj.title}}
                     </h2>
-                    <mat-checkbox style="position: absolute;
+                    
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-checkbox style="position: absolute;
                     left: 80px;
                     opacity: 100;" *ngIf="compare" (change)="OnCheck(proj.title)"></mat-checkbox>
-                  </div>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6">
                   <div class="body">
-                    <small class="project-description">{{proj.description}}</small>
-                    <h4>Your link: {{proj.linkURL}}</h4>
-                    <div class="col-md-6 text-right">
-
-                      <button type="button" class="btn bg-pink waves-effect btn-sm"
-                        [routerLink]="['/app/project', proj.id]">
-                        <span>Details</span>
-                        <i class="fa fa-arrow-circle-right"></i>
-                      </button>
-                    </div>
-                    <div class="col-md-6 text-center">
+                    <!-- <small class="project-description">{{proj.description}}</small> -->
+                    <p>Your link:<b> {{proj.linkURL}} </b></p>
+                    
+                    <!-- <div class="col-md-6 text-center"> -->
                       <!-- <section *ngIf="projectload.data | async as user">
                         <h3>{{projectload.name}}</h3>
                         <p>Height: {{projectload.height}}</p>
                         <p>Mass: {{projectload.mass}}</p>
                         <p>Homeworld: {{projectload.homeworld}}</p>
                       </section> -->
-                      <div *ngIf = "proj.isReady; else CalculatingState">
+                      <!-- <div *ngIf = "proj.isReady; else CalculatingState">
                         <span>Calculated!</span>
                       </div>
                       <ng-template #CalculatingState>
@@ -71,16 +70,27 @@
                       </ng-template>
                       
                       
-                    </div>
+                    </div> -->
                   </div>
                 </div>
-                
+                <div class="col-md-4 text-center m-r--1">
+                  <div><p>Size: {{proj.size}}</p></div>        
+                  <div><p>Sloc Estimate: {{proj.sloc}}</p></div>       
+                </div>
+                <div class="col-md-2 text-center m-r--1">
+
+                  <button type="button" class="btn bg-pink waves-effect btn-sm"
+                    [routerLink]="['/app/project', proj.id]">
+                    <span>Details</span>
+                    <i class="fa fa-arrow-circle-right"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </mat-tab>
         <!-- PLAN TAB -->
-        <mat-tab label="My Future Plans">
+        <!-- <mat-tab label="My Future Plans">
           <div class="col-md-4" *ngFor="let plan of planList; let i= index">
 
             <div class="card">
@@ -123,7 +133,7 @@
               </mat-accordion>
             </div>
           </div>
-        </mat-tab>
+        </mat-tab> -->
 
       </mat-tab-group>
 

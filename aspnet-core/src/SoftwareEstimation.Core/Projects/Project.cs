@@ -11,12 +11,13 @@ namespace SoftwareEstimation.Projects
     {
         
         public virtual string Title { get; protected set; }
-        public virtual string Description { get; protected set; }
+        
         public virtual string Type { get; protected set; }
         public virtual string LinkURL { get; protected set; }
         public virtual int Sloc { get; protected set; }
+        public virtual float Size { get; protected set; }
         public virtual bool isReady { get; protected set; }
-        
+        public virtual bool isCloned { get; protected set; }
 
         public const int MaxTitleLength = 100;
         public const int MaxDescriptionLength = 2000;
@@ -25,13 +26,12 @@ namespace SoftwareEstimation.Projects
 
         }
 
-        public static Project CreateWithLink ( string title, string description, string type, string linkURL)
+        public static Project CreateWithLink ( string title, string type, string linkURL)
         {
             var @project = new Project
             {
                 
                 Title = title,
-                Description = description,
                 Type = type,
                 LinkURL = linkURL
 

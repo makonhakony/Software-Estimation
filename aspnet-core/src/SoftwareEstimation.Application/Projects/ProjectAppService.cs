@@ -33,7 +33,7 @@ namespace SoftwareEstimation.Projects
         public async Task<Guid> CreateWithLink(ProjectInput Projects)
         {
             
-            var @project = Project.CreateWithLink( Projects.Title, Projects.Description, Projects.Type, Projects.LinkURL);
+            var @project = Project.CreateWithLink( Projects.Title, Projects.Type, Projects.LinkURL);
             await _projectRespository.InsertAsync(@project);
             return project.Id;
         }
@@ -59,7 +59,7 @@ namespace SoftwareEstimation.Projects
 
             if (@project == null)
             {
-                throw new UserFriendlyException("Could not found the event, maybe it's deleted.");
+                throw new UserFriendlyException("Could not found the project, maybe it's deleted.");
             }
 
             return @project.MapTo<ProjectDetailOutput>();
@@ -102,6 +102,31 @@ namespace SoftwareEstimation.Projects
                     // Execute the Query
                     cmd.ExecuteNonQuery();
                 }
+                conn.Close();
+            }
+        }
+
+        public void ModifySizeValue(string Id, float Size)
+        {
+            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
+            //Create SQL conection to your database here
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // Open your connection
+                conn.Open();
+                // Create the Command and Parameter objects.
+                // Here change the columnames and table names as per you table
+                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.AppProjects SET [Size]=@Size, [isCloned]=1 WHERE [Id]=@ProjectId", conn))
+                {
+                    // Provide the query string with a parameter placeholder.
+                    //Change the control name as per your design
+                    cmd.Parameters.AddWithValue("@projectId", Id);
+                    cmd.Parameters.AddWithValue("@Size", Size);
+
+                    // Execute the Query
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
             }
         }
 

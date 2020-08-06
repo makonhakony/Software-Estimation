@@ -61,8 +61,8 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
         // this.event.date = moment($('#datetime').val());
         // console.log(this.event.date)
         if (this.data.type == "Link") {
-            this.internalService.Clonegit(this.userID.toString(), this.data.title, this.data.linkURL).subscribe((result: any) => {
-                console.log("after post:", result)
+            // this.internalService.Clonegit(this.userID.toString(), this.data.title, this.data.linkURL).subscribe((result: any) => {
+            //     console.log("after post:", result)
                 this._projectService.createWithLink(this.data).subscribe((result) => {
                     this.projectId =result
                     console.log("this data: ", result)
@@ -77,13 +77,13 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
                 });
 
                 
-            })
+            // })
 
         }
         else if (this.data.type == "Input file") {
             this.data.linkURL = this.fileToUpload.name
-            this.internalService.UploadProject(this.userID.toString(), this.data.title, this.fileToUpload).subscribe((result: any) => {
-                console.log("after post:", result)
+            // this.internalService.UploadProject(this.userID.toString(), this.data.title, this.fileToUpload).subscribe((result: any) => {
+            //     console.log("after post:", result)
                 this._projectService.createWithLink(this.data) //actually this is file
                     .subscribe(async () => {
                         console.log("this data: ", this.data)
@@ -100,7 +100,7 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
                     });
                    //START UCC HERE
                 
-            })
+            // })
 
         }
 
@@ -112,16 +112,16 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
     }
 
     close(): void {
-        this.dialogRef.close({data:this.data, projectId:this.projectId})
+        this.dialogRef.close({data:this.data, projectId:this.projectId, FileUpload:this.fileToUpload})
     }
 
     //-------------------PLAN-------------------------
-    savePlan(){
-        this._planService.createPlans(this.data2).subscribe(async () => {
-            console.log("this data: ", this.data2)
-            this.notify.info(this.l('SavedSuccessfully'));
-            this.close();
+//     savePlan(){
+//         this._planService.createPlans(this.data2).subscribe(async () => {
+//             console.log("this data: ", this.data2)
+//             this.notify.info(this.l('SavedSuccessfully'));
+//             this.close();
 
-        });
-    }
+//         });
+//     }
 }

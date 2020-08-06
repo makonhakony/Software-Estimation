@@ -10,7 +10,8 @@ namespace SoftwareEstimation.Projects.Dto
     public class ProjectListDto: FullAuditedEntityDto<Guid>
     {
         public string Title { get; set; }
-        public string Description { get; set; }
+        public int Size { get; set; }
+        public int Sloc { get; set; }
         public string Type { get; set; }
         public string LinkURL { get; set; }
         public bool isReady { get; set; }

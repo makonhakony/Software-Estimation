@@ -34,7 +34,7 @@ export class ProjectCalInfoComponent extends AppComponentBase implements OnInit
             this.userID = params['userId'];
             this.projectID = params['projectId'];
             //debugger
-            this._internalService.ShowUCC(this.userID, this.Title).subscribe((result: any) => {
+            this._internalService.ShowUCC(this.userID, this.projectID).subscribe((result: any) => {
                 console.log(result)
                 this.result = result
                 

@@ -1,0 +1,100 @@
+<!--component html goes here -->
+<div class="row clearfix" [@routerTransition]>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="align-items: flex-start;">
+    <div class="block-header row">
+      <div class='col-md-6 text-left'>
+        <h3>Estimation List</h3>
+      </div>
+      <div class="col-md-6 text-right">
+        <button type="button" data-toggle="modal"
+          class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="createProject()">
+          <i class="material-icons">add</i>
+        </button>
+
+      </div>
+
+    </div>
+    <div class="row">
+      <mat-tab-group mat-align-tabs="center">
+
+        <!-- PLAN TAB -->
+        <mat-tab label="All Estimation">
+          <div class="col-md-4" *ngFor="let plan of planList; let i= index">
+
+            <div class="card">
+              <mat-accordion>
+                <mat-expansion-panel hideToggle (opened)="panelOpenState1[i] = true"
+                  (closed)="panelOpenState1[i] = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{plan.title}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <i>{{panelOpenState1[i]? '': plan.description}}</i>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <pre>{{plan.description}}</pre>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState2[i] = true" (closed)="panelOpenState2[i] = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Estimation Result
+                    </mat-panel-title>
+
+                    <div *ngIf="panelOpenState2[i]">
+                      <button>
+                        <i class="fa fa-clone" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </mat-expansion-panel-header>
+
+                  <!-- 2ng box start -->
+                  <div class='information-box'>
+                    <div *ngIf='plan.ucpLatest'>
+                      <p>Use Case Point: {{plan.ucpLatest.ucp.toFixed(1)}} point(s)</p>
+                    </div>
+                    <!-- <div *ngIf='plan.fPoint !== 0 '>
+                      <p>Function Point: {{plan.fPoint}}</p>
+                    </div> -->
+                    <div *ngIf='plan.sepLatest '>
+                      <p>Effort point : {{plan.sepLatest.effort.toFixed(1)}} point(s)</p>
+                      <p>Time required: {{plan.sepLatest.time.toFixed(1)}} month(s)</p>
+                      <p>Staff required: {{plan.sepLatest.staff.toFixed(1)}} people</p>
+                    </div>
+                  </div>
+                  <div *ngIf='plan.ucPoint == 0 && plan.fPoint ==0 && plan.sePoint ==0; else DetailButton'>
+                    <p>No recording result</p>
+                  </div>
+
+                  <ng-template #DetailButton>
+                    <div style='margin-top: 10px;'>
+                      <button mat-raised-button color='primary' (click)="GotoDetail(plan.id)">Detail</button>
+                      <span *ngIf='plan.ucPoint == 0 || plan.fPoint ==0 || plan.sePoint ==0'>
+                        <button mat-raised-button color='accent' (click)="OpenModel(plan)">Estimate
+                          this</button>
+                      </span>
+                      <button mat-raised-button color='warn' (click)="DeletePlan(plan.id)">Delete</button>
+                    </div>
+                  </ng-template>
+
+
+
+                  <!-- 2ng box end -->
+
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+
+    </div>
+    <!-- <div style="position: sticky;
+    top: 0;">
+        <button (click)="Compare2Projects()">Compare!!</button>
+      </div> -->
+  </div>
+
+
+</div>
