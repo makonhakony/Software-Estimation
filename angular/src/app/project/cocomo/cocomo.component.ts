@@ -6,6 +6,7 @@ import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { SaveNewEstimationComponent } from '@app/estimation/save-new-estimation/save-new-estimation.component';
+import { HelperModalComponent } from '@app/estimation/helper-modal/helper-modal.component';
 
 export interface SelectedValue {
     value: string
@@ -122,21 +123,21 @@ export class CocomoComponent implements OnInit {
     ]
 
     Attribute: any[] = [
-        { name: 'Required Reliability', option: this.option },
-        { name: 'Database Size', option: this.option },
-        { name: 'Product Complexity', option: this.option },
-        { name: 'Execution Time Constraint', option: this.option },
-        { name: 'Main Storage Constraint', option: this.option },
-        { name: 'Platform Volatility', option: this.option },
-        { name: 'Computer Turnaround Time', option: this.option },
-        { name: 'Analyst Capability', option: this.option },
-        { name: 'Applications Experience', option: this.option },
-        { name: 'Programmer Capability', option: this.option },
-        { name: 'Platform Experience', option: this.option },
-        { name: 'Programming Language and Tool Experience', option: this.option },
-        { name: 'Moden Programming Practices', option: this.option },
-        { name: 'Use of Software Tool', option: this.option },
-        { name: 'Require Development Schedule', option: this.option },
+        { name: 'Required Reliability', option: this.option, description:'This reflects the extent that a software product can be expectedto perform its intended funtions satisfactorily. \n+Verylow: The effect of a software failureis simply the inconvenience incumbent on the developers to fix the fault. \n+Low: The effect of a software failure is a low leve, easiy recoverable loss to users. \n +Normal: the effect of a software failure is a moderate loss to users, but a situatuation for hich one can recover without extreme penalty. \n +High: the effect of a software failure can be a mojor financial loss or a massive human incovenience.' },
+        { name: 'Database Size', option: this.option, description:'This is the relative database size to be developed whre size refers to the amount of data to be assembled and stored in non-main storage: D/P = (Dtbase size in bytes or characters) / (Program size in SLOC) \n Very low: not determine \n +Low: D/P <10 \n Normal: 10<=D/P<=100 \n +High: 100<=D/P<=1000 \n +Very high: D/P >1000' },
+        { name: 'Product Complexity', option: this.option, description:'Complexity is assessed as the subjective average of tour types of control functions: cintrol, computation, device-dependent or data management operations. \n +very Low: straight-line code with a few none-nested structured programming opertions: DOs, CASEs, IF-THEN-ELSEs. Simpe predicates. \n +Low: Straight forward nesting of strucured programing operators. Mosetly simple predicates. \n+Noral: Mostly simple nesting. Some intermodule control. Decision table. \n+High: Highly nested structured programming operators with many compound predicates. Queue and stack control. Considerable intermodule control. \n +Very high: Reentrant and recursive coding. Fixed-priority interupt handing.' },
+        { name: 'Execution Time Constraint', option: this.option, descrition:'This reflects the degree of execution time constraint imposed upon a software product. the rating is expressed in term of available execution time expected to be used. \n+Very low: No rating \n+Low: No rating.\nNormal: <=50% use of available execution time \n+High: 70% use of available execution time. \n+Very high: 85% use of available execution time.' },
+        { name: 'Main Storage Constraint', option: this.option, description:'This refects the percentage of main storage expected to be used by the software product and any subsystems consuming the main storage resources. ain storage refers to direct random access storage such as disks, tapes, or optical drives.\n+Very low: No rating.\n+Low: No rating. \n+Normal: <=50% use of available storage.\n+High: 70% use of available storage.\n+Very high: 85% use of available storage.' },
+        { name: 'Platform Volatility', option: this.option, description:'This reflects the level of volatility of the virtual machine underlying the software product to be developed. The virtual machine is defined as the complex of hardware and software. The product will call upon to accomplish its tasks. \n+Very low: No rating. \n +Low: Major change every 12 months. \n +Normal: Mojor change every 6 months. \n+High: Major change every 2 months. \n+ Very high: No rating' },
+        { name: 'Computer Turnaround Time', option: this.option, description: 'This reflects the level of computer response time experienced by the project team deveping the software product. The response time is the average time from then the developers hands. \n+Very low: No rating. \n+Low: Interactive. \nNormal: average turnaround time < 4 hours. \+High: 4-12 Hours.\n+Very high: >12 hours.' },
+        { name: 'Analyst Capability', option: this.option , description: 'Analysts participate in the development and validation of requirements and preliminar design specifications. They consults on detailed design and code activities. They are heavily involved in intergration and test. \n Very low:'},
+        { name: 'Applications Experience', option: this.option, description: '' },
+        { name: 'Programmer Capability', option: this.option, description: '' },
+        { name: 'Platform Experience', option: this.option, description: '' },
+        { name: 'Programming Language and Tool Experience', option: this.option, description: '' },
+        { name: 'Moden Programming Practices', option: this.option, description: '' },
+        { name: 'Use of Software Tool', option: this.option, description: '' },
+        { name: 'Require Development Schedule', option: this.option, description: '' },
     ]
 
     disableWhenCal: boolean = false
@@ -145,7 +146,7 @@ export class CocomoComponent implements OnInit {
         this.internalService.BasicCocomo(this.selectedMode.type, this.selectedProject.sloc).subscribe((result) => {
             this.EffortResult = result.effort.toFixed(1)
             this.TimeResult = result.time.toFixed(1)
-            this.StaffResult = result.staff.toFixed(1)
+            this.StaffResult = result.staff
             console.log(result)
         })
     }
@@ -154,7 +155,7 @@ export class CocomoComponent implements OnInit {
         this.internalService.InterCocomo(this.selectedMode.type, this.selectedOption, this.selectedProject.sloc).subscribe((result) => {
             this.EffortResult = result.effort.toFixed(1)
             this.TimeResult = result.time.toFixed(1)
-            this.StaffResult = result.staff.toFixed(1)
+            this.StaffResult = result.staff
             console.log(result)
         })
     }
@@ -184,14 +185,14 @@ export class CocomoComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log(result)
             this.SEP = new SepInput()
-            this.SEP.planID = result.planID
+            this.SEP.planID = result.planId
             this.SEP.effort = this.EffortResult
             this.SEP.time = this.TimeResult
             this.SEP.staff = this.StaffResult
             this.SEP.mode = this.selectedMode.type
             this.SEP.model = this.selectedModel.type
             this.SEP.sloc = this.selectedProject.sloc
-
+            console.log(this.SEP)
 
             this._planService.setSep(this.SEP).subscribe(() => {
                 this.route.navigate(['app/estimation'])
@@ -199,4 +200,21 @@ export class CocomoComponent implements OnInit {
 
         });
     }
+    Refresh(){
+        window.location.reload();
+    }
+    
+    OpenHelper(i:number){
+        const dialogRef = this.dialog.open(HelperModalComponent, {
+          width: '550px',
+          data: { title: this.Attribute[i].name, description: this.Attribute[i].description }
+      });
+      
+      dialogRef.afterClosed().subscribe(async result => {
+          
+          console.log('after close:', result)
+    
+    
+      })
+      }
 }

@@ -31,6 +31,7 @@
     <Compile Remove="Migrations\20200728031424_test.cs" />
     <Compile Remove="Migrations\20200728032258_test2.cs" />
     <Compile Remove="Migrations\20200728032549_Initial.cs" />
+    <Compile Remove="Migrations\20200816155141_add-fk.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />

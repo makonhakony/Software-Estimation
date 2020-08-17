@@ -1,5 +1,7 @@
 import { Component, SkipSelf, Input, OnInit, SimpleChanges, AfterViewInit, ChangeDetectorRef, AfterViewChecked, AfterContentInit } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
+import { HelperModalComponent } from '@app/estimation/helper-modal/helper-modal.component';
+import { MatDialog } from '@angular/material';
 export interface RV {
     value: number
     name: string
@@ -17,7 +19,8 @@ export interface RV {
 })
 export class EnvironmentalComplexityComponent implements OnInit {
     constructor(
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private dialog : MatDialog
     ) { 
         
     }
@@ -96,5 +99,18 @@ export class EnvironmentalComplexityComponent implements OnInit {
         // this.selectedOption[i] = this.selectedValue[0]
         // console.log("select: ", this.selectedOption[i])
 
+    }
+    OpenHelper(){
+        const dialogRef = this.dialog.open(HelperModalComponent, {
+          width: '550px',
+          data: { title: 'EF', description: 'ECF is the Environment Complexity Factor for a project. This estimates factors will not be implemented in a project, but severely impact it. ECF deals with the project team and their ability to complete the project. Each factor needs to be rated on a scale of 0 (irrelevant) to 5 (essential).' }
+      });
+      
+      dialogRef.afterClosed().subscribe(async result => {
+          
+          console.log('after close:', result)
+    
+    
+      })
     }
 }

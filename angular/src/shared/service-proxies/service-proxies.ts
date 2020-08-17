@@ -637,6 +637,112 @@ export class PlanServiceProxy {
         }
         return _observableOf<SepOutput>(<any>null);
     }
+
+    /**
+     * @param input (optional) 
+     * @return Success
+     */
+    setFp(input: FpInput | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/SetFp";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSetFp(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSetFp(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processSetFp(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param planID (optional) 
+     * @return Success
+     */
+    getOutputFp(planID: string | null | undefined): Observable<FpOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetOutputFp?";
+        if (planID !== undefined)
+            url_ += "planID=" + encodeURIComponent("" + planID) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetOutputFp(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetOutputFp(<any>response_);
+                } catch (e) {
+                    return <Observable<FpOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<FpOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetOutputFp(response: HttpResponseBase): Observable<FpOutput> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FpOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<FpOutput>(<any>null);
+    }
 }
 
 @Injectable()
@@ -2896,9 +3002,9 @@ export interface IListResultDtoOfPlanListDto {
 export class PlanListDto implements IPlanListDto {
     title: string | undefined;
     description: string | undefined;
-    fPoint: number | undefined;
     ucpLatest: UCPoint | undefined;
     sepLatest: SEPoint | undefined;
+    fpLatest: FPoint | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -2921,9 +3027,9 @@ export class PlanListDto implements IPlanListDto {
         if (_data) {
             this.title = _data["title"];
             this.description = _data["description"];
-            this.fPoint = _data["fPoint"];
             this.ucpLatest = _data["ucpLatest"] ? UCPoint.fromJS(_data["ucpLatest"]) : <any>undefined;
             this.sepLatest = _data["sepLatest"] ? SEPoint.fromJS(_data["sepLatest"]) : <any>undefined;
+            this.fpLatest = _data["fpLatest"] ? FPoint.fromJS(_data["fpLatest"]) : <any>undefined;
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
@@ -2946,9 +3052,9 @@ export class PlanListDto implements IPlanListDto {
         data = typeof data === 'object' ? data : {};
         data["title"] = this.title;
         data["description"] = this.description;
-        data["fPoint"] = this.fPoint;
         data["ucpLatest"] = this.ucpLatest ? this.ucpLatest.toJSON() : <any>undefined;
         data["sepLatest"] = this.sepLatest ? this.sepLatest.toJSON() : <any>undefined;
+        data["fpLatest"] = this.fpLatest ? this.fpLatest.toJSON() : <any>undefined;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -2971,9 +3077,9 @@ export class PlanListDto implements IPlanListDto {
 export interface IPlanListDto {
     title: string | undefined;
     description: string | undefined;
-    fPoint: number | undefined;
     ucpLatest: UCPoint | undefined;
     sepLatest: SEPoint | undefined;
+    fpLatest: FPoint | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -3242,10 +3348,194 @@ export interface ISEPoint {
     id: number | undefined;
 }
 
+export class FPoint implements IFPoint {
+    planId: string | undefined;
+    fp: number | undefined;
+    ufp: number | undefined;
+    caf: number | undefined;
+    u11: number | undefined;
+    u12: number | undefined;
+    u13: number | undefined;
+    u21: number | undefined;
+    u22: number | undefined;
+    u23: number | undefined;
+    u31: number | undefined;
+    u32: number | undefined;
+    u33: number | undefined;
+    u41: number | undefined;
+    u42: number | undefined;
+    u43: number | undefined;
+    u51: number | undefined;
+    u52: number | undefined;
+    u53: number | undefined;
+    c1: number | undefined;
+    c2: number | undefined;
+    c3: number | undefined;
+    c4: number | undefined;
+    c5: number | undefined;
+    c6: number | undefined;
+    c7: number | undefined;
+    c8: number | undefined;
+    c9: number | undefined;
+    c10: number | undefined;
+    c11: number | undefined;
+    c12: number | undefined;
+    c13: number | undefined;
+    c14: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IFPoint) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.planId = _data["planId"];
+            this.fp = _data["fp"];
+            this.ufp = _data["ufp"];
+            this.caf = _data["caf"];
+            this.u11 = _data["u11"];
+            this.u12 = _data["u12"];
+            this.u13 = _data["u13"];
+            this.u21 = _data["u21"];
+            this.u22 = _data["u22"];
+            this.u23 = _data["u23"];
+            this.u31 = _data["u31"];
+            this.u32 = _data["u32"];
+            this.u33 = _data["u33"];
+            this.u41 = _data["u41"];
+            this.u42 = _data["u42"];
+            this.u43 = _data["u43"];
+            this.u51 = _data["u51"];
+            this.u52 = _data["u52"];
+            this.u53 = _data["u53"];
+            this.c1 = _data["c1"];
+            this.c2 = _data["c2"];
+            this.c3 = _data["c3"];
+            this.c4 = _data["c4"];
+            this.c5 = _data["c5"];
+            this.c6 = _data["c6"];
+            this.c7 = _data["c7"];
+            this.c8 = _data["c8"];
+            this.c9 = _data["c9"];
+            this.c10 = _data["c10"];
+            this.c11 = _data["c11"];
+            this.c12 = _data["c12"];
+            this.c13 = _data["c13"];
+            this.c14 = _data["c14"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): FPoint {
+        data = typeof data === 'object' ? data : {};
+        let result = new FPoint();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["planId"] = this.planId;
+        data["fp"] = this.fp;
+        data["ufp"] = this.ufp;
+        data["caf"] = this.caf;
+        data["u11"] = this.u11;
+        data["u12"] = this.u12;
+        data["u13"] = this.u13;
+        data["u21"] = this.u21;
+        data["u22"] = this.u22;
+        data["u23"] = this.u23;
+        data["u31"] = this.u31;
+        data["u32"] = this.u32;
+        data["u33"] = this.u33;
+        data["u41"] = this.u41;
+        data["u42"] = this.u42;
+        data["u43"] = this.u43;
+        data["u51"] = this.u51;
+        data["u52"] = this.u52;
+        data["u53"] = this.u53;
+        data["c1"] = this.c1;
+        data["c2"] = this.c2;
+        data["c3"] = this.c3;
+        data["c4"] = this.c4;
+        data["c5"] = this.c5;
+        data["c6"] = this.c6;
+        data["c7"] = this.c7;
+        data["c8"] = this.c8;
+        data["c9"] = this.c9;
+        data["c10"] = this.c10;
+        data["c11"] = this.c11;
+        data["c12"] = this.c12;
+        data["c13"] = this.c13;
+        data["c14"] = this.c14;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): FPoint {
+        const json = this.toJSON();
+        let result = new FPoint();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFPoint {
+    planId: string | undefined;
+    fp: number | undefined;
+    ufp: number | undefined;
+    caf: number | undefined;
+    u11: number | undefined;
+    u12: number | undefined;
+    u13: number | undefined;
+    u21: number | undefined;
+    u22: number | undefined;
+    u23: number | undefined;
+    u31: number | undefined;
+    u32: number | undefined;
+    u33: number | undefined;
+    u41: number | undefined;
+    u42: number | undefined;
+    u43: number | undefined;
+    u51: number | undefined;
+    u52: number | undefined;
+    u53: number | undefined;
+    c1: number | undefined;
+    c2: number | undefined;
+    c3: number | undefined;
+    c4: number | undefined;
+    c5: number | undefined;
+    c6: number | undefined;
+    c7: number | undefined;
+    c8: number | undefined;
+    c9: number | undefined;
+    c10: number | undefined;
+    c11: number | undefined;
+    c12: number | undefined;
+    c13: number | undefined;
+    c14: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
 export class PlanDetailOutput implements IPlanDetailOutput {
     title: string | undefined;
     description: string | undefined;
     ucp: UCPoint[] | undefined;
+    fp: FPoint[] | undefined;
     sep: SEPoint[] | undefined;
 
     constructor(data?: IPlanDetailOutput) {
@@ -3265,6 +3555,11 @@ export class PlanDetailOutput implements IPlanDetailOutput {
                 this.ucp = [] as any;
                 for (let item of _data["ucp"])
                     this.ucp.push(UCPoint.fromJS(item));
+            }
+            if (Array.isArray(_data["fp"])) {
+                this.fp = [] as any;
+                for (let item of _data["fp"])
+                    this.fp.push(FPoint.fromJS(item));
             }
             if (Array.isArray(_data["sep"])) {
                 this.sep = [] as any;
@@ -3290,6 +3585,11 @@ export class PlanDetailOutput implements IPlanDetailOutput {
             for (let item of this.ucp)
                 data["ucp"].push(item.toJSON());
         }
+        if (Array.isArray(this.fp)) {
+            data["fp"] = [];
+            for (let item of this.fp)
+                data["fp"].push(item.toJSON());
+        }
         if (Array.isArray(this.sep)) {
             data["sep"] = [];
             for (let item of this.sep)
@@ -3310,6 +3610,7 @@ export interface IPlanDetailOutput {
     title: string | undefined;
     description: string | undefined;
     ucp: UCPoint[] | undefined;
+    fp: FPoint[] | undefined;
     sep: SEPoint[] | undefined;
 }
 
@@ -3640,6 +3941,164 @@ export interface ISepOutput {
     effort: number | undefined;
     time: number | undefined;
     staff: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+}
+
+export class FpInput implements IFpInput {
+    planID: string | undefined;
+    ufp: number[] | undefined;
+    caf: number[] | undefined;
+    ufpR: number | undefined;
+    cafR: number | undefined;
+    fpR: number | undefined;
+
+    constructor(data?: IFpInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.planID = _data["planID"];
+            if (Array.isArray(_data["ufp"])) {
+                this.ufp = [] as any;
+                for (let item of _data["ufp"])
+                    this.ufp.push(item);
+            }
+            if (Array.isArray(_data["caf"])) {
+                this.caf = [] as any;
+                for (let item of _data["caf"])
+                    this.caf.push(item);
+            }
+            this.ufpR = _data["ufpR"];
+            this.cafR = _data["cafR"];
+            this.fpR = _data["fpR"];
+        }
+    }
+
+    static fromJS(data: any): FpInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new FpInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["planID"] = this.planID;
+        if (Array.isArray(this.ufp)) {
+            data["ufp"] = [];
+            for (let item of this.ufp)
+                data["ufp"].push(item);
+        }
+        if (Array.isArray(this.caf)) {
+            data["caf"] = [];
+            for (let item of this.caf)
+                data["caf"].push(item);
+        }
+        data["ufpR"] = this.ufpR;
+        data["cafR"] = this.cafR;
+        data["fpR"] = this.fpR;
+        return data; 
+    }
+
+    clone(): FpInput {
+        const json = this.toJSON();
+        let result = new FpInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFpInput {
+    planID: string | undefined;
+    ufp: number[] | undefined;
+    caf: number[] | undefined;
+    ufpR: number | undefined;
+    cafR: number | undefined;
+    fpR: number | undefined;
+}
+
+export class FpOutput implements IFpOutput {
+    planID: string | undefined;
+    ufp: number[] | undefined;
+    caf: number[] | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IFpOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.planID = _data["planID"];
+            if (Array.isArray(_data["ufp"])) {
+                this.ufp = [] as any;
+                for (let item of _data["ufp"])
+                    this.ufp.push(item);
+            }
+            if (Array.isArray(_data["caf"])) {
+                this.caf = [] as any;
+                for (let item of _data["caf"])
+                    this.caf.push(item);
+            }
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): FpOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new FpOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["planID"] = this.planID;
+        if (Array.isArray(this.ufp)) {
+            data["ufp"] = [];
+            for (let item of this.ufp)
+                data["ufp"].push(item);
+        }
+        if (Array.isArray(this.caf)) {
+            data["caf"] = [];
+            for (let item of this.caf)
+                data["caf"].push(item);
+        }
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): FpOutput {
+        const json = this.toJSON();
+        let result = new FpOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFpOutput {
+    planID: string | undefined;
+    ufp: number[] | undefined;
+    caf: number[] | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;

@@ -11,6 +11,7 @@ namespace SoftwareEstimation.Plans.Dto
         public string title { get; set; }
         public string Description { get; set; }
         public IList<UCPoint> UCP { get; set; }
+        public IList<FPoint> FP { get; set; }
         public IList<SEPoint> SEP { get; set; }
 
     }

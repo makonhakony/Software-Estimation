@@ -17,6 +17,7 @@ import { TestRadioComponent } from './project/test-radio/test-radio.component';
 import { EstimationComponent } from './estimation/estimation.component';
 import { EstimationDetailComponent } from './estimation/estimation-detail/estimation-detail.component';
 import { CyclomaticComponent } from './cyclomatic/cyclomatic.component';
+import { FpComponent } from './fp/fp.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import { CyclomaticComponent } from './cyclomatic/cyclomatic.component';
                     { path: 'project/:projectId/detail/:userId/:projectTitle',component:ProjectCalInfoComponent},
                     { path: 'update-password', component: ChangePasswordComponent },
                     { path: 'ucp', component:  UcpComponent},
+                    { path: 'fp', component: FpComponent},
                     { path: 'SnEpoint', component:  CocomoComponent},
                     { path: 'estimation', component:  EstimationComponent},
                     { path: 'estimation/:estimationId',component: EstimationDetailComponent},

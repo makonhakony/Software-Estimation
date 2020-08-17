@@ -1,6 +1,8 @@
 import { Component, Input, SkipSelf, ViewChild, OnInit, Output, SimpleChanges, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { ControlContainer, FormBuilder } from '@angular/forms';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { HelperModalComponent } from '@app/estimation/helper-modal/helper-modal.component';
+import { MatDialogRef, MatDialog } from '@angular/material';
 export interface RV {
     value: number
     name: string
@@ -22,7 +24,8 @@ export interface RV {
 export class TechnicalComplexityComponent implements OnInit {
     constructor(
         private cdr: ChangeDetectorRef,
-        private fb :FormBuilder
+        private fb :FormBuilder,
+        private dialog: MatDialog
     ) { 
         //this.cdr.detach()
     }
@@ -110,5 +113,17 @@ export class TechnicalComplexityComponent implements OnInit {
 
     // }
 
+    OpenHelper(){
+        const dialogRef = this.dialog.open(HelperModalComponent, {
+          width: '550px',
+          data: { title: 'TF', description: 'TCF is the Technical Complexity Factor for a project that takes into consideration any technical requirements that will be implemented. Each of the 13 listed factors needs to be rated on a scale of 0 (irrelevant) to 5 (essential).' }
+      });
+      
+      dialogRef.afterClosed().subscribe(async result => {
+          
+          console.log('after close:', result)
     
+    
+      })
+    }
 }

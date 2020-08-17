@@ -1,6 +1,8 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using SoftwareEstimation.Projects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SoftwareEstimation.Plans
@@ -9,6 +11,10 @@ namespace SoftwareEstimation.Plans
     {
         //public virtual Plan Plan { get; set; }
         public virtual Guid PlanId { get; set; }
+
+        [ForeignKey("ProjectId")]
+        public virtual Project Projects { get; set; }
+        public virtual Guid ProjectId { get; set; }
 
         public virtual int Sloc { get; set; }
         public virtual int Mode { get; set; }

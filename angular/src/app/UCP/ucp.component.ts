@@ -6,12 +6,14 @@ import { PlanServiceProxy, UcpInput, PlanInput, UcpOutput } from '@shared/servic
 import { AppComponentBase } from '@shared/app-component-base';
 import { MatDialog } from '@angular/material';
 import { SaveNewEstimationComponent } from '@app/estimation/save-new-estimation/save-new-estimation.component';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
 
 @Component({
     moduleId: module.id,
     selector: 'ucp',
     templateUrl: 'ucp.component.html',
-    styleUrls: ['ucp.component.scss']
+    styleUrls: ['ucp.component.scss'],
+    animations: [appModuleAnimation()],
 })
 export class UcpComponent extends AppComponentBase implements OnInit {
     constructor(

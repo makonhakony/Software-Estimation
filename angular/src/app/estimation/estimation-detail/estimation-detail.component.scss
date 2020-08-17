@@ -1,1 +1,29 @@
 // component css goes here
+
+
+#header-strip ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    list-style-type: none;
+  }
+  
+  #header-strip li {
+   margin:0 2%;
+  }
+  
+  #header-strip li:nth-child(2) {
+    margin: auto;
+  }
+
+  #header-strip li:nth-child(3) {
+    margin: auto;
+  }
+  #header-strip li:nth-child(1) {
+    margin: auto;
+  }
+  #header-strip li:nth-child(4) {
+    margin: auto;
+  }

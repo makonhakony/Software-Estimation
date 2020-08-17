@@ -1,26 +1,38 @@
 <!--component html goes here -->
 
 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="40px">
-    <h5>Total Environmental Factor (EFactor)</h5>
-
+    <div class='header row'>
+        <div class='col-md-10'>
+            <h5>Total Environmental Factor (EFactor)</h5>
+        </div>
+        <div class='col-md-2 text-right' style='font-size: 150%; '>
+            <span (click)="OpenHelper()" style='cursor: pointer;'><i class="fa fa-question-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+    </div>
     <div *ngFor="let Factor2 of Factors; let m =index">
         <div [ngModelGroup]="m" #myModel="ngModelGroup">
             <input name='name' [(ngModel)]='Factor2.name' type='hidden' readonly>
             <input name='weight' [(ngModel)]='Factor2.weight' type='hidden' readonly>
+            <div class='card'>
+                <div class='header'>
+                    <h4>{{Factor2.name}}</h4>
+                </div>
+                <div class='body'>
+                    <mat-radio-group class="example-radio-group-2" required [(ngModel)]='selectedOption2[m]'
+                        [name]="'select2'+m">
+                        <mat-radio-button class="example-radio-button" *ngFor="let RV2 of Factor2.rv ;let n = index"
+                            [name]="'RV2'+((m*6)+n)" [value]="RV2.value" style='margin-right: 5%;'>
+                            {{RV2.name}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
 
-            <h5>{{Factor2.name}}</h5>
-
-            <mat-radio-group class="example-radio-group-2" required [(ngModel)]='selectedOption2[m]' [name]="'select2'+m">
-                <mat-radio-button class="example-radio-button" *ngFor="let RV2 of Factor2.rv ;let n = index"
-                    [name]="'RV2'+((m*6)+n)" [value]="RV2.value">
-                    {{RV2.name}}
-                </mat-radio-button>
-            </mat-radio-group>
-            
             <input name='rv' [(ngModel)]='selectedOption2[m]' type='hidden' readonly>
         </div>
     </div>
 
-    
+
 
 </div>

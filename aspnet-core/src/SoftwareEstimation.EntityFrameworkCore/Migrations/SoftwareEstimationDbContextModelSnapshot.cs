@@ -1084,6 +1084,89 @@ namespace SoftwareEstimation.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("SoftwareEstimation.Plans.FPoint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("CAF");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<float>("FP");
+
+                    b.Property<Guid>("PlanId");
+
+                    b.Property<float>("UFP");
+
+                    b.Property<int>("c1");
+
+                    b.Property<int>("c10");
+
+                    b.Property<int>("c11");
+
+                    b.Property<int>("c12");
+
+                    b.Property<int>("c13");
+
+                    b.Property<int>("c14");
+
+                    b.Property<int>("c2");
+
+                    b.Property<int>("c3");
+
+                    b.Property<int>("c4");
+
+                    b.Property<int>("c5");
+
+                    b.Property<int>("c6");
+
+                    b.Property<int>("c7");
+
+                    b.Property<int>("c8");
+
+                    b.Property<int>("c9");
+
+                    b.Property<int>("u11");
+
+                    b.Property<int>("u12");
+
+                    b.Property<int>("u13");
+
+                    b.Property<int>("u21");
+
+                    b.Property<int>("u22");
+
+                    b.Property<int>("u23");
+
+                    b.Property<int>("u31");
+
+                    b.Property<int>("u32");
+
+                    b.Property<int>("u33");
+
+                    b.Property<int>("u41");
+
+                    b.Property<int>("u42");
+
+                    b.Property<int>("u43");
+
+                    b.Property<int>("u51");
+
+                    b.Property<int>("u52");
+
+                    b.Property<int>("u53");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.ToTable("FPoints");
+                });
+
             modelBuilder.Entity("SoftwareEstimation.Plans.Plan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1099,7 +1182,7 @@ namespace SoftwareEstimation.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<float>("FPoint");
+                    b.Property<int?>("FpLatestId");
 
                     b.Property<bool>("IsDeleted");
 
@@ -1109,11 +1192,15 @@ namespace SoftwareEstimation.Migrations
 
                     b.Property<int?>("SepLatestId");
 
+                    b.Property<int>("TenantId");
+
                     b.Property<string>("Title");
 
                     b.Property<int?>("UcpLatestId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FpLatestId");
 
                     b.HasIndex("SepLatestId");
 
@@ -1140,6 +1227,8 @@ namespace SoftwareEstimation.Migrations
 
                     b.Property<Guid>("PlanId");
 
+                    b.Property<Guid>("ProjectId");
+
                     b.Property<int>("Sloc");
 
                     b.Property<int>("Staff");
@@ -1149,6 +1238,8 @@ namespace SoftwareEstimation.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PlanId");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("SEPoints");
                 });
@@ -1258,6 +1349,8 @@ namespace SoftwareEstimation.Migrations
                     b.Property<float>("Size");
 
                     b.Property<int>("Sloc");
+
+                    b.Property<int>("TenantId");
 
                     b.Property<string>("Title");
 
@@ -1441,8 +1534,20 @@ namespace SoftwareEstimation.Migrations
                         .HasForeignKey("LastModifierUserId");
                 });
 
+            modelBuilder.Entity("SoftwareEstimation.Plans.FPoint", b =>
+                {
+                    b.HasOne("SoftwareEstimation.Plans.Plan")
+                        .WithMany("FP")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SoftwareEstimation.Plans.Plan", b =>
                 {
+                    b.HasOne("SoftwareEstimation.Plans.FPoint", "FpLatest")
+                        .WithMany()
+                        .HasForeignKey("FpLatestId");
+
                     b.HasOne("SoftwareEstimation.Plans.SEPoint", "SepLatest")
                         .WithMany()
                         .HasForeignKey("SepLatestId");
@@ -1457,6 +1562,11 @@ namespace SoftwareEstimation.Migrations
                     b.HasOne("SoftwareEstimation.Plans.Plan")
                         .WithMany("SEP")
                         .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SoftwareEstimation.Projects.Project", "Projects")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

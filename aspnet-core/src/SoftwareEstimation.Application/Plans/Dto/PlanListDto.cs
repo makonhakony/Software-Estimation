@@ -12,9 +12,9 @@ namespace SoftwareEstimation.Plans.Dto
         public string Title { get; set; }
         public string Description { get; set; }
         
-        public float FPoint { get; set; }
         public UCPoint UcpLatest { get; set; }
         public SEPoint SepLatest { get; set; }
+        public FPoint FpLatest { get; set; }
 
     }
 }

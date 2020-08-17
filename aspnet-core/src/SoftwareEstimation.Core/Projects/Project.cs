@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,9 +8,9 @@ using System.Text;
 namespace SoftwareEstimation.Projects
 {
     [Table("AppProjects")]
-    public class Project : FullAuditedEntity<Guid>
+    public class Project : FullAuditedEntity<Guid>, IMustHaveTenant
     {
-        
+        public virtual int TenantId { get; set; }
         public virtual string Title { get; protected set; }
         
         public virtual string Type { get; protected set; }

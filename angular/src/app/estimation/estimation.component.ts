@@ -35,6 +35,8 @@ export class EstimationComponent implements OnInit {
         this._planService.getListPlan()
             .subscribe((result: ListResultDtoOfPlanListDto) => {
                 this.planList = result.items;
+                this.panelOpenState1 =[]
+                this.panelOpenState2 =[]
                 this.planList.forEach(() => {
                     this.panelOpenState1.push(false)
                     this.panelOpenState2.push(false)
@@ -57,7 +59,7 @@ export class EstimationComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(async result => {
-
+            this.loadPlan()
             console.log('after close:', result)
 
 
@@ -66,9 +68,25 @@ export class EstimationComponent implements OnInit {
 
     //Estimating model
     OpenModel(plan:PlanListDto){
+        var ucp,fp,sep
+        if(plan.ucpLatest){
+            ucp=plan.ucpLatest.ucp
+        } else{
+            ucp =0
+        }
+        if(plan.fpLatest){
+            fp=plan.fpLatest.fp
+        } else{
+            fp =0
+        }
+        if(plan.sepLatest){
+            sep=plan.sepLatest.effort
+        } else{
+            sep =0
+        }
         const dialogRef = this.dialog.open(AddEstimatingValueComponent,{
             
-            data:{id :plan.id}
+            data:{id :plan.id,ucp: ucp, fp: fp, sep:sep}
         });
 
         dialogRef.afterClosed().subscribe(async result => {

@@ -1,0 +1,151 @@
+<!--component html goes here -->
+
+<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="40px">
+    
+    <!-- internal logical file -->
+    <div class='body'>
+        <div class='col-md-1 text-right' style='font-size: 150%; margin-top: 5px;'>
+            <span (click)="OpenHelper(0)" style='cursor: pointer;'><i class="fa fa-question-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+        <div class='col-md-2'>
+            
+            <h5>Number of Internal Logical File by Type</h5>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field fxFlex="100">
+                <mat-label>Simple</mat-label>
+                <input matInput type="number" name ="NLFS" [(ngModel)]="NLFC">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Average</mat-label>
+                <input matInput type="number" name ="NLFA" [(ngModel)]="NLFA">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Complex</mat-label>
+                <input matInput type="number" name ="NLFC" [(ngModel)]="NLFC" >
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- External interface file -->
+    <div class='body'>
+        <div class='col-md-1 text-right' style='font-size: 150%;margin-top: 5px; '>
+            <span (click)="OpenHelper(1)" style='cursor: pointer;'><i class="fa fa-question-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+        <div class='col-md-2'>
+            <h5>Number of External Interface File by Type</h5>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field fxFlex="100">
+                <mat-label>Simple</mat-label>
+                <input matInput type="number" name ="NIFS" [(ngModel)]="NIFS">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Average</mat-label>
+                <input matInput type="number" name ="NIFA" [(ngModel)]="NIFA">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Complex</mat-label>
+                <input matInput type="number" name ="NIFC" [(ngModel)]="NIFC" >
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- external input -->
+    <div class='body'>
+        <div class='col-md-1 text-right' style='font-size: 150%;margin-top: 5px; '>
+            <span (click)="OpenHelper(2)" style='cursor: pointer;'><i class="fa fa-question-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+        <div class='col-md-2'>
+            <h5>Number of External Input by Type</h5>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field fxFlex="100">
+                <mat-label>Simple</mat-label>
+                <input matInput type="number" name ="NIS" [(ngModel)]="NIS">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Average</mat-label>
+                <input matInput type="number" name ="NIA" [(ngModel)]="NIA">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Complex</mat-label>
+                <input matInput type="number" name ="NIC" [(ngModel)]="NIC" >
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- external output -->
+    <div class='body'>
+        <div class='col-md-1 text-right' style='font-size: 150%;margin-top: 5px; '>
+            <span (click)="OpenHelper(3)" style='cursor: pointer;'><i class="fa fa-question-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+        <div class='col-md-2'>
+            <h5>Number of External Output by Type</h5>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field fxFlex="100">
+                <mat-label>Simple</mat-label>
+                <input matInput type="number" name ="NOS" [(ngModel)]="NOS">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Average</mat-label>
+                <input matInput type="number" name ="NOA" [(ngModel)]="NOA">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Complex</mat-label>
+                <input matInput type="number" name ="NOC" [(ngModel)]="NOC" >
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- external inquiry -->
+    <div class='body'>
+        <div class='col-md-1 text-right' style='font-size: 150%; margin-top: 5px;'>
+            <span (click)="OpenHelper(4)" style='cursor: pointer;'><i class="fa fa-question-circle"
+                    aria-hidden="true"></i></span>
+        </div>
+        <div class='col-md-2'>
+            <h5>Number of External Inquiry by Type</h5>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field fxFlex="100">
+                <mat-label>Simple</mat-label>
+                <input matInput type="number" name ="NIQS" [(ngModel)]="NIQS">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Average</mat-label>
+                <input matInput type="number" name ="NIQA" [(ngModel)]="NIQA">
+            </mat-form-field>
+        </div>
+        <div class='col-md-3'>
+            <mat-form-field>
+                <mat-label>Complex</mat-label>
+                <input matInput type="number" name ="NIQC" [(ngModel)]="NIQC" >
+            </mat-form-field>
+        </div>
+    </div>
+    
+    
+    
+    <!-- another -->
+    
+</div>

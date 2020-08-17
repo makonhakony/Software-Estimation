@@ -21,6 +21,7 @@ namespace SoftwareEstimation.Plans
         private readonly IRepository<Plan, Guid> _planRepository;
         private readonly IRepository<UCPoint> _ucpRepository;
         private readonly IRepository<SEPoint> _sepRepository;
+        private readonly IRepository<FPoint> _fpRepository;
         public PlanAppService()
         {
 
@@ -28,11 +29,13 @@ namespace SoftwareEstimation.Plans
         public PlanAppService(
             IRepository<Plan,Guid> planRepository,
             IRepository<UCPoint> ucpRepository,
-            IRepository<SEPoint> sepRepository)
+            IRepository<SEPoint> sepRepository,
+            IRepository<FPoint> fpRepository)
         {
             _planRepository = planRepository;
             _ucpRepository = ucpRepository;
             _sepRepository = sepRepository;
+            _fpRepository = fpRepository;
 
 
         }
@@ -50,7 +53,7 @@ namespace SoftwareEstimation.Plans
             var plans = await _planRepository
                 .GetAll()  
                 .Include(x=> x.UcpLatest)
-                
+                .Include(x=>x.FpLatest)
                 .Include(x => x.SepLatest)
                 .Where(e => (e.CreatorUserId == AbpSession.GetUserId()))
                 //.OrderByDescending(e => e.CreationTime)
@@ -73,7 +76,12 @@ namespace SoftwareEstimation.Plans
                 .OrderByDescending(e => e.CreationTime)
                 .FirstOrDefaultAsync();
 
-                
+                p.FpLatest = await _fpRepository
+                .GetAll()
+                .Where(x => x.PlanId == p.Id)
+                .OrderByDescending(e => e.CreationTime)
+                .FirstOrDefaultAsync();
+
             };
             
             return new ListResultDto<PlanListDto>(plans.MapTo<List<PlanListDto>>()); 
@@ -86,6 +94,7 @@ namespace SoftwareEstimation.Plans
             var @plan = await _planRepository
                 .GetAll()
                 .Include(x => x.UCP)
+                .Include(x=> x.FP)
                 .Include(x => x.SEP)
                 .Where(p => p.Id == PlanId)
                 .FirstOrDefaultAsync();
@@ -152,7 +161,7 @@ namespace SoftwareEstimation.Plans
                 Tf = new int[] { ucpoint.t0, ucpoint.t1, ucpoint.t2, ucpoint.t3, ucpoint.t4, ucpoint.t5, ucpoint.t6, ucpoint.t7, ucpoint.t8, ucpoint.t9, ucpoint.t10, ucpoint.t11, ucpoint.t12 },
                 Ef = new int[] { ucpoint.e0, ucpoint.e1, ucpoint.e2, ucpoint.e3, ucpoint.e4, ucpoint.e5, ucpoint.e6, ucpoint.e7, },
                 CreationTime = ucpoint.CreationTime,
-                CreatorUserId =ucpoint.Id,
+                CreatorUserId =ucpoint.CreatorUserId,
                 Id = ucpoint.Id
                 
             };
@@ -179,6 +188,41 @@ namespace SoftwareEstimation.Plans
             return sePoint.MapTo<SepOutput>();
         }
 
-        
+        //Funtion point
+        public async void SetFp(FpInput input)
+        {
+            var @fp = FPoint.SetValue(input.planID, input.ufp, input.caf, input.ufpR, input.cafR, input.fpR);
+            await _fpRepository.InsertAsync(@fp);
+        }
+
+        public async Task<FpOutput> GetOutputFp(Guid planID)
+        {
+            var fpoint = await _fpRepository
+                .GetAll()
+                .Where(p => p.PlanId == planID)
+                .OrderByDescending(e => e.CreationTime)
+                .FirstOrDefaultAsync();
+
+            var fp_detail = new FpOutput
+            {
+                PlanID = planID,
+                ufp = new int[,] {
+                    { fpoint.u11, fpoint.u12, fpoint.u13 },
+                    { fpoint.u21, fpoint.u22, fpoint.u23},
+                    { fpoint.u31, fpoint.u32, fpoint.u33},
+                    { fpoint.u41, fpoint.u42, fpoint.u43},
+                    { fpoint.u51, fpoint.u52, fpoint.u53},
+                },
+                caf = new int[] { fpoint.c1, fpoint.c2, fpoint.c3, fpoint.c4, fpoint.c5, fpoint.c6, fpoint.c7, fpoint.c8, fpoint.c9, fpoint.c10, fpoint.c11, fpoint.c12, fpoint.c13, fpoint.c14},
+                CreationTime = fpoint.CreationTime,
+                CreatorUserId = fpoint.CreatorUserId,
+                Id = fpoint.Id
+
+            };
+
+            return fp_detail;
+
+        }
+
     }
 }

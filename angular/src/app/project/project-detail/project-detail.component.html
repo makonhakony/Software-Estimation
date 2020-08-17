@@ -53,10 +53,27 @@
 
         </div>
         <div class="body">
-            <p>some information about this link:</p>
-            <pre>{{projectDetail}}</pre>
-            <h5>link:<a href="{{project.linkURL}}">{{project.linkURL}}</a></h5>
-            <button mat-raised-button color="warn" (click)="toggle()"> Show list of file</button>
+            <div class='row clear-fix'>
+                <div class='col-md-8'>
+                    <p>some information about this project:</p>
+                    <pre>{{projectDetail}}</pre>
+                    <h5>link:<a href="{{project.linkURL}}">{{project.linkURL}}</a></h5>
+                    <button mat-raised-button color="warn" (click)="toggle()"> Show list of file</button>
+                </div>
+                <div class = 'col-md-4'>
+                    <div class='card'>
+                        <div class='header'>
+                            <h3>Percentage type of file in Project</h3>
+                        </div>
+                        <div class='body'>
+                            <div id="type_chart" class="dashboard-donut-chart"></div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
 
         </div>
         

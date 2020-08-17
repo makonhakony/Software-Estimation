@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector, AfterViewInit } from '@angular/core';
-import { PlanServiceProxy, PlanDetailOutput, UCPoint, SEPoint } from '@shared/service-proxies/service-proxies';
+import { PlanServiceProxy, PlanDetailOutput, UCPoint, SEPoint, FPoint } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute, Params } from '@angular/router';
 import { param } from 'jquery';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -13,7 +13,7 @@ import * as moment from 'moment';
     styleUrls: ['estimation-detail.component.scss'],
     animations: [appModuleAnimation()]
 })
-export class EstimationDetailComponent extends AppComponentBase implements OnInit, AfterViewInit {
+export class EstimationDetailComponent extends AppComponentBase implements OnInit {
     constructor(
         injector : Injector,
         private _planService : PlanServiceProxy,
@@ -33,8 +33,23 @@ export class EstimationDetailComponent extends AppComponentBase implements OnIni
             this._planService.getPlanDetail(this.planId).subscribe((result)=>{
                 this.plan = result
                 
+
                 this.showedSEP = result.sep.pop()
                 this.showedUCP = result.ucp.pop()
+                this.showedFP = result.fp.pop()
+                if (this.showedFP){
+                this.showedFP.caf = Number(this.showedFP.caf.toFixed(1))
+                this.showedFP.fp = Number(this.showedFP.fp.toFixed(1))
+                }
+                if (this.showedSEP){
+                this.showedSEP.effort=Number(this.showedSEP.effort.toFixed(1))
+                this.showedSEP.time=Number(this.showedSEP.time.toFixed(1))
+                }
+                if (this.showedUCP){
+                this.showedUCP.ucp=Number(this.showedUCP.ucp.toFixed(1))
+                this.showedUCP.ef=Number(this.showedUCP.ef.toFixed(1))
+                this.showedUCP.tf=Number(this.showedUCP.tf.toFixed(1))
+                }
                 this.ucpCreationTime = this.showedUCP.creationTime
                 console.log(this.showedSEP,this.showedUCP, this.ucpCreationTime)
                 
@@ -44,49 +59,7 @@ export class EstimationDetailComponent extends AppComponentBase implements OnIni
 
     showedUCP:UCPoint
     showedSEP:SEPoint
-
-    ngAfterViewInit(){
-        $(function () {
-            // Widgets count
-            $('.count-to').countTo();
-
-            // Sales count to
-            $('.sales-count-to').countTo({
-                formatter: function (value, options) {
-                    return '$' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, ' ').replace('.', ',');
-                }
-            });
-
-            
-            initDonutChart();
-            
-        });
-        function initDonutChart() {
-            ((window as any).Morris).Donut({
-                element: 'donut_chart',
-                data: [{
-                        label: 'Chrome',
-                        value: 37
-                    }, {
-                        label: 'Firefox',
-                        value: 30
-                    }, {
-                        label: 'Safari',
-                        value: 18
-                    }, {
-                        label: 'Opera',
-                        value: 12
-                    },
-                    {
-                        label: 'Other',
-                        value: 3
-                    }],
-                colors: ['rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
-                formatter: function (y) {
-                    return y + '%';
-                }
-            });
-        }
-    }
+    showedFP: FPoint
+    
 
 }

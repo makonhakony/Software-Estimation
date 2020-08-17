@@ -60,6 +60,12 @@ export class AddEstimatingValueComponent {
         } else
         if(this.SelectedValue.value=='SEP'){
             this.route.navigate(['/app/SnEpoint'], { queryParams: {id: this.data.id, type:this.SelectedValue2, idP: this.SelectedProject.id, sloc: this.SlocValue|this.SelectedProject.sloc} }) //router query param not param!
+        } else
+        if(this.SelectedValue.value =='FP'){
+            if (this.SelectedValue.point==0)
+                this.route.navigate(['/app/fp'], { queryParams: {id: this.data.id, status: false} }) //router query param not param!
+            else
+                this.route.navigate(['/app/fp'], { queryParams: {id: this.data.id, status: true} }) //router query param not param!
         }
         this.close()
 

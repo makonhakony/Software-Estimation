@@ -9,15 +9,16 @@
             </div>
             <div class="body">
                 <div *ngIf="!disableProject">
-                <mat-form-field appearance="fill">
-                    <mat-label>Select a project</mat-label>
-                    <mat-select [(ngModel)]="selectedProject" name="projectSelected" (selectionChange)="ChangeModel()" [disabled] = 'disableWhenCal' >
-                        <mat-option *ngFor="let project of projects" [value]="project">
-                            {{project.title}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Select a project</mat-label>
+                        <mat-select [(ngModel)]="selectedProject" name="projectSelected"
+                            (selectionChange)="ChangeModel()" [disabled]='disableWhenCal'>
+                            <mat-option *ngFor="let project of projects" [value]="project">
+                                {{project.title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
                 <p>Sloc Estimate: {{selectedProject.sloc}}</p>
 
             </div>
@@ -26,7 +27,8 @@
             <div class="body">
                 <mat-form-field appearance="fill">
                     <mat-label>Select a Estimation Mode</mat-label>
-                    <mat-select [(ngModel)]='selectedMode' value="Mode" (selectionChange)="ChangeModel2()" [disabled] = 'disableWhenCal'>
+                    <mat-select [(ngModel)]='selectedMode' value="Mode" (selectionChange)="ChangeModel2()"
+                        [disabled]='disableWhenCal'>
                         <mat-option *ngFor="let option of options" [value]="option">
                             {{option.value}}
                         </mat-option>
@@ -40,7 +42,8 @@
             <div class="body">
                 <mat-form-field appearance="fill">
                     <mat-label>Select a COCOMO Model</mat-label>
-                    <mat-select [(ngModel)]='selectedModel' value="Model" (selectionChange)="ChangeModel3()" [disabled] = 'disableWhenCal'>
+                    <mat-select [(ngModel)]='selectedModel' value="Model" (selectionChange)="ChangeModel3()"
+                        [disabled]='disableWhenCal'>
                         <mat-option *ngFor="let option of options2" [value]="option">
                             {{option.value}}
                         </mat-option>
@@ -62,10 +65,11 @@
                             <h4>Time Estimation: {{TimeResult}}</h4>
                             <h4>Number of staffs required: {{StaffResult}}</h4>
                             <div *ngIf='existed; else NewCreate'>
-                                <button mat-raised-button (click)='UpdateEstimation()'>Save this to my Estimation</button>
+                                <button mat-raised-button (click)='UpdateEstimation()'>Save this to my
+                                    Estimation</button>
                             </div>
                             <ng-template #NewCreate>
-                                <button mat-raised-button (click)='SaveToEstimation()'>Save/Create Estimation</button>
+                                <button mat-raised-button (click)='SaveNew()'>Save/Create Estimation</button>
                             </ng-template>
                         </mat-step>
                     </mat-horizontal-stepper>
@@ -77,31 +81,45 @@
                         <mat-step label="step 1">
 
                             <div *ngFor="let att of Attribute; let i =index">
-                                <h4>{{att.name}}</h4>
+                                <div class='card'>
+                                    <div class='header row'>
+                                        <div class='col-md-10'>
+                                            <h4>{{att.name}}</h4>
+                                        </div>
+                                        <div class='col-md-2 text-right' style='font-size: 120%; '>
+                                            <span (click)="OpenHelper(i)" style='cursor: pointer;'><i class="fa fa-question-circle"
+                                                    aria-hidden="true"></i></span>
+                                        </div>
+                                    </div>
 
-                                <mat-radio-group class="example-radio-group" required [(ngModel)]='selectedOption[i]'
-                                    [name]="'select'+i">
-                                    <mat-radio-button class="example-radio-button"
-                                        *ngFor="let opt of att.option ;let j = index" [name]="'opt'+((i*6)+j)"
-                                        [value]="opt.value">
-                                        {{opt.name}}
-                                    </mat-radio-button>
-                                </mat-radio-group>
+                                    <div class='body'>
+                                        <mat-radio-group class="example-radio-group" required
+                                            [(ngModel)]='selectedOption[i]' [name]="'select'+i">
+                                            <mat-radio-button class="example-radio-button"
+                                                *ngFor="let opt of att.option ;let j = index" style="margin-right: 7%;" [name]="'opt'+((i*6)+j)"
+                                                [value]="opt.value" >
+                                                {{opt.name}}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
                             </div>
                             <button mat-raised-button matStepperNext (click)="CalculateInter()">Calculate
                                 this</button>
                         </mat-step>
                         <mat-step label="step 2">
-                            <h4>Effort Estimation: {{EffortResult | number:2}}</h4>
-                            <h4>Time Estimation: {{TimeResult | number:2}}</h4>
-                            <h4>Number of staffs required: {{StaffResult | number:2}}</h4>
+                            <h4>Effort Estimation: {{EffortResult}}</h4>
+                            <h4>Time Estimation: {{TimeResult}}</h4>
+                            <h4>Number of staffs required: {{StaffResult}}</h4>
                             <div *ngIf='existed; else NewCreate'>
-                                <button mat-raised-button (click)='UpdateEstimation()'>Save this to my Estimation</button>
+                                <button mat-raised-button color='primary' (click)='UpdateEstimation()'>Save this to my
+                                    Estimation</button>
                             </div>
                             <ng-template #NewCreate>
-                                <button mat-raised-button (click)='SaveNew()'>Save/Create Estimation</button>
+                                <button mat-raised-button color='primary' (click)='SaveNew()'>Save/Create
+                                    Estimation</button>
                             </ng-template>
-                            
+                            <button mat-raised-button (click)='Refresh()'>Redo the Survey</button>
                         </mat-step>
                     </mat-horizontal-stepper>
 

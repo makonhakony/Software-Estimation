@@ -117,4 +117,18 @@ export class ProjectDetailService implements OnInit
           //debugger
         return { data, status ,request };
     }
+
+    GetType(username:string, title:string){
+        let body = new HttpParams()
+        .set('username',username)
+        .set("name",title)
+    
+        return this.http.post<any>("http://hcthanh.ddns.net:3000/api/GetSlocandType",
+        body,
+        {
+            responseType: 'json'
+        }
+        )
+        .pipe(catchError(this.handleError))
+    }
 }

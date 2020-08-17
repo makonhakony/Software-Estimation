@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 namespace SoftwareEstimation.Plans
 {
     [Table("AppPlans")]
-    public class Plan : FullAuditedEntity<Guid>
+    public class Plan : FullAuditedEntity<Guid>, IMustHaveTenant
     {
-        
+        public virtual int TenantId { get; set; }
         public virtual string Title { get; protected set; }
         public virtual string Description { get; protected set;}
         
         //public virtual float SEPoint { get; protected set; }
-        public virtual float FPoint { get; protected set; }
+        
 
         [ForeignKey("PlanId")]
         public virtual IList<UCPoint> UCP { get; set; }
@@ -25,6 +26,11 @@ namespace SoftwareEstimation.Plans
         [ForeignKey("PlanId")]
         public virtual IList<SEPoint> SEP { get; set; }
         public virtual SEPoint SepLatest { get; set; }
+
+        [ForeignKey("PlanId")]
+        public virtual IList<FPoint> FP { get; set; }
+        public virtual FPoint FpLatest { get; set; }
+
 
         protected Plan()
         {
@@ -40,6 +46,7 @@ namespace SoftwareEstimation.Plans
             };
             @plan.UCP = new List<UCPoint>();
             @plan.SEP = new List<SEPoint>();
+            @plan.FP = new List<FPoint>();
             return @plan;
         }
         

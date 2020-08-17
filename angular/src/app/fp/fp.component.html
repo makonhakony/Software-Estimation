@@ -1,0 +1,39 @@
+<!--component html goes here -->
+<div class="row clearfix" [@routerTransition]>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="header main-content">
+            <h1>Funtion point estimation</h1>
+        </div>
+
+        <div class='body'>
+            <form (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
+                <mat-horizontal-stepper [linear]=true #stepper>
+                    <mat-step #UFP="ngModelGroup" ngModelGroup="UFP" label="step 1">
+                        <h4>Unadjusted Function Points</h4>
+                        <unadjusted-fp modelGroupName="UFP" [InitValue]="InitUFP"></unadjusted-fp>
+                        <button mat-raised-button matStepperNext>Next</button>
+                    </mat-step>
+                    <mat-step #CAF="ngModelGroup" ngModelGroup="CAF" label="step 2">
+                        <h4>Complexity adjusted factor</h4>
+                        <complexity-factor modelGroupName="CAF" [InitValue]="InitCAF" [status]="status">
+                        </complexity-factor>
+                        <button mat-raised-button matStepperPrevious>Back</button>
+                        <button mat-raised-button matStepperNext (click)="onClick(f)">Next</button>
+                    </mat-step>
+                    <mat-step label="Result">
+
+                        <h4>Calculate Funtion Points</h4>
+                        <cal-fp [UFP]='UFPs' [CAF]="CAFs" [FP]="FP"></cal-fp>
+                        <div *ngIf="state; else savenew">
+                            <button mat-raised-button color="accent" (click)="Update()">Update Result</button>
+                        </div>
+                        <ng-template #savenew>
+                            <button mat-raised-button color="accent" (click)="SaveNew() ">Save this to my stuff</button>
+                        </ng-template>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </form>
+        </div>
+    </div>
+</div>

@@ -62,6 +62,11 @@ import { EstimationDetailComponent } from './estimation/estimation-detail/estima
 import { SaveNewEstimationComponent } from './estimation/save-new-estimation/save-new-estimation.component';
 import { CyclomaticComponent } from './cyclomatic/cyclomatic.component';
 import { CyclomaticService } from './cyclomatic/cyclomatic.service';
+import { FpComponent } from './fp/fp.component';
+import { ComplexityFactorComponent } from './fp/complexity-factor/complexity-factor.component';
+import { UnadjustedFpComponent } from './fp/unadjusted-fp/unadjusted-fp.component';
+import { CalFpComponent } from './fp/cal-fp/cal-fp.component';
+import { HelperModalComponent } from './estimation/helper-modal/helper-modal.component';
 
 @NgModule({
   declarations: [
@@ -108,8 +113,14 @@ import { CyclomaticService } from './cyclomatic/cyclomatic.service';
     AddEstimatingValueComponent,
     EstimationDetailComponent,
     SaveNewEstimationComponent,
+    HelperModalComponent,
     //Clyclomatic
-    CyclomaticComponent
+    CyclomaticComponent,
+    //Function Point
+    FpComponent,
+    UnadjustedFpComponent,
+    ComplexityFactorComponent,
+    CalFpComponent
   ],
   imports: [
     CommonModule,
@@ -157,7 +168,8 @@ import { CyclomaticService } from './cyclomatic/cyclomatic.service';
     //Estimation
     CreateEstimationComponent,
     AddEstimatingValueComponent,
-    SaveNewEstimationComponent
+    SaveNewEstimationComponent,
+    HelperModalComponent
   ],
   
 })
