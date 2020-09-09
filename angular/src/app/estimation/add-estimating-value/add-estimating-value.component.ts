@@ -36,7 +36,7 @@ export class AddEstimatingValueComponent {
     SelectedValue2:string=''
 
     options : any[] = [
-        {name : 'Schedule and Effort Point', value: 'SEP' ,point: this.data.sep},
+        {name : 'Schedule and Effort Point', value: 'Cocomo' ,point: this.data.ccm},
         {name: 'Use Case Point ', value:'UCP', point: this.data.ucp},
         {name: 'Function Point ', value :'FP', point: this.data.fp}
     ]
@@ -58,8 +58,8 @@ export class AddEstimatingValueComponent {
             else
                 this.route.navigate(['/app/ucp'], { queryParams: {id: this.data.id, status: true} }) //router query param not param!
         } else
-        if(this.SelectedValue.value=='SEP'){
-            this.route.navigate(['/app/SnEpoint'], { queryParams: {id: this.data.id, type:this.SelectedValue2, idP: this.SelectedProject.id, sloc: this.SlocValue|this.SelectedProject.sloc} }) //router query param not param!
+        if(this.SelectedValue.value=='Cocomo'){
+            this.route.navigate(['/app/cocomo'], { queryParams: {id: this.data.id, type:this.SelectedValue2, idP: this.SelectedProject.id, sloc: this.SlocValue|this.SelectedProject.sloc} }) //router query param not param!
         } else
         if(this.SelectedValue.value =='FP'){
             if (this.SelectedValue.point==0)

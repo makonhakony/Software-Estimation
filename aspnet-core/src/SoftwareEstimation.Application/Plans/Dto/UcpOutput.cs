@@ -13,6 +13,8 @@ namespace SoftwareEstimation.Plans.Dto
         public int[] Uucp { get; set; }
         public int[] Ef { get; set; }
         public int[] Tf { get; set; }
-        
+        public float effort { get; set; }
+        public float time { get; set; }
+        public int staff { get; set; }
     }
 }

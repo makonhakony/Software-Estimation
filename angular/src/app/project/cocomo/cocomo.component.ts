@@ -1,6 +1,6 @@
 import { Component, OnInit, SkipSelf, Injector } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { ProjectServiceProxy, ProjectSlocDetail, PlanServiceProxy, SepInput } from '@shared/service-proxies/service-proxies';
+import { ProjectServiceProxy, ProjectSlocDetail, PlanServiceProxy, CcmInput } from '@shared/service-proxies/service-proxies';
 import { CocomoService } from './cocomo.service';
 import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -104,7 +104,7 @@ export class CocomoComponent implements OnInit {
         console.log(this.selectedModel)
         this.state3 = true
     }
-    SEP: SepInput
+    CCM: CcmInput
     EffortResult: number = 0
     TimeResult: number = 0
     StaffResult: number = 0
@@ -162,17 +162,17 @@ export class CocomoComponent implements OnInit {
 
 
     UpdateEstimation() {
-        this.SEP = new SepInput()
-        this.SEP.planID = this.planID
-        this.SEP.effort = this.EffortResult
-        this.SEP.time = this.TimeResult
-        this.SEP.staff = this.StaffResult
-        this.SEP.mode = this.selectedMode.type
-        this.SEP.model = this.selectedModel.type
-        this.SEP.sloc = this.selectedProject.sloc
+        this.CCM = new CcmInput()
+        this.CCM.planID = this.planID
+        this.CCM.effort = this.EffortResult
+        this.CCM.time = this.TimeResult
+        this.CCM.staff = this.StaffResult
+        this.CCM.mode = this.selectedMode.type
+        this.CCM.model = this.selectedModel.type
+        this.CCM.sloc = this.selectedProject.sloc
+        this.CCM.projectID = this.selectedProject.id
 
-
-        this._planService.setSep(this.SEP).subscribe(() => {
+        this._planService.setCcm(this.CCM).subscribe(() => {
             this.route.navigate(['app/estimation'])
         })
     }
@@ -184,17 +184,18 @@ export class CocomoComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result)
-            this.SEP = new SepInput()
-            this.SEP.planID = result.planId
-            this.SEP.effort = this.EffortResult
-            this.SEP.time = this.TimeResult
-            this.SEP.staff = this.StaffResult
-            this.SEP.mode = this.selectedMode.type
-            this.SEP.model = this.selectedModel.type
-            this.SEP.sloc = this.selectedProject.sloc
-            console.log(this.SEP)
+            this.CCM = new CcmInput()
+            this.CCM.planID = result.planId
+            this.CCM.effort = this.EffortResult
+            this.CCM.time = this.TimeResult
+            this.CCM.staff = this.StaffResult
+            this.CCM.mode = this.selectedMode.type
+            this.CCM.model = this.selectedModel.type
+            this.CCM.sloc = this.selectedProject.sloc
+            this.CCM.projectID = this.selectedProject.id
+            console.log(this.CCM)
 
-            this._planService.setSep(this.SEP).subscribe(() => {
+            this._planService.setCcm(this.CCM).subscribe(() => {
                 this.route.navigate(['app/estimation'])
             })
 

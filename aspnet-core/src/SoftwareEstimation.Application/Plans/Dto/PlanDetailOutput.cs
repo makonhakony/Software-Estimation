@@ -12,7 +12,9 @@ namespace SoftwareEstimation.Plans.Dto
         public string Description { get; set; }
         public IList<UCPoint> UCP { get; set; }
         public IList<FPoint> FP { get; set; }
-        public IList<SEPoint> SEP { get; set; }
-
+        public IList<Cocomo> CCM { get; set; }
+        public float TotalEffort { get; set; }
+        public float TotalTime { get; set; }
+        public int TotalStaff { get; set; }
     }
 }

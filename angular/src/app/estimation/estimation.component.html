@@ -30,7 +30,7 @@
                       {{plan.title}}
                     </mat-panel-title>
                     <mat-panel-description>
-                      <i>{{panelOpenState1[i]? '': plan.description}}</i>
+                      <!-- <i>{{panelOpenState1[i]? '': plan.description}}</i> -->
                     </mat-panel-description>
                   </mat-expansion-panel-header>
                   <pre>{{plan.description}}</pre>
@@ -42,52 +42,54 @@
                     </mat-panel-title>
 
                     <!-- Flag start -->
-                   
-                      <p><span *ngIf='plan.ucpLatest' class='label bg-red' style='margin-right: 10px;'>U</span></p>
-                      <p><span *ngIf='plan.sepLatest' class='label bg-purple' style='margin-right: 10px;'>SnE</span></p>
-                      <p><span *ngIf='plan.fpLatest' class='label bg-green' style='margin-right: 10px;'>F</span></p>
-                    
+
+                    <p><span *ngIf='plan.ucpLatest' class='label bg-red' style='margin-right: 10px;'>U</span></p>
+                    <p><span *ngIf='plan.fpLatest' class='label bg-green' style='margin-right: 10px;'>F</span></p>
+                    <p><span *ngIf='plan.ccmLatest' class='label bg-purple' style='margin-right: 10px;'>C</span></p>
                     <!-- flag end -->
                     <div *ngIf="panelOpenState2[i]">
-                      <button style="margin-right: 10px">
+                      <!-- <button style="margin-right: 10px">
                         <i class="fa fa-clone" aria-hidden="true"></i>
-                      </button>
+                      </button> -->
                     </div>
                   </mat-expansion-panel-header>
 
                   <!-- 2ng box start -->
                   <div class='information-box'>
+                    <div *ngIf="plan.TotalEffort != 0">
+                      <tbody>
+                        <p><span class='label bg-indigo'>Effort</span> {{plan.totalEffort.toFixed(1)}}
+                          point(s)</p>
+                        <p><span class='label bg-blue'>Time required</span> {{plan.totalTime.toFixed(1)}} month(s)
+                        </p>
+                        <p><span class='label bg-light-blue'>Staff required</span> {{plan.totalStaff}}
+                          people</p>
+                      </tbody>
+                    </div>
                     <div *ngIf='plan.ucpLatest'>
-                      <p><span class='label bg-red'>Use Case Point</span> {{plan.ucpLatest.ucp.toFixed(1)}} point(s)</p>
+                      <p><span class='label bg-red'>Use Case</span> {{plan.ucpLatest.ucp.toFixed(1)}} point(s)</p>
                     </div>
                     <!-- <div *ngIf='plan.fPoint !== 0 '>
                       <p>Function Point: {{plan.fPoint}}</p>
                     </div> -->
-                    <div *ngIf='plan.sepLatest '>
-                      <tbody>
-                        <p><span class='label bg-purple'>Effort point</span> {{plan.sepLatest.effort.toFixed(1)}}
-                          point(s)</p>
-                        <p><span class='label bg-blue'>Time required</span> {{plan.sepLatest.time.toFixed(1)}} month(s)
-                        </p>
-                        <p><span class='label bg-light-blue'>Staff required</span> {{plan.sepLatest.staff.toFixed(1)}}
-                          people</p>
-                      </tbody>
-                    </div>
+                    
                     <div *ngIf='plan.fpLatest'>
-                      <p><span class='label bg-green'>Function Point</span> {{plan.fpLatest.fp.toFixed(1)}} point(s)</p>
+                      <p><span class='label bg-green'>Function</span> {{plan.fpLatest.fp.toFixed(1)}} point(s)</p>
+                    </div>
+                    <div *ngIf='plan.ccmLatest '>
+                      <p><span class='label bg-purple'>Number lines of code</span> {{plan.ccmLatest.sloc}}</p>
                     </div>
                   </div>
-                  <div *ngIf='!plan.ucpLatest&& !plan.sepLatest && !plan.fpLatest; else DetailButton'>
+                  <div *ngIf='!plan.ucpLatest&& !plan.ccmLatest && !plan.fpLatest'>
                     <p>No recording result</p>
                   </div>
                   <div style='margin-top: 10px;'>
-                    <span *ngIf='!plan.ucpLatest || !plan.sepLatest || !plan.fpLatest'>
-                      <button mat-raised-button color='accent' (click)="OpenModel(plan)">Estimate
-                        this</button>
-                    </span>
-                    <ng-template #DetailButton>
+                    
+                    <button mat-raised-button color='accent' (click)="OpenModel(plan)">Estimate
+                      this</button>
+                    <span *ngIf='plan.ucpLatest||plan.ccmLatest||plan.fpLatest'>
                       <button mat-raised-button color='primary' (click)="GotoDetail(plan.id)">Detail</button>
-                    </ng-template>
+                    </span>
                     <button mat-raised-button color='warn' (click)="DeletePlan(plan.id)">Delete</button>
                   </div>
 

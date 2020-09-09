@@ -74,7 +74,7 @@
                   </div>
                 </div>
                 <div class="col-md-4 text-center m-r--1">
-                  <div><p>Size: {{proj.size}} KB</p></div>        
+                  <div><p>Size: {{(proj.size/1024/1024).toFixed(1)}} MB</p></div>        
                   <div><p>Sloc: {{proj.sloc}} lines of code</p></div>       
                 </div>
                 <div class="col-md-2 text-center m-r--1">

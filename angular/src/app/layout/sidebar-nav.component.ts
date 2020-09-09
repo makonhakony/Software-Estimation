@@ -17,15 +17,13 @@ export class SideBarNavComponent extends AppComponentBase {
         new MenuItem(this.l('Roles'), 'Pages.Roles', 'local_offer', '/app/roles'),
         new MenuItem(this.l('About'), '', 'info', '/app/about'),
         //new MenuItem(this.l('My project'),'','important_devices','/app/project'),
-        new MenuItem(this.l('Cloned Project Storage'), '', 'cloud_done', '/app/project'),
-        new MenuItem(this.l('Estimation'), '', 'mediation', '', [
-            new MenuItem(this.l('Estimating Result Storage'), '', 'folder', '/app/estimation'),
-            new MenuItem(this.l('Use Case Point'), '', 'accessibility_new', '/app/ucp'),
-            new MenuItem(this.l('Function Point'), '', 'functions', '/app/fp'),
-            new MenuItem(this.l('Schedule and Effort'), '', 'av_timer', '/app/SnEpoint'),
+        new MenuItem(this.l('My Storage'), '', 'folder', '', [
+            new MenuItem(this.l('Cloned Project Storage'), '', 'cloud_done', '/app/project'),
+            new MenuItem(this.l('Estimating Result Storage'), '', 'library_add_check', '/app/estimation'),
         ]),
-        new MenuItem(this.l('Cyclomatic Complexity Evaluation'), '', 'emoji_objects', '/app/CCEva'),
-        
+        new MenuItem(this.l('Estimated by Use Case Point'), '', 'accessibility_new', '/app/ucp'),
+        new MenuItem(this.l('Estimated by Function Point'), '', 'functions', '/app/fp'),
+        new MenuItem(this.l('Estimation using COCOMO'), '', 'av_timer', '/app/cocomo'),
 
     ];
 

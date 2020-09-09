@@ -18,6 +18,7 @@ import { EstimationComponent } from './estimation/estimation.component';
 import { EstimationDetailComponent } from './estimation/estimation-detail/estimation-detail.component';
 import { CyclomaticComponent } from './cyclomatic/cyclomatic.component';
 import { FpComponent } from './fp/fp.component';
+import { SummaryReportComponent } from './estimation/summary-report/summary-report.component';
 
 @NgModule({
     imports: [
@@ -37,9 +38,10 @@ import { FpComponent } from './fp/fp.component';
                     { path: 'update-password', component: ChangePasswordComponent },
                     { path: 'ucp', component:  UcpComponent},
                     { path: 'fp', component: FpComponent},
-                    { path: 'SnEpoint', component:  CocomoComponent},
+                    { path: 'cocomo', component:  CocomoComponent},
                     { path: 'estimation', component:  EstimationComponent},
                     { path: 'estimation/:estimationId',component: EstimationDetailComponent},
+                    { path: 'estimation/:estimationId/summary',component:SummaryReportComponent},
                     { path: 'CCEva',component: CyclomaticComponent},
                     {path:'test',component: TestRadioComponent}
                 ]

@@ -68,7 +68,7 @@ export class EstimationComponent implements OnInit {
 
     //Estimating model
     OpenModel(plan:PlanListDto){
-        var ucp,fp,sep
+        var ucp,fp,ccm
         if(plan.ucpLatest){
             ucp=plan.ucpLatest.ucp
         } else{
@@ -79,14 +79,14 @@ export class EstimationComponent implements OnInit {
         } else{
             fp =0
         }
-        if(plan.sepLatest){
-            sep=plan.sepLatest.effort
+        if(plan.ccmLatest){
+            ccm=plan.ccmLatest.effort
         } else{
-            sep =0
+            ccm =0
         }
         const dialogRef = this.dialog.open(AddEstimatingValueComponent,{
             
-            data:{id :plan.id,ucp: ucp, fp: fp, sep:sep}
+            data:{id :plan.id,ucp: ucp, fp: fp, ccm:ccm}
         });
 
         dialogRef.afterClosed().subscribe(async result => {

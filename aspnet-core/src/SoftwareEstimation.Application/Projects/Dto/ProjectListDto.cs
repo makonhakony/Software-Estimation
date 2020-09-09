@@ -15,5 +15,6 @@ namespace SoftwareEstimation.Projects.Dto
         public string Type { get; set; }
         public string LinkURL { get; set; }
         public bool isReady { get; set; }
+        public string Languages { get; set; }
     }
 }

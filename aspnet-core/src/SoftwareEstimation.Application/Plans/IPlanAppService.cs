@@ -13,8 +13,8 @@ namespace SoftwareEstimation.Plans
         //void UpdatePlanResult(string Id, float Ucpoint);
         void SetUcp(UcpInput input);
         Task<UcpOutput> GetOutputUcp(Guid planID);
-        void SetSep(SepInput input);
-        Task<SepOutput> GetSepOutput(Guid planID);
-
+        void SetCcm(CcmInput input);
+        Task<CcmOutput> GetOutputCcm(Guid planID);
+        Task<HomeDetailDto> GeneralInformation();
     }
 }

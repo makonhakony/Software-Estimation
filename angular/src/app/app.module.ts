@@ -67,6 +67,7 @@ import { ComplexityFactorComponent } from './fp/complexity-factor/complexity-fac
 import { UnadjustedFpComponent } from './fp/unadjusted-fp/unadjusted-fp.component';
 import { CalFpComponent } from './fp/cal-fp/cal-fp.component';
 import { HelperModalComponent } from './estimation/helper-modal/helper-modal.component';
+import { SummaryReportComponent } from './estimation/summary-report/summary-report.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { HelperModalComponent } from './estimation/helper-modal/helper-modal.com
     EstimationDetailComponent,
     SaveNewEstimationComponent,
     HelperModalComponent,
+    SummaryReportComponent,
     //Clyclomatic
     CyclomaticComponent,
     //Function Point

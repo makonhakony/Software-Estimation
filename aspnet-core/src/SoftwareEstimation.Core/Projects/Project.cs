@@ -19,6 +19,7 @@ namespace SoftwareEstimation.Projects
         public virtual float Size { get; protected set; }
         public virtual bool isReady { get; protected set; }
         public virtual bool isCloned { get; protected set; }
+        public virtual string Languages { get; protected set; }
 
         public const int MaxTitleLength = 100;
         public const int MaxDescriptionLength = 2000;

@@ -1,7 +1,7 @@
 ﻿<div [@routerTransition]>
 
-    <div class="block-header">
-        <h2>SAMPLE DASHBOARD</h2>
+    <div class="block-header text-center" style = "font-size: 77px; margin:10px">
+        <b>Welcome {{name}} {{surname}}</b>
     </div>
 
     <!-- Widgets -->
@@ -12,48 +12,48 @@
                     <i class="material-icons">playlist_add_check</i>
                 </div>
                 <div class="content">
-                    <div class="text">NEW TASKS</div>
-                    <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20"></div>
+                    <div class="text">ESTIMATIONS</div>
+                    <div class="number count-to" data-from="0" attr.data-to="{{number_estimation}}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-cyan hover-expand-effect">
                 <div class="icon">
-                    <i class="material-icons">help</i>
+                    <i class="material-icons">accessibility_new</i>
                 </div>
                 <div class="content">
-                    <div class="text">NEW TICKETS</div>
-                    <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                    <div class="text">UCP EVALUATED</div>
+                    <div class="number count-to" data-from="0" attr.data-to="{{number_ucp}}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-light-green hover-expand-effect">
                 <div class="icon">
-                    <i class="material-icons">forum</i>
+                    <i class="material-icons">functions</i>
                 </div>
                 <div class="content">
-                    <div class="text">NEW COMMENTS</div>
-                    <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                    <div class="text">FP EVALUATED</div>
+                    <div class="number count-to" data-from="0" attr.data-to="{{number_fp}}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-orange hover-expand-effect">
                 <div class="icon">
-                    <i class="material-icons">person_add</i>
+                    <i class="material-icons">av_timer</i>
                 </div>
                 <div class="content">
-                    <div class="text">NEW VISITORS</div>
-                    <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                    <div class="text">COCOMO EVALUATED</div>
+                    <div class="number count-to" data-from="0" attr.data-to="{{number_ccm}}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
     </div>
     <!-- #END# Widgets -->
     <!-- CPU Usage -->
-    <div class="row clearfix">
+    <!-- <div class="row clearfix">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="header">
@@ -86,13 +86,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- #END# CPU Usage -->
-    <div class="row clearfix">
+    <div class="row clearfix">       
+        
         <!-- Visitors -->
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card">
-                <div class="body bg-pink">
+                <div class="body bg-brown">
                     <div class="sparkline" data-type="line" data-spot-Radius="4" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#fff"
                          data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
                          data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
@@ -102,82 +103,80 @@
                     <ul class="dashboard-stat-list">
                         <li>
                             TODAY
-                            <span class="pull-right"><b>1 200</b> <small>USERS</small></span>
+                            <span class="pull-right"><b>{{ne_today}} </b> <small>Estimation(s)</small></span>
                         </li>
                         <li>
                             YESTERDAY
-                            <span class="pull-right"><b>3 872</b> <small>USERS</small></span>
+                            <span class="pull-right"><b>{{ne_yesterday}} </b> <small>Estimation(s)</small></span>
                         </li>
                         <li>
                             LAST WEEK
-                            <span class="pull-right"><b>26 582</b> <small>USERS</small></span>
+                            <span class="pull-right"><b>{{ne_lastweek}} </b> <small>Estimation(s)</small></span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- #END# Visitors -->
-        <!-- Latest Social Trends -->
+        <!-- Language Trends -->
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card">
-                <div class="body bg-cyan">
-                    <div class="m-b--35 font-bold">LATEST SOCIAL TRENDS</div>
-                    <ul class="dashboard-stat-list">
-                        <li>
-                            #socialtrends
+                <div class="body bg-indigo">
+                    <div class="m-b--35 font-bold">TRENDING LANGUAGE USED</div>
+                    <ul class="dashboard-stat-list" >
+                        <li *ngFor="let lang of languageDictionary[0]">
+                            # {{lang}}
+                            
+                        </li>
+                        <!-- <li>
+                            #CSS
                             <span class="pull-right">
                                 <i class="material-icons">trending_up</i>
                             </span>
                         </li>
+                        <li>#Ruby</li>
+                        <li>#CS</li>
+                        <li>#TypeScript</li>
                         <li>
-                            #materialdesign
+                            #CPP
                             <span class="pull-right">
                                 <i class="material-icons">trending_up</i>
                             </span>
-                        </li>
-                        <li>#adminbsb</li>
-                        <li>#freeadmintemplate</li>
-                        <li>#bootstraptemplate</li>
-                        <li>
-                            #freehtmltemplate
-                            <span class="pull-right">
-                                <i class="material-icons">trending_up</i>
-                            </span>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- #END# Latest Social Trends -->
+        <!-- #END# Language Trends -->
         <!-- Answered Tickets -->
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card">
                 <div class="body bg-teal">
-                    <div class="font-bold m-b--35">ANSWERED TICKETS</div>
+                    <div class="font-bold m-b--35">CLONED PROJECTS</div>
                     <ul class="dashboard-stat-list">
                         <li>
-                            TODAY
-                            <span class="pull-right"><b>12</b> <small>TICKETS</small></span>
+                            RECENTLY
+                            <span class="pull-right"><b>{{np_recently}} </b> <small>Project(s)</small></span>
                         </li>
                         <li>
-                            YESTERDAY
-                            <span class="pull-right"><b>15</b> <small>TICKETS</small></span>
+                            PAST FEW DAYS
+                            <span class="pull-right"><b>{{np_fewdays}} </b> <small>Project(s)</small></span>
                         </li>
                         <li>
-                            LAST WEEK
-                            <span class="pull-right"><b>90</b> <small>TICKETS</small></span>
+                            PAST FEW WEEKS
+                            <span class="pull-right"><b>{{np_fewweeks}} </b> <small>Project(s)</small></span>
                         </li>
                         <li>
-                            LAST MONTH
-                            <span class="pull-right"><b>342</b> <small>TICKETS</small></span>
+                            MONTH(S) AGO
+                            <span class="pull-right"><b>{{np_fewmonths}} </b> <small>Project(s)</small></span>
                         </li>
                         <li>
-                            LAST YEAR
-                            <span class="pull-right"><b>4 225</b> <small>TICKETS</small></span>
+                            LONG TIME AGO
+                            <span class="pull-right"><b>{{np_fewyears}} </b> <small>Project(s)</small></span>
                         </li>
                         <li>
                             ALL
-                            <span class="pull-right"><b>8 752</b> <small>TICKETS</small></span>
+                            <span class="pull-right"><b>{{number_project}} </b> <small>Project(s)</small></span>
                         </li>
                     </ul>
                 </div>
@@ -187,19 +186,18 @@
     </div>
     <div class="row clearfix">
         <!-- Task Info -->
-        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="header">
-                    <h2>TASK INFOS</h2>
+                    <h2>ESTIMATION INFOS</h2>
                     <ul class="header-dropdown m-r--5">
                         <li class="dropdown">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">more_vert</i>
                             </a>
                             <ul class="dropdown-menu pull-right">
-                                <li><a href="javascript:void(0);">Action</a></li>
-                                <li><a href="javascript:void(0);">Another action</a></li>
-                                <li><a href="javascript:void(0);">Something else here</a></li>
+                                <li><a [routerLink]="['/app/estimation']">Go to Estimation Page</a></li>
+                                <li><a [routerLink]="['/app/about']">About the Estimation</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -209,26 +207,28 @@
                         <table class="table table-hover dashboard-task-infos">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Task</th>
-                                    <th>Status</th>
-                                    <th>Manager</th>
-                                    <th>Progress</th>
+                                    <th>Id</th>
+                                    <th>Project title</th>
+                                    <th>Creation Time</th>
+                                    <th>Point Types Evaluated</th>
+                                    <th>Creator</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Task A</td>
-                                    <td><span class="label bg-green">Doing</span></td>
-                                    <td>John Doe</td>
+                            <tbody >
+                                <tr *ngFor="let estimation of planList; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{estimation.title}}</td>
+                                    <td>{{estimation.creationTime}}</td>
                                     <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%"></div>
-                                        </div>
+                                        <span class="label bg-red" *ngIf='estimation.ucpLatest' style = 'margin-right: 5px;'>Use Case Point</span>
+                                        <span class="label bg-green" *ngIf='estimation.fpLatest' style = 'margin-right: 5px;'>Function Point</span>
+                                        <span class="label bg-purple" *ngIf='estimation.ccmLatest' style = 'margin-right: 5px;'>Cocomo</span>
+                                        
                                     </td>
+                                    <td>{{name}} {{surname}}</td>
+                                    
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>2</td>
                                     <td>Task B</td>
                                     <td><span class="label bg-blue">To Do</span></td>
@@ -273,7 +273,7 @@
                                             <div class="progress-bar bg-red" role="progressbar" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100" style="width: 87%"></div>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -282,7 +282,7 @@
         </div>
         <!-- #END# Task Info -->
         <!-- Browser Usage -->
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card">
                 <div class="header">
                     <h2>BROWSER USAGE</h2>
@@ -303,7 +303,7 @@
                     <div id="donut_chart" class="dashboard-donut-chart"></div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- #END# Browser Usage -->
     </div>
 

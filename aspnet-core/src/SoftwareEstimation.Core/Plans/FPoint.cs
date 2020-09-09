@@ -1,4 +1,5 @@
 ﻿
+using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
@@ -6,8 +7,9 @@ using System.Text;
 
 namespace SoftwareEstimation.Plans
 {
-    public class FPoint : CreationAuditedEntity
+    public class FPoint : CreationAuditedEntity, IMustHaveTenant
     {
+        public virtual int TenantId { get; set; }
         public virtual Guid PlanId { get; set; }
         public virtual float FP { get; set; }
         public virtual float UFP { get; set; }
@@ -44,11 +46,15 @@ namespace SoftwareEstimation.Plans
         public virtual int c13 { get; set; }
         public virtual int c14 { get; set; }
 
+        public virtual float Effort { get; set; }
+        public virtual float Time { get; set; }
+        public virtual int Staff { get; set; }
+
         protected FPoint()
         {
         
         }
-        public static FPoint SetValue (Guid PlanID, int[,] ufp, int[] caf, float ufpR, float cafR, float fpR)
+        public static FPoint SetValue (Guid PlanID, int[,] ufp, int[] caf, float ufpR, float cafR, float fpR, float effort, float time, int staff)
         {
             var @fp = new FPoint
             {
@@ -86,7 +92,10 @@ namespace SoftwareEstimation.Plans
 
                 UFP = ufpR,
                 CAF = cafR,
-                FP = fpR
+                FP = fpR,
+                Effort = effort,
+                Time = time,
+                Staff = staff
             };
             return fp;
         }

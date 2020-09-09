@@ -1,0 +1,193 @@
+<!--component html goes here -->
+<div class="row clearfix" [@routerTransition]>
+    <div class="card" style='max-width: 1000px; margin-left:auto; margin-right: auto;'>
+        <div class='header' style="text-align: center;">
+            <h1>Estimation Result</h1>
+        </div>
+        <div class='body row information-box'>
+            <div class='col-md-12'>
+                <b>Project:</b> {{plan.title}}
+            </div>
+            <div class='col-md-12'>
+                <b>Description:</b> {{plan.description}}
+            </div>
+            <div class='col-md-12' *ngIf="showedCCM">
+                <div *ngIf='showedCCM.projects'>
+                    <div *ngIf='showedCCM.projects.type =="Link"'>
+                        <b>Project link:</b> <a href="{{showedCCM.projects.linkURL}}"> {{showedCCM.projects.linkURL}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-12' *ngIf="showedCCM">
+                <div *ngIf='showedCCM.projects'>
+                    <div *ngIf='showedCCM.projects.type =="Input File"'>
+                        <b>Project file name:</b> {{showedCCM.projects.linkURL}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COCOMO -->
+        <div *ngIf='showedCCM'>
+            <div class='header'>
+                <h4>Estimation using COCOMO</h4>
+            </div>
+            <div class='body row information-box'>
+                <div class='col-md-4'>
+                    Size (SLOC):
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedCCM.sloc}}
+                </div>
+                <div class='col-md-4'>
+                    Effort:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedCCM.effort}}
+                </div>
+                <div class='col-md-4'>
+                    Time:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedCCM.time}}
+                </div>
+                <div class='col-md-4'>
+                    Staff:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedCCM.staff}}
+                </div>
+            </div>
+
+        </div>
+        <!-- UCP -->
+        <div *ngIf="showedUCP">
+            <div class='header'>
+                <h4>Estimation using UCP</h4>
+            </div>
+            <div class='body row information-box'>
+                <div class='col-md-4'>
+                    Total Use case point:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedUCP.ucp}}
+                </div>
+                <div class='col-md-4'>
+                    Unadjusted use case point:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedUCP.uucp}}
+                </div>
+                <div class='col-md-4'>
+                    Technical Complexity Factors:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedUCP.tf}}
+                </div>
+                <div class='col-md-4'>
+                    Environmental Complexity Factors:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedUCP.ef}}
+                </div>
+            </div>
+
+        </div>
+        <!-- FP -->
+        <div *ngIf="showedFP">
+            <div class='header'>
+                <h4>Estimation using FP</h4>
+            </div>
+            <div class='body row information-box'>
+                <div class='col-md-4'>
+                    Total Function point:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedFP.fp}}
+                </div>
+                <div class='col-md-4'>
+                    Unadjusted function point:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedFP.ufp}}
+                </div>
+                <div class='col-md-4'>
+                    Complexity Adjusted Factors:
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedFP.caf}}
+                </div>
+            </div>
+
+        </div>
+        <!-- Summary -->
+
+        <div class='header'>
+            <h4>Summary</h4>
+        </div>
+        <div class='body row information-box' style='font-weight: bold;'>
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    Size(Sloc):
+                </div>
+                <div class='col-md-8 text-right' *ngIf='showedCCM'>
+                    {{showedCCM.sloc}}
+                </div>
+            </div>
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    Total Use Case Point:
+                </div>
+                <div class='col-md-8 text-right' *ngIf='showedUCP'>
+                    {{showedUCP.ucp}}
+                </div>
+            </div>
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    Total Function point:
+                </div>
+                <div class='col-md-8 text-right' *ngIf='showedFP'>
+                    {{showedFP.fp}}
+                </div>
+            </div>
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    Effort (Person-Month):
+                </div>
+                <div class='col-md-8 text-right' *ngIf='showedCCM'>
+                    {{showedCCM.effort}}
+                </div>
+            </div>
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    Time to develop (Month):
+                </div>
+                <div class='col-md-8 text-right' *ngIf='showedCCM'>
+                    {{showedCCM.time}} 
+                </div>
+            </div>
+            <div class='col-md-12'>
+                <div class='col-md-4'>
+                    Staff:
+                </div>
+                <div class='col-md-8 text-right' *ngIf='showedCCM'>
+                    {{showedCCM.staff}} 
+                </div>
+            </div>
+
+        </div>
+        <textarea #summary style="opacity: .01; height:0; position:absolute; z-index: -1;">
+            Summary 
+            Size(SLOC): {{showedCCM.sloc}}   
+            Total Use Case Point: {{showedUCP.ucp}} 
+            Total Function point: {{showedFP.fp}}
+            Effort (Person-Month): {{showedCCM.effort}}
+            Time to develop (Month): {{showedCCM.time}}
+            Person: {{showedCCM.staff}} 
+        </textarea>
+        <div class='body text-center'>
+            <button mat-raised-button color='primary' (click)='CopyClipboard(summary)'>Copy the summary to
+                clipboard</button>
+        </div>
+    </div>
+</div>

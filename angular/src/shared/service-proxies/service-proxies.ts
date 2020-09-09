@@ -536,8 +536,8 @@ export class PlanServiceProxy {
      * @param input (optional) 
      * @return Success
      */
-    setSep(input: SepInput | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Plan/SetSep";
+    setCcm(input: CcmInput | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/SetCcm";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -552,11 +552,11 @@ export class PlanServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processSetSep(response_);
+            return this.processSetCcm(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processSetSep(<any>response_);
+                    return this.processSetCcm(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -565,7 +565,7 @@ export class PlanServiceProxy {
         }));
     }
 
-    protected processSetSep(response: HttpResponseBase): Observable<void> {
+    protected processSetCcm(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -588,8 +588,8 @@ export class PlanServiceProxy {
      * @param planID (optional) 
      * @return Success
      */
-    getSepOutput(planID: string | null | undefined): Observable<SepOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Plan/GetSepOutput?";
+    getOutputCcm(planID: string | null | undefined): Observable<CcmOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetOutputCcm?";
         if (planID !== undefined)
             url_ += "planID=" + encodeURIComponent("" + planID) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -603,20 +603,20 @@ export class PlanServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSepOutput(response_);
+            return this.processGetOutputCcm(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSepOutput(<any>response_);
+                    return this.processGetOutputCcm(<any>response_);
                 } catch (e) {
-                    return <Observable<SepOutput>><any>_observableThrow(e);
+                    return <Observable<CcmOutput>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<SepOutput>><any>_observableThrow(response_);
+                return <Observable<CcmOutput>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetSepOutput(response: HttpResponseBase): Observable<SepOutput> {
+    protected processGetOutputCcm(response: HttpResponseBase): Observable<CcmOutput> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -627,7 +627,7 @@ export class PlanServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = SepOutput.fromJS(resultData200);
+            result200 = CcmOutput.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -635,7 +635,7 @@ export class PlanServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<SepOutput>(<any>null);
+        return _observableOf<CcmOutput>(<any>null);
     }
 
     /**
@@ -742,6 +742,57 @@ export class PlanServiceProxy {
             }));
         }
         return _observableOf<FpOutput>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    generalInformation(): Observable<HomeDetailDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GeneralInformation";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGeneralInformation(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGeneralInformation(<any>response_);
+                } catch (e) {
+                    return <Observable<HomeDetailDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<HomeDetailDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGeneralInformation(response: HttpResponseBase): Observable<HomeDetailDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = HomeDetailDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<HomeDetailDto>(<any>null);
     }
 }
 
@@ -1173,6 +1224,59 @@ export class ProjectServiceProxy {
             }));
         }
         return _observableOf<ListResultDtoOfProjectSlocDetail>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @param languages (optional) 
+     * @return Success
+     */
+    modifyLanguageValue(id: string | null | undefined, languages: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Project/ModifyLanguageValue?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        if (languages !== undefined)
+            url_ += "Languages=" + encodeURIComponent("" + languages) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processModifyLanguageValue(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processModifyLanguageValue(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processModifyLanguageValue(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -3003,8 +3107,11 @@ export class PlanListDto implements IPlanListDto {
     title: string | undefined;
     description: string | undefined;
     ucpLatest: UCPoint | undefined;
-    sepLatest: SEPoint | undefined;
+    ccmLatest: Cocomo | undefined;
     fpLatest: FPoint | undefined;
+    totalEffort: number | undefined;
+    totalTime: number | undefined;
+    totalStaff: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -3028,8 +3135,11 @@ export class PlanListDto implements IPlanListDto {
             this.title = _data["title"];
             this.description = _data["description"];
             this.ucpLatest = _data["ucpLatest"] ? UCPoint.fromJS(_data["ucpLatest"]) : <any>undefined;
-            this.sepLatest = _data["sepLatest"] ? SEPoint.fromJS(_data["sepLatest"]) : <any>undefined;
+            this.ccmLatest = _data["ccmLatest"] ? Cocomo.fromJS(_data["ccmLatest"]) : <any>undefined;
             this.fpLatest = _data["fpLatest"] ? FPoint.fromJS(_data["fpLatest"]) : <any>undefined;
+            this.totalEffort = _data["totalEffort"];
+            this.totalTime = _data["totalTime"];
+            this.totalStaff = _data["totalStaff"];
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
@@ -3053,8 +3163,11 @@ export class PlanListDto implements IPlanListDto {
         data["title"] = this.title;
         data["description"] = this.description;
         data["ucpLatest"] = this.ucpLatest ? this.ucpLatest.toJSON() : <any>undefined;
-        data["sepLatest"] = this.sepLatest ? this.sepLatest.toJSON() : <any>undefined;
+        data["ccmLatest"] = this.ccmLatest ? this.ccmLatest.toJSON() : <any>undefined;
         data["fpLatest"] = this.fpLatest ? this.fpLatest.toJSON() : <any>undefined;
+        data["totalEffort"] = this.totalEffort;
+        data["totalTime"] = this.totalTime;
+        data["totalStaff"] = this.totalStaff;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -3078,8 +3191,11 @@ export interface IPlanListDto {
     title: string | undefined;
     description: string | undefined;
     ucpLatest: UCPoint | undefined;
-    sepLatest: SEPoint | undefined;
+    ccmLatest: Cocomo | undefined;
     fpLatest: FPoint | undefined;
+    totalEffort: number | undefined;
+    totalTime: number | undefined;
+    totalStaff: number | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -3091,6 +3207,7 @@ export interface IPlanListDto {
 }
 
 export class UCPoint implements IUCPoint {
+    tenantId: number | undefined;
     planId: string | undefined;
     ucp: number | undefined;
     uucp: number | undefined;
@@ -3123,6 +3240,9 @@ export class UCPoint implements IUCPoint {
     e5: number | undefined;
     e6: number | undefined;
     e7: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
@@ -3138,6 +3258,7 @@ export class UCPoint implements IUCPoint {
 
     init(_data?: any) {
         if (_data) {
+            this.tenantId = _data["tenantId"];
             this.planId = _data["planId"];
             this.ucp = _data["ucp"];
             this.uucp = _data["uucp"];
@@ -3170,6 +3291,9 @@ export class UCPoint implements IUCPoint {
             this.e5 = _data["e5"];
             this.e6 = _data["e6"];
             this.e7 = _data["e7"];
+            this.effort = _data["effort"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
@@ -3185,6 +3309,7 @@ export class UCPoint implements IUCPoint {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
         data["planId"] = this.planId;
         data["ucp"] = this.ucp;
         data["uucp"] = this.uucp;
@@ -3217,6 +3342,9 @@ export class UCPoint implements IUCPoint {
         data["e5"] = this.e5;
         data["e6"] = this.e6;
         data["e7"] = this.e7;
+        data["effort"] = this.effort;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
@@ -3232,6 +3360,7 @@ export class UCPoint implements IUCPoint {
 }
 
 export interface IUCPoint {
+    tenantId: number | undefined;
     planId: string | undefined;
     ucp: number | undefined;
     uucp: number | undefined;
@@ -3264,13 +3393,19 @@ export interface IUCPoint {
     e5: number | undefined;
     e6: number | undefined;
     e7: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
 }
 
-export class SEPoint implements ISEPoint {
+export class Cocomo implements ICocomo {
+    tenantId: number | undefined;
     planId: string | undefined;
+    projects: Project | undefined;
+    projectId: string | undefined;
     sloc: number | undefined;
     mode: number | undefined;
     model: number | undefined;
@@ -3281,7 +3416,7 @@ export class SEPoint implements ISEPoint {
     creatorUserId: number | undefined;
     id: number | undefined;
 
-    constructor(data?: ISEPoint) {
+    constructor(data?: ICocomo) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3292,7 +3427,10 @@ export class SEPoint implements ISEPoint {
 
     init(_data?: any) {
         if (_data) {
+            this.tenantId = _data["tenantId"];
             this.planId = _data["planId"];
+            this.projects = _data["projects"] ? Project.fromJS(_data["projects"]) : <any>undefined;
+            this.projectId = _data["projectId"];
             this.sloc = _data["sloc"];
             this.mode = _data["mode"];
             this.model = _data["model"];
@@ -3305,16 +3443,19 @@ export class SEPoint implements ISEPoint {
         }
     }
 
-    static fromJS(data: any): SEPoint {
+    static fromJS(data: any): Cocomo {
         data = typeof data === 'object' ? data : {};
-        let result = new SEPoint();
+        let result = new Cocomo();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
         data["planId"] = this.planId;
+        data["projects"] = this.projects ? this.projects.toJSON() : <any>undefined;
+        data["projectId"] = this.projectId;
         data["sloc"] = this.sloc;
         data["mode"] = this.mode;
         data["model"] = this.model;
@@ -3327,16 +3468,19 @@ export class SEPoint implements ISEPoint {
         return data; 
     }
 
-    clone(): SEPoint {
+    clone(): Cocomo {
         const json = this.toJSON();
-        let result = new SEPoint();
+        let result = new Cocomo();
         result.init(json);
         return result;
     }
 }
 
-export interface ISEPoint {
+export interface ICocomo {
+    tenantId: number | undefined;
     planId: string | undefined;
+    projects: Project | undefined;
+    projectId: string | undefined;
     sloc: number | undefined;
     mode: number | undefined;
     model: number | undefined;
@@ -3349,6 +3493,7 @@ export interface ISEPoint {
 }
 
 export class FPoint implements IFPoint {
+    tenantId: number | undefined;
     planId: string | undefined;
     fp: number | undefined;
     ufp: number | undefined;
@@ -3382,6 +3527,9 @@ export class FPoint implements IFPoint {
     c12: number | undefined;
     c13: number | undefined;
     c14: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
@@ -3397,6 +3545,7 @@ export class FPoint implements IFPoint {
 
     init(_data?: any) {
         if (_data) {
+            this.tenantId = _data["tenantId"];
             this.planId = _data["planId"];
             this.fp = _data["fp"];
             this.ufp = _data["ufp"];
@@ -3430,6 +3579,9 @@ export class FPoint implements IFPoint {
             this.c12 = _data["c12"];
             this.c13 = _data["c13"];
             this.c14 = _data["c14"];
+            this.effort = _data["effort"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
@@ -3445,6 +3597,7 @@ export class FPoint implements IFPoint {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
         data["planId"] = this.planId;
         data["fp"] = this.fp;
         data["ufp"] = this.ufp;
@@ -3478,6 +3631,9 @@ export class FPoint implements IFPoint {
         data["c12"] = this.c12;
         data["c13"] = this.c13;
         data["c14"] = this.c14;
+        data["effort"] = this.effort;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
@@ -3493,6 +3649,7 @@ export class FPoint implements IFPoint {
 }
 
 export interface IFPoint {
+    tenantId: number | undefined;
     planId: string | undefined;
     fp: number | undefined;
     ufp: number | undefined;
@@ -3526,9 +3683,119 @@ export interface IFPoint {
     c12: number | undefined;
     c13: number | undefined;
     c14: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
+}
+
+export class Project implements IProject {
+    tenantId: number | undefined;
+    readonly title: string | undefined;
+    readonly type: string | undefined;
+    readonly linkURL: string | undefined;
+    readonly sloc: number | undefined;
+    readonly size: number | undefined;
+    readonly isReady: boolean | undefined;
+    readonly isCloned: boolean | undefined;
+    readonly languages: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: string | undefined;
+
+    constructor(data?: IProject) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.tenantId = _data["tenantId"];
+            (<any>this).title = _data["title"];
+            (<any>this).type = _data["type"];
+            (<any>this).linkURL = _data["linkURL"];
+            (<any>this).sloc = _data["sloc"];
+            (<any>this).size = _data["size"];
+            (<any>this).isReady = _data["isReady"];
+            (<any>this).isCloned = _data["isCloned"];
+            (<any>this).languages = _data["languages"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): Project {
+        data = typeof data === 'object' ? data : {};
+        let result = new Project();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["title"] = this.title;
+        data["type"] = this.type;
+        data["linkURL"] = this.linkURL;
+        data["sloc"] = this.sloc;
+        data["size"] = this.size;
+        data["isReady"] = this.isReady;
+        data["isCloned"] = this.isCloned;
+        data["languages"] = this.languages;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): Project {
+        const json = this.toJSON();
+        let result = new Project();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IProject {
+    tenantId: number | undefined;
+    title: string | undefined;
+    type: string | undefined;
+    linkURL: string | undefined;
+    sloc: number | undefined;
+    size: number | undefined;
+    isReady: boolean | undefined;
+    isCloned: boolean | undefined;
+    languages: string | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: string | undefined;
 }
 
 export class PlanDetailOutput implements IPlanDetailOutput {
@@ -3536,7 +3803,10 @@ export class PlanDetailOutput implements IPlanDetailOutput {
     description: string | undefined;
     ucp: UCPoint[] | undefined;
     fp: FPoint[] | undefined;
-    sep: SEPoint[] | undefined;
+    ccm: Cocomo[] | undefined;
+    totalEffort: number | undefined;
+    totalTime: number | undefined;
+    totalStaff: number | undefined;
 
     constructor(data?: IPlanDetailOutput) {
         if (data) {
@@ -3561,11 +3831,14 @@ export class PlanDetailOutput implements IPlanDetailOutput {
                 for (let item of _data["fp"])
                     this.fp.push(FPoint.fromJS(item));
             }
-            if (Array.isArray(_data["sep"])) {
-                this.sep = [] as any;
-                for (let item of _data["sep"])
-                    this.sep.push(SEPoint.fromJS(item));
+            if (Array.isArray(_data["ccm"])) {
+                this.ccm = [] as any;
+                for (let item of _data["ccm"])
+                    this.ccm.push(Cocomo.fromJS(item));
             }
+            this.totalEffort = _data["totalEffort"];
+            this.totalTime = _data["totalTime"];
+            this.totalStaff = _data["totalStaff"];
         }
     }
 
@@ -3590,11 +3863,14 @@ export class PlanDetailOutput implements IPlanDetailOutput {
             for (let item of this.fp)
                 data["fp"].push(item.toJSON());
         }
-        if (Array.isArray(this.sep)) {
-            data["sep"] = [];
-            for (let item of this.sep)
-                data["sep"].push(item.toJSON());
+        if (Array.isArray(this.ccm)) {
+            data["ccm"] = [];
+            for (let item of this.ccm)
+                data["ccm"].push(item.toJSON());
         }
+        data["totalEffort"] = this.totalEffort;
+        data["totalTime"] = this.totalTime;
+        data["totalStaff"] = this.totalStaff;
         return data; 
     }
 
@@ -3611,7 +3887,10 @@ export interface IPlanDetailOutput {
     description: string | undefined;
     ucp: UCPoint[] | undefined;
     fp: FPoint[] | undefined;
-    sep: SEPoint[] | undefined;
+    ccm: Cocomo[] | undefined;
+    totalEffort: number | undefined;
+    totalTime: number | undefined;
+    totalStaff: number | undefined;
 }
 
 export class UcpInput implements IUcpInput {
@@ -3623,6 +3902,9 @@ export class UcpInput implements IUcpInput {
     tfR: number | undefined;
     efR: number | undefined;
     ucpR: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
 
     constructor(data?: IUcpInput) {
         if (data) {
@@ -3655,6 +3937,9 @@ export class UcpInput implements IUcpInput {
             this.tfR = _data["tfR"];
             this.efR = _data["efR"];
             this.ucpR = _data["ucpR"];
+            this.effort = _data["effort"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
         }
     }
 
@@ -3687,6 +3972,9 @@ export class UcpInput implements IUcpInput {
         data["tfR"] = this.tfR;
         data["efR"] = this.efR;
         data["ucpR"] = this.ucpR;
+        data["effort"] = this.effort;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
         return data; 
     }
 
@@ -3707,6 +3995,9 @@ export interface IUcpInput {
     tfR: number | undefined;
     efR: number | undefined;
     ucpR: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
 }
 
 export class UcpOutput implements IUcpOutput {
@@ -3714,6 +4005,9 @@ export class UcpOutput implements IUcpOutput {
     uucp: number[] | undefined;
     ef: number[] | undefined;
     tf: number[] | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
@@ -3745,6 +4039,9 @@ export class UcpOutput implements IUcpOutput {
                 for (let item of _data["tf"])
                     this.tf.push(item);
             }
+            this.effort = _data["effort"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
@@ -3776,6 +4073,9 @@ export class UcpOutput implements IUcpOutput {
             for (let item of this.tf)
                 data["tf"].push(item);
         }
+        data["effort"] = this.effort;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
@@ -3795,12 +4095,15 @@ export interface IUcpOutput {
     uucp: number[] | undefined;
     ef: number[] | undefined;
     tf: number[] | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
 }
 
-export class SepInput implements ISepInput {
+export class CcmInput implements ICcmInput {
     planID: string | undefined;
     sloc: number | undefined;
     mode: number | undefined;
@@ -3808,8 +4111,9 @@ export class SepInput implements ISepInput {
     effort: number | undefined;
     time: number | undefined;
     staff: number | undefined;
+    projectID: string | undefined;
 
-    constructor(data?: ISepInput) {
+    constructor(data?: ICcmInput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3827,12 +4131,13 @@ export class SepInput implements ISepInput {
             this.effort = _data["effort"];
             this.time = _data["time"];
             this.staff = _data["staff"];
+            this.projectID = _data["projectID"];
         }
     }
 
-    static fromJS(data: any): SepInput {
+    static fromJS(data: any): CcmInput {
         data = typeof data === 'object' ? data : {};
-        let result = new SepInput();
+        let result = new CcmInput();
         result.init(data);
         return result;
     }
@@ -3846,18 +4151,19 @@ export class SepInput implements ISepInput {
         data["effort"] = this.effort;
         data["time"] = this.time;
         data["staff"] = this.staff;
+        data["projectID"] = this.projectID;
         return data; 
     }
 
-    clone(): SepInput {
+    clone(): CcmInput {
         const json = this.toJSON();
-        let result = new SepInput();
+        let result = new CcmInput();
         result.init(json);
         return result;
     }
 }
 
-export interface ISepInput {
+export interface ICcmInput {
     planID: string | undefined;
     sloc: number | undefined;
     mode: number | undefined;
@@ -3865,9 +4171,10 @@ export interface ISepInput {
     effort: number | undefined;
     time: number | undefined;
     staff: number | undefined;
+    projectID: string | undefined;
 }
 
-export class SepOutput implements ISepOutput {
+export class CcmOutput implements ICcmOutput {
     planID: string | undefined;
     sloc: number | undefined;
     mode: number | undefined;
@@ -3875,11 +4182,12 @@ export class SepOutput implements ISepOutput {
     effort: number | undefined;
     time: number | undefined;
     staff: number | undefined;
+    projectID: string | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
 
-    constructor(data?: ISepOutput) {
+    constructor(data?: ICcmOutput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3897,15 +4205,16 @@ export class SepOutput implements ISepOutput {
             this.effort = _data["effort"];
             this.time = _data["time"];
             this.staff = _data["staff"];
+            this.projectID = _data["projectID"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
         }
     }
 
-    static fromJS(data: any): SepOutput {
+    static fromJS(data: any): CcmOutput {
         data = typeof data === 'object' ? data : {};
-        let result = new SepOutput();
+        let result = new CcmOutput();
         result.init(data);
         return result;
     }
@@ -3919,21 +4228,22 @@ export class SepOutput implements ISepOutput {
         data["effort"] = this.effort;
         data["time"] = this.time;
         data["staff"] = this.staff;
+        data["projectID"] = this.projectID;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
         return data; 
     }
 
-    clone(): SepOutput {
+    clone(): CcmOutput {
         const json = this.toJSON();
-        let result = new SepOutput();
+        let result = new CcmOutput();
         result.init(json);
         return result;
     }
 }
 
-export interface ISepOutput {
+export interface ICcmOutput {
     planID: string | undefined;
     sloc: number | undefined;
     mode: number | undefined;
@@ -3941,6 +4251,7 @@ export interface ISepOutput {
     effort: number | undefined;
     time: number | undefined;
     staff: number | undefined;
+    projectID: string | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
@@ -3953,6 +4264,9 @@ export class FpInput implements IFpInput {
     ufpR: number | undefined;
     cafR: number | undefined;
     fpR: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
 
     constructor(data?: IFpInput) {
         if (data) {
@@ -3979,6 +4293,9 @@ export class FpInput implements IFpInput {
             this.ufpR = _data["ufpR"];
             this.cafR = _data["cafR"];
             this.fpR = _data["fpR"];
+            this.effort = _data["effort"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
         }
     }
 
@@ -4005,6 +4322,9 @@ export class FpInput implements IFpInput {
         data["ufpR"] = this.ufpR;
         data["cafR"] = this.cafR;
         data["fpR"] = this.fpR;
+        data["effort"] = this.effort;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
         return data; 
     }
 
@@ -4023,12 +4343,18 @@ export interface IFpInput {
     ufpR: number | undefined;
     cafR: number | undefined;
     fpR: number | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
 }
 
 export class FpOutput implements IFpOutput {
     planID: string | undefined;
     ufp: number[] | undefined;
     caf: number[] | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
@@ -4055,6 +4381,9 @@ export class FpOutput implements IFpOutput {
                 for (let item of _data["caf"])
                     this.caf.push(item);
             }
+            this.effort = _data["effort"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
             this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
@@ -4081,6 +4410,9 @@ export class FpOutput implements IFpOutput {
             for (let item of this.caf)
                 data["caf"].push(item);
         }
+        data["effort"] = this.effort;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
@@ -4099,9 +4431,91 @@ export interface IFpOutput {
     planID: string | undefined;
     ufp: number[] | undefined;
     caf: number[] | undefined;
+    effort: number | undefined;
+    time: number | undefined;
+    staff: number | undefined;
     creationTime: moment.Moment | undefined;
     creatorUserId: number | undefined;
     id: number | undefined;
+}
+
+export class HomeDetailDto implements IHomeDetailDto {
+    name: string | undefined;
+    surname: string | undefined;
+    nPlan: number | undefined;
+    nProject: number | undefined;
+    nUCP: number | undefined;
+    nFP: number | undefined;
+    nCcm: number | undefined;
+    allPlan: PlanListDto[] | undefined;
+
+    constructor(data?: IHomeDetailDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.surname = _data["surname"];
+            this.nPlan = _data["nPlan"];
+            this.nProject = _data["nProject"];
+            this.nUCP = _data["nUCP"];
+            this.nFP = _data["nFP"];
+            this.nCcm = _data["nCcm"];
+            if (Array.isArray(_data["allPlan"])) {
+                this.allPlan = [] as any;
+                for (let item of _data["allPlan"])
+                    this.allPlan.push(PlanListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): HomeDetailDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new HomeDetailDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["nPlan"] = this.nPlan;
+        data["nProject"] = this.nProject;
+        data["nUCP"] = this.nUCP;
+        data["nFP"] = this.nFP;
+        data["nCcm"] = this.nCcm;
+        if (Array.isArray(this.allPlan)) {
+            data["allPlan"] = [];
+            for (let item of this.allPlan)
+                data["allPlan"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): HomeDetailDto {
+        const json = this.toJSON();
+        let result = new HomeDetailDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHomeDetailDto {
+    name: string | undefined;
+    surname: string | undefined;
+    nPlan: number | undefined;
+    nProject: number | undefined;
+    nUCP: number | undefined;
+    nFP: number | undefined;
+    nCcm: number | undefined;
+    allPlan: PlanListDto[] | undefined;
 }
 
 export class ProjectInput implements IProjectInput {
@@ -4213,6 +4627,7 @@ export class ProjectListDto implements IProjectListDto {
     type: string | undefined;
     linkURL: string | undefined;
     isReady: boolean | undefined;
+    languages: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;
@@ -4239,6 +4654,7 @@ export class ProjectListDto implements IProjectListDto {
             this.type = _data["type"];
             this.linkURL = _data["linkURL"];
             this.isReady = _data["isReady"];
+            this.languages = _data["languages"];
             this.isDeleted = _data["isDeleted"];
             this.deleterUserId = _data["deleterUserId"];
             this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
@@ -4265,6 +4681,7 @@ export class ProjectListDto implements IProjectListDto {
         data["type"] = this.type;
         data["linkURL"] = this.linkURL;
         data["isReady"] = this.isReady;
+        data["languages"] = this.languages;
         data["isDeleted"] = this.isDeleted;
         data["deleterUserId"] = this.deleterUserId;
         data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
@@ -4291,6 +4708,7 @@ export interface IProjectListDto {
     type: string | undefined;
     linkURL: string | undefined;
     isReady: boolean | undefined;
+    languages: string | undefined;
     isDeleted: boolean | undefined;
     deleterUserId: number | undefined;
     deletionTime: moment.Moment | undefined;

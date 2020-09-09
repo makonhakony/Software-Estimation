@@ -52,7 +52,9 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
                         result['Type'].forEach(element => {
                             this.Pie.push({label: element['Language'],value:element['detail']['LogicalSLOC'] })
                         });
+                        console.log(this.Pie)
                         this.Pie.pop()
+                        
                         this.Pie.forEach(element => {
                             
                             element.value = Number((element.value/this.TotalSloc * 100).toFixed(1))
@@ -107,7 +109,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
         
     }
     DoCocomo(){
-        this._router.navigate(['app/SnEpoint'],{queryParams: {id:this.project.id}})
+        this._router.navigate(['app/cocomo'],{queryParams: {id:this.project.id}})
     }
     projectload: Pending<any>;
     isCalculating:boolean=false

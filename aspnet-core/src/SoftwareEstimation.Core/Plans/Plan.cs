@@ -20,16 +20,20 @@ namespace SoftwareEstimation.Plans
         
 
         [ForeignKey("PlanId")]
-        public virtual IList<UCPoint> UCP { get; set; }
+        public virtual ICollection<UCPoint> UCP { get; set; }
         public virtual UCPoint UcpLatest { get; set; }
 
         [ForeignKey("PlanId")]
-        public virtual IList<SEPoint> SEP { get; set; }
-        public virtual SEPoint SepLatest { get; set; }
+        public virtual ICollection<Cocomo> CCM { get; set; }
+        public virtual Cocomo CcmLatest { get; set; }
 
         [ForeignKey("PlanId")]
-        public virtual IList<FPoint> FP { get; set; }
+        public virtual ICollection<FPoint> FP { get; set; }
         public virtual FPoint FpLatest { get; set; }
+
+        public virtual float TotalEffort { get; set; }
+        public virtual float TotalTime { get; set; }
+        public virtual int TotalStaff { get; set; }
 
 
         protected Plan()
@@ -45,7 +49,7 @@ namespace SoftwareEstimation.Plans
                 Description = description
             };
             @plan.UCP = new List<UCPoint>();
-            @plan.SEP = new List<SEPoint>();
+            @plan.CCM = new List<Cocomo>();
             @plan.FP = new List<FPoint>();
             return @plan;
         }

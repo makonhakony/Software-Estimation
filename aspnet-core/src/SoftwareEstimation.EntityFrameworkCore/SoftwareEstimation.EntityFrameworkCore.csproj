@@ -32,6 +32,12 @@
     <Compile Remove="Migrations\20200728032258_test2.cs" />
     <Compile Remove="Migrations\20200728032549_Initial.cs" />
     <Compile Remove="Migrations\20200816155141_add-fk.cs" />
+    <Compile Remove="Migrations\20200828031509_change-ilist-to-icollection.cs" />
+    <Compile Remove="Migrations\20200829153942_update-project-model.cs" />
+    <Compile Remove="Migrations\20200829154616_update-project-model.cs" />
+    <Compile Remove="Migrations\20200904144735_allow-null.cs" />
+    <Compile Remove="Migrations\20200906052323_significant-change.cs" />
+    <Compile Remove="Migrations\20200906052846_significant-change.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />

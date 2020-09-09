@@ -392,27 +392,6 @@ namespace SoftwareEstimation.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppPlans",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    LastModificationTime = table.Column<DateTime>(nullable: true),
-                    LastModifierUserId = table.Column<long>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeleterUserId = table.Column<long>(nullable: true),
-                    DeletionTime = table.Column<DateTime>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    FPoint = table.Column<float>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppPlans", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AppProjects",
                 columns: table => new
                 {
@@ -424,62 +403,19 @@ namespace SoftwareEstimation.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeleterUserId = table.Column<long>(nullable: true),
                     DeletionTime = table.Column<DateTime>(nullable: true),
+                    TenantId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true),
                     LinkURL = table.Column<string>(nullable: true),
                     Sloc = table.Column<int>(nullable: false),
                     Size = table.Column<float>(nullable: false),
                     isReady = table.Column<bool>(nullable: false),
-                    isCloned = table.Column<bool>(nullable: false)
+                    isCloned = table.Column<bool>(nullable: false),
+                    Languages = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AppProjects", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UCPoints",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    UCP = table.Column<float>(nullable: false),
-                    UUCP = table.Column<float>(nullable: false),
-                    TF = table.Column<float>(nullable: false),
-                    EF = table.Column<float>(nullable: false),
-                    u0 = table.Column<int>(nullable: false),
-                    u1 = table.Column<int>(nullable: false),
-                    u2 = table.Column<int>(nullable: false),
-                    u3 = table.Column<int>(nullable: false),
-                    u4 = table.Column<int>(nullable: false),
-                    u5 = table.Column<int>(nullable: false),
-                    t0 = table.Column<int>(nullable: false),
-                    t1 = table.Column<int>(nullable: false),
-                    t2 = table.Column<int>(nullable: false),
-                    t3 = table.Column<int>(nullable: false),
-                    t4 = table.Column<int>(nullable: false),
-                    t5 = table.Column<int>(nullable: false),
-                    t6 = table.Column<int>(nullable: false),
-                    t7 = table.Column<int>(nullable: false),
-                    t8 = table.Column<int>(nullable: false),
-                    t9 = table.Column<int>(nullable: false),
-                    t10 = table.Column<int>(nullable: false),
-                    t11 = table.Column<int>(nullable: false),
-                    t12 = table.Column<int>(nullable: false),
-                    e0 = table.Column<int>(nullable: false),
-                    e1 = table.Column<int>(nullable: false),
-                    e2 = table.Column<int>(nullable: false),
-                    e3 = table.Column<int>(nullable: false),
-                    e4 = table.Column<int>(nullable: false),
-                    e5 = table.Column<int>(nullable: false),
-                    e6 = table.Column<int>(nullable: false),
-                    e7 = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UCPoints", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -744,33 +680,6 @@ namespace SoftwareEstimation.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SEPoints",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    CreatorUserId = table.Column<long>(nullable: true),
-                    PlanId = table.Column<Guid>(nullable: false),
-                    Sloc = table.Column<int>(nullable: false),
-                    Mode = table.Column<int>(nullable: false),
-                    Model = table.Column<int>(nullable: false),
-                    Effort = table.Column<float>(nullable: false),
-                    Time = table.Column<float>(nullable: false),
-                    Staff = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SEPoints", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SEPoints_AppPlans_PlanId",
-                        column: x => x.PlanId,
-                        principalTable: "AppPlans",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AbpEntityPropertyChanges",
                 columns: table => new
                 {
@@ -848,6 +757,181 @@ namespace SoftwareEstimation.Migrations
                         principalTable: "AbpRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cocomos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    TenantId = table.Column<int>(nullable: false),
+                    PlanId = table.Column<Guid>(nullable: false),
+                    ProjectId = table.Column<Guid>(nullable: true),
+                    Sloc = table.Column<int>(nullable: false),
+                    Mode = table.Column<int>(nullable: false),
+                    Model = table.Column<int>(nullable: false),
+                    Effort = table.Column<float>(nullable: false),
+                    Time = table.Column<float>(nullable: false),
+                    Staff = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cocomos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cocomos_AppProjects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "AppProjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FPoints",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    TenantId = table.Column<int>(nullable: false),
+                    PlanId = table.Column<Guid>(nullable: false),
+                    FP = table.Column<float>(nullable: false),
+                    UFP = table.Column<float>(nullable: false),
+                    CAF = table.Column<float>(nullable: false),
+                    u11 = table.Column<int>(nullable: false),
+                    u12 = table.Column<int>(nullable: false),
+                    u13 = table.Column<int>(nullable: false),
+                    u21 = table.Column<int>(nullable: false),
+                    u22 = table.Column<int>(nullable: false),
+                    u23 = table.Column<int>(nullable: false),
+                    u31 = table.Column<int>(nullable: false),
+                    u32 = table.Column<int>(nullable: false),
+                    u33 = table.Column<int>(nullable: false),
+                    u41 = table.Column<int>(nullable: false),
+                    u42 = table.Column<int>(nullable: false),
+                    u43 = table.Column<int>(nullable: false),
+                    u51 = table.Column<int>(nullable: false),
+                    u52 = table.Column<int>(nullable: false),
+                    u53 = table.Column<int>(nullable: false),
+                    c1 = table.Column<int>(nullable: false),
+                    c2 = table.Column<int>(nullable: false),
+                    c3 = table.Column<int>(nullable: false),
+                    c4 = table.Column<int>(nullable: false),
+                    c5 = table.Column<int>(nullable: false),
+                    c6 = table.Column<int>(nullable: false),
+                    c7 = table.Column<int>(nullable: false),
+                    c8 = table.Column<int>(nullable: false),
+                    c9 = table.Column<int>(nullable: false),
+                    c10 = table.Column<int>(nullable: false),
+                    c11 = table.Column<int>(nullable: false),
+                    c12 = table.Column<int>(nullable: false),
+                    c13 = table.Column<int>(nullable: false),
+                    c14 = table.Column<int>(nullable: false),
+                    Effort = table.Column<float>(nullable: false),
+                    Time = table.Column<float>(nullable: false),
+                    Staff = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FPoints", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UCPoints",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    TenantId = table.Column<int>(nullable: false),
+                    PlanId = table.Column<Guid>(nullable: false),
+                    UCP = table.Column<float>(nullable: false),
+                    UUCP = table.Column<float>(nullable: false),
+                    TF = table.Column<float>(nullable: false),
+                    EF = table.Column<float>(nullable: false),
+                    u0 = table.Column<int>(nullable: false),
+                    u1 = table.Column<int>(nullable: false),
+                    u2 = table.Column<int>(nullable: false),
+                    u3 = table.Column<int>(nullable: false),
+                    u4 = table.Column<int>(nullable: false),
+                    u5 = table.Column<int>(nullable: false),
+                    t0 = table.Column<int>(nullable: false),
+                    t1 = table.Column<int>(nullable: false),
+                    t2 = table.Column<int>(nullable: false),
+                    t3 = table.Column<int>(nullable: false),
+                    t4 = table.Column<int>(nullable: false),
+                    t5 = table.Column<int>(nullable: false),
+                    t6 = table.Column<int>(nullable: false),
+                    t7 = table.Column<int>(nullable: false),
+                    t8 = table.Column<int>(nullable: false),
+                    t9 = table.Column<int>(nullable: false),
+                    t10 = table.Column<int>(nullable: false),
+                    t11 = table.Column<int>(nullable: false),
+                    t12 = table.Column<int>(nullable: false),
+                    e0 = table.Column<int>(nullable: false),
+                    e1 = table.Column<int>(nullable: false),
+                    e2 = table.Column<int>(nullable: false),
+                    e3 = table.Column<int>(nullable: false),
+                    e4 = table.Column<int>(nullable: false),
+                    e5 = table.Column<int>(nullable: false),
+                    e6 = table.Column<int>(nullable: false),
+                    e7 = table.Column<int>(nullable: false),
+                    Effort = table.Column<float>(nullable: false),
+                    Time = table.Column<float>(nullable: false),
+                    Staff = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UCPoints", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppPlans",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    TenantId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    UcpLatestId = table.Column<int>(nullable: true),
+                    CcmLatestId = table.Column<int>(nullable: true),
+                    FpLatestId = table.Column<int>(nullable: true),
+                    TotalEffort = table.Column<float>(nullable: false),
+                    TotalTime = table.Column<float>(nullable: false),
+                    TotalStaff = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppPlans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppPlans_Cocomos_CcmLatestId",
+                        column: x => x.CcmLatestId,
+                        principalTable: "Cocomos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AppPlans_FPoints_FpLatestId",
+                        column: x => x.FpLatestId,
+                        principalTable: "FPoints",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AppPlans_UCPoints_UcpLatestId",
+                        column: x => x.UcpLatestId,
+                        principalTable: "UCPoints",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -1162,13 +1246,79 @@ namespace SoftwareEstimation.Migrations
                 columns: new[] { "TenantId", "UserId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_SEPoints_PlanId",
-                table: "SEPoints",
+                name: "IX_AppPlans_CcmLatestId",
+                table: "AppPlans",
+                column: "CcmLatestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppPlans_FpLatestId",
+                table: "AppPlans",
+                column: "FpLatestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppPlans_UcpLatestId",
+                table: "AppPlans",
+                column: "UcpLatestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cocomos_PlanId",
+                table: "Cocomos",
                 column: "PlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cocomos_ProjectId",
+                table: "Cocomos",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FPoints_PlanId",
+                table: "FPoints",
+                column: "PlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UCPoints_PlanId",
+                table: "UCPoints",
+                column: "PlanId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Cocomos_AppPlans_PlanId",
+                table: "Cocomos",
+                column: "PlanId",
+                principalTable: "AppPlans",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_FPoints_AppPlans_PlanId",
+                table: "FPoints",
+                column: "PlanId",
+                principalTable: "AppPlans",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_UCPoints_AppPlans_PlanId",
+                table: "UCPoints",
+                column: "PlanId",
+                principalTable: "AppPlans",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AppPlans_Cocomos_CcmLatestId",
+                table: "AppPlans");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_AppPlans_FPoints_FpLatestId",
+                table: "AppPlans");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_AppPlans_UCPoints_UcpLatestId",
+                table: "AppPlans");
+
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
 
@@ -1239,15 +1389,6 @@ namespace SoftwareEstimation.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AppProjects");
-
-            migrationBuilder.DropTable(
-                name: "SEPoints");
-
-            migrationBuilder.DropTable(
-                name: "UCPoints");
-
-            migrationBuilder.DropTable(
                 name: "AbpEntityChanges");
 
             migrationBuilder.DropTable(
@@ -1257,13 +1398,25 @@ namespace SoftwareEstimation.Migrations
                 name: "AbpEditions");
 
             migrationBuilder.DropTable(
-                name: "AppPlans");
-
-            migrationBuilder.DropTable(
                 name: "AbpEntityChangeSets");
 
             migrationBuilder.DropTable(
                 name: "AbpUsers");
+
+            migrationBuilder.DropTable(
+                name: "Cocomos");
+
+            migrationBuilder.DropTable(
+                name: "AppProjects");
+
+            migrationBuilder.DropTable(
+                name: "FPoints");
+
+            migrationBuilder.DropTable(
+                name: "UCPoints");
+
+            migrationBuilder.DropTable(
+                name: "AppPlans");
         }
     }
 }

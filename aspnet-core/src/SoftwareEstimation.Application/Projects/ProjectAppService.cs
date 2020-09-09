@@ -140,5 +140,29 @@ namespace SoftwareEstimation.Projects
 
             return new ListResultDto<ProjectSlocDetail>(project.MapTo<List<ProjectSlocDetail>>());
         }
+
+        public void ModifyLanguageValue(string Id, string Languages)
+        {
+            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
+            //Create SQL conection to your database here
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // Open your connection
+                conn.Open();
+                // Create the Command and Parameter objects.
+                // Here change the columnames and table names as per you table
+                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.AppProjects SET [Languages]=@Languages WHERE [Id]=@ProjectId", conn))
+                {
+                    // Provide the query string with a parameter placeholder.
+                    //Change the control name as per your design
+                    cmd.Parameters.AddWithValue("@projectId", Id);
+                    cmd.Parameters.AddWithValue("@Languages", Languages);
+
+                    // Execute the Query
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
     }
 }

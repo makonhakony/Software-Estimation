@@ -1,12 +1,14 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SoftwareEstimation.Plans
 {
-    public class UCPoint: CreationAuditedEntity
+    public class UCPoint: CreationAuditedEntity, IMustHaveTenant
     {
+        public virtual int TenantId { get; set; }
         public virtual Guid PlanId { get; set; }
         public virtual float UCP { get; set; }
         public virtual float UUCP { get; set; }
@@ -43,12 +45,16 @@ namespace SoftwareEstimation.Plans
         public virtual int e6 { get; set; }
         public virtual int e7 { get; set; }
 
+        public virtual float Effort { get; set; }
+        public virtual float Time { get; set; }
+        public virtual int Staff { get; set; }
+
         protected UCPoint()
         {
 
         }
 
-        public static UCPoint SetValue(Guid planID,int[] uucp, int[] tf, int[] ef,float ucpR, float uucpR, float tfR , float efR)
+        public static UCPoint SetValue(Guid planID,int[] uucp, int[] tf, int[] ef,float ucpR, float uucpR, float tfR , float efR, float effort, float time, int staff)
         {
             var @ucp = new UCPoint {
                 PlanId = planID,
@@ -85,8 +91,11 @@ namespace SoftwareEstimation.Plans
                 UCP = ucpR,
                 UUCP = uucpR,
                 TF =tfR,
-                EF =efR
+                EF =efR,
 
+                Effort = effort,
+                Time = time,
+                Staff = staff
             };
             return @ucp;
         }

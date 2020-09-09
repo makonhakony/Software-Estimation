@@ -12,5 +12,8 @@ namespace SoftwareEstimation.Plans.Dto
         public float ufpR { get; set; }
         public float cafR { get; set; }
         public float fpR { get; set; }
+        public float effort { get; set; }
+        public float time { get; set; }
+        public int staff { get; set; }
     }
 }

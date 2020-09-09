@@ -2,13 +2,15 @@
 <div class="row clearfix" [@routerTransition]>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="align-items: flex-start;">
         <div class="block-header row">
-            <div class='col-md-10'>
+            <div class='col-md-8'>
                 <h3>Estimation Detail</h3>
             </div>
-            <div class='col-md-2'>
+            <div class='col-md-4 text-right'>
                 <button type="button" [routerLink]="['/app/estimation']"
                     class="btn bg-black waves-effect waves-light"><i class="fa fa-arrow-circle-left"></i> Back to
                     estimation list</button>
+                <button type="button" [routerLink]="['/app/estimation/',planId,'summary']"
+                    class="btn bg-pink waves-effect waves-light"><i class="fa fa-info-circle"></i> Summary report</button>
             </div>
 
         </div>
@@ -42,7 +44,7 @@
                                         line-height: 1em;' class='slide-in-top'>{{showedUCP.tf}}</p>
                                         </li>
                                         <li>
-                                            <p>Environmental factor</p>
+                                            <p>Environmental factors</p>
                                             <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;' class='slide-in-top'>{{showedUCP.ef}}</p>
@@ -79,21 +81,21 @@
                                 <section id='header-strip'>
                                     <ul>
                                         <li>
-                                            <p>Effort</p>
+                                            <p>Unadjusted function point</p>
                                             <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         ' class='slide-in-top'>{{showedFP.ufp}}</p>
                                         </li>
                                         <li>
-                                            <p>Time</p>
+                                            <p>Complexity adjusted factors</p>
                                             <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         ' class='slide-in-top'>{{showedFP.caf}}</p>
                                         </li>
                                         <li>
-                                            <p>Number of staff</p>
+                                            <p>Function point</p>
                                             <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
@@ -108,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf='showedSEP'>
+            <div *ngIf='showedCCM'>
                 <div class='card main-content'>
                     <div class='header row'>
 
@@ -116,7 +118,7 @@
                             <h2>Schedule and Effort (Cocomo point)</h2>
                         </div>
                         <div class='col-md-6 text-right'>
-                            <p><b>Creation Time: {{showedSEP.creationTime | date:'short'}}</b></p>
+                            <p><b>Creation Time: {{showedCCM.creationTime | date:'short'}}</b></p>
                         </div>
                     </div>
                     <div class='body'>
@@ -129,21 +131,21 @@
                                             <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
-                                        color: teal;' class='slide-in-top'>{{showedSEP.effort}}</p>
+                                        color: teal;' class='slide-in-top'>{{showedCCM.sloc}}</p>
                                         </li>
                                         <li>
                                             <p>Time</p>
                                             <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
-                                        color:steelblue' class='slide-in-top'>{{showedSEP.staff}}</p>
+                                        color:steelblue' class='slide-in-top'>{{showedCCM.mode}}</p>
                                         </li>
                                         <li>
                                             <p>Number of staff</p>
                                             <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
-                                        color: saddlebrown;' class='slide-in-top'>{{showedSEP.time}}</p>
+                                        color: saddlebrown;' class='slide-in-top'>{{showedCCM.model}}</p>
                                         </li>
                                     </ul>
 
@@ -154,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
