@@ -9,6 +9,9 @@ export class AppPreBootstrap {
     static run(appRootUrl: string, callback: () => void): void {
         AppPreBootstrap.getApplicationConfig(appRootUrl, () => {
             AppPreBootstrap.getUserConfiguration(callback);
+
+
+            
         });
     }
 
