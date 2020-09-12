@@ -20,7 +20,7 @@ export interface ProjectListLoad extends ProjectListDto {
     animations: [appModuleAnimation()]
 })
 export class ProjectComponent implements OnInit {
-    @ViewChild('createProjectModal') createProjectModal: CreateProjectComponent;
+    //@ViewChild('createProjectModal') createProjectModal: CreateProjectComponent;
     readonly Status = Status;
     projectload: Pending<any>;
 
