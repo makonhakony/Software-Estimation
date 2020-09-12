@@ -1,0 +1,12 @@
+<!--component html goes here -->
+<h1 mat-dialog-title>Custom sloc value </h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Sloc value</mat-label>
+        <input matInput [(ngModel)]="sloc" required >
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Proceed</button>
+</div>

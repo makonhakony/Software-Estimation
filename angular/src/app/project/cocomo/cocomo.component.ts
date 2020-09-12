@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { SaveNewEstimationComponent } from '@app/estimation/save-new-estimation/save-new-estimation.component';
 import { HelperModalComponent } from '@app/estimation/helper-modal/helper-modal.component';
+import { CustomSlocComponent } from './custom-sloc/custom-sloc.component';
 
 export interface SelectedValue {
     value: string
@@ -218,4 +219,15 @@ export class CocomoComponent implements OnInit {
     
       })
       }
+    OpenCustomSloc(){
+        const dialogRef = this.dialog.open(CustomSlocComponent, {
+            width: '550px',
+            data: {}
+        });
+        dialogRef.afterClosed().subscribe(async result => {
+            this.selectedProject.title = "Custom value"
+            this.selectedProject.sloc = result.data
+            this.ChangeModel()
+        })
+    }
 }

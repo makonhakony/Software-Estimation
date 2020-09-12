@@ -16,9 +16,10 @@ import { CocomoComponent } from './project/cocomo/cocomo.component';
 import { TestRadioComponent } from './project/test-radio/test-radio.component';
 import { EstimationComponent } from './estimation/estimation.component';
 import { EstimationDetailComponent } from './estimation/estimation-detail/estimation-detail.component';
-import { CyclomaticComponent } from './cyclomatic/cyclomatic.component';
+import { CyclomaticComponent } from './project/cyclomatic/cyclomatic.component';
 import { FpComponent } from './fp/fp.component';
 import { SummaryReportComponent } from './estimation/summary-report/summary-report.component';
+import { HistoricalEstimationComponent } from './historical-estimation/historical-estimation.component';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ import { SummaryReportComponent } from './estimation/summary-report/summary-repo
                     { path: 'estimation/:estimationId',component: EstimationDetailComponent},
                     { path: 'estimation/:estimationId/summary',component:SummaryReportComponent},
                     { path: 'CCEva',component: CyclomaticComponent},
+                    { path: 'histoest',component: HistoricalEstimationComponent},
                     {path:'test',component: TestRadioComponent}
                 ]
             }

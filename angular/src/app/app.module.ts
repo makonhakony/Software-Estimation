@@ -60,14 +60,18 @@ import { CreateEstimationComponent } from './estimation/create-estimation/create
 import { AddEstimatingValueComponent } from './estimation/add-estimating-value/add-estimating-value.component';
 import { EstimationDetailComponent } from './estimation/estimation-detail/estimation-detail.component';
 import { SaveNewEstimationComponent } from './estimation/save-new-estimation/save-new-estimation.component';
-import { CyclomaticComponent } from './cyclomatic/cyclomatic.component';
-import { CyclomaticService } from './cyclomatic/cyclomatic.service';
+
 import { FpComponent } from './fp/fp.component';
 import { ComplexityFactorComponent } from './fp/complexity-factor/complexity-factor.component';
 import { UnadjustedFpComponent } from './fp/unadjusted-fp/unadjusted-fp.component';
 import { CalFpComponent } from './fp/cal-fp/cal-fp.component';
 import { HelperModalComponent } from './estimation/helper-modal/helper-modal.component';
 import { SummaryReportComponent } from './estimation/summary-report/summary-report.component';
+import { CustomSlocComponent } from './project/cocomo/custom-sloc/custom-sloc.component';
+import { HistoricalEstimationComponent } from './historical-estimation/historical-estimation.component';
+import { CreateNewHistoricalComponent } from './historical-estimation/create-new-historical/create-new-historical.component';
+import { CyclomaticService } from './project/cyclomatic/cyclomatic.service';
+import { CyclomaticComponent } from './project/cyclomatic/cyclomatic.component';
 
 @NgModule({
   declarations: [
@@ -100,13 +104,15 @@ import { SummaryReportComponent } from './estimation/summary-report/summary-repo
     ProjectDetailComponent,
     CreateProjectComponent,
     ProjectCalInfoComponent,
+    CocomoComponent,
+    CustomSlocComponent,
     //UCP
     UcpComponent,
     UnadjustedUcpComponent,
     TechnicalComplexityComponent,
     EnvironmentalComplexityComponent,
     CalUcpComponent,
-    CocomoComponent,
+    
     TestRadioComponent,
     //Estimation
     EstimationComponent,
@@ -122,7 +128,10 @@ import { SummaryReportComponent } from './estimation/summary-report/summary-repo
     FpComponent,
     UnadjustedFpComponent,
     ComplexityFactorComponent,
-    CalFpComponent
+    CalFpComponent,
+    //Historical
+    HistoricalEstimationComponent,
+    CreateNewHistoricalComponent
   ],
   imports: [
     CommonModule,
@@ -167,11 +176,15 @@ import { SummaryReportComponent } from './estimation/summary-report/summary-repo
     ResetPasswordDialogComponent,
     //project
     CreateProjectComponent,
+    CustomSlocComponent,
     //Estimation
     CreateEstimationComponent,
     AddEstimatingValueComponent,
     SaveNewEstimationComponent,
-    HelperModalComponent
+    HelperModalComponent,
+    //Historical
+    CreateNewHistoricalComponent
+    
   ],
   
 })

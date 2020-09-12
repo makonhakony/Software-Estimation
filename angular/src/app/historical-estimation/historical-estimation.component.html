@@ -1,0 +1,60 @@
+<!--component html goes here -->
+<div class="row clearfix" [@routerTransition]>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="align-items: flex-start;">
+      <div class="block-header row">
+        <div class='col-md-12 text-left'>
+          <h3> Historical Estimation Data</h3>
+        </div>
+        <div class="col-md-6 text-right">
+          <button type="button" data-toggle="modal"
+            class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" (click)="createOldEstimation()">
+            <i class="material-icons">add</i>
+          </button>
+        </div>
+        
+      </div>
+      <div class="row">
+        <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="All Historical Estimation">
+            <div class="col-md-6" *ngFor="let est of estimationList"> 
+              <div class="card">
+                <div class="block-header row">
+                  <div class="col-md-6">
+                    <div class="header">
+                      <h2 class="project-title">
+                        {{est.title}}
+                      </h2>
+                      
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="body">
+                      <small class="project-description">{{est.description}}</small>
+                      
+                      
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-2 text-center m-r--1">
+  
+                    <button type="button" class="btn bg-pink waves-effect btn-sm"
+                      [routerLink]="['/app/project', proj.id]">
+                      <span>Details</span>
+                      <i class="fa fa-arrow-circle-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>  
+        </mat-tab-group>
+  
+      </div>
+      
+    </div>
+  
+  
+  </div>

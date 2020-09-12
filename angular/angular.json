@@ -45,6 +45,7 @@
               "src/shared/core.less"
             ],
             "scripts": [
+              "profileLinkedin.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jquery-migrate/dist/jquery-migrate.min.js",
               "node_modules/js-cookie/src/js.cookie.js",

@@ -21,9 +21,10 @@ export class SideBarNavComponent extends AppComponentBase {
             new MenuItem(this.l('Cloned Project Storage'), '', 'cloud_done', '/app/project'),
             new MenuItem(this.l('Estimating Result Storage'), '', 'library_add_check', '/app/estimation'),
         ]),
+        new MenuItem(this.l('Personal Historical Data'), '', 'restore', '/app/histoest'),
         new MenuItem(this.l('Estimated by Use Case Point'), '', 'accessibility_new', '/app/ucp'),
         new MenuItem(this.l('Estimated by Function Point'), '', 'functions', '/app/fp'),
-        new MenuItem(this.l('Estimation using COCOMO'), '', 'av_timer', '/app/cocomo'),
+        new MenuItem(this.l('Estimation using COCOMO'), '', 'code', '/app/cocomo'),
 
     ];
 

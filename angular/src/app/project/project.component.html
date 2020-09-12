@@ -2,7 +2,7 @@
 <div class="row clearfix" [@routerTransition]>
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="align-items: flex-start;">
     <div class="block-header row">
-      <div class='col-md-6 text-left'>
+      <div class='col-md-12 text-left'>
         <h3> Project List</h3>
       </div>
       <div class="col-md-6 text-right">
@@ -88,6 +88,9 @@
               </div>
             </div>
           </div>
+        </mat-tab>
+        <mat-tab label="Cyclomatic Complexity">
+            <cyclomatic style='display: inline-block; width: 100%;'></cyclomatic>
         </mat-tab>
         <!-- PLAN TAB -->
         <!-- <mat-tab label="My Future Plans">
