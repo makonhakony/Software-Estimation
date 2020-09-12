@@ -10,8 +10,9 @@ export class AppPreBootstrap {
         AppPreBootstrap.getApplicationConfig(appRootUrl, () => {
             AppPreBootstrap.getUserConfiguration(callback);
 
-
             
+
+
         });
     }
 
