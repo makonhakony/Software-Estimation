@@ -102,7 +102,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
         var ms = moment(now, "DD/MM/YYYY HH:mm:ss").diff(moment(date, "DD/MM/YYYY HH:mm:ss"));
         var d = moment.duration(ms);
         var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
-        debugger
         if (d.days() == 0 && d.days() == 1)
             this.np_recently += 1
         else if (d.days() > 1 && d.days() <= 7)

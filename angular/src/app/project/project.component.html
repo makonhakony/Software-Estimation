@@ -97,17 +97,6 @@
                     <ul>
                       <li>
                         <p>Size (MB)</p>
-<<<<<<< HEAD
-                        <p style='font-size: 30px;
-            font-weight: bold;
-            line-height: 1em;' >{{(proj.size/1024/1024).toFixed(1)}}</p>
-                      </li>
-                      <li>
-                        <p>Number lines of code (lines)</p>
-                        <p style='font-size: 30px;
-            font-weight: bold;
-            line-height: 1em;' >{{proj.sloc}}</p>
-=======
                         <p>
                           <span style='font-size: 30px;font-weight: bold;line-height: 1em;'
                             *ngIf="proj.size!=0">{{(proj.size/1024/1024).toFixed(1)}}</span>
@@ -120,7 +109,6 @@
                             *ngIf="proj.sloc!=0">{{proj.sloc}}</span>
                           <span *ngIf="proj.sloc==0">Calculating...</span>
                         </p>
->>>>>>> fix-by-thanh
                       </li>
                     </ul>
                   </section>
