@@ -31,9 +31,10 @@
                         {{proj.title}}
 
                         <span class="label bg-green" *ngIf="proj.sloc > 0" style="margin-left: 5px;">COMPLETE</span>
-                        <span class="label bg-yellow"
-                          *ngIf="proj.sloc == 0 && proj.size > -1 && 100000000 > proj.size" style="margin-left: 5px;">PENDING</span>
-                        <span class="label bg-red" *ngIf="proj.sloc==-1 || 0 > proj.size || proj.size > 100000000" style="margin-left: 5px;">
+                        <span class="label bg-yellow" *ngIf="proj.sloc == 0 && proj.size > -1 && 100000000 > proj.size"
+                          style="margin-left: 5px;">PENDING</span>
+                        <span class="label bg-red" *ngIf="proj.sloc==-1 || 0 > proj.size || proj.size > 100000000"
+                          style="margin-left: 5px;">
                           <a style="text-decoration: none; outline: none; color: white"
                             (click)="RaiseError(proj.sloc, proj.size)">ERROR
                           </a></span>
@@ -106,8 +107,9 @@
                         <p>SLOC (lines)</p>
                         <p>
                           <span style='font-size: 30px;font-weight: bold;line-height: 1em;'
-                            *ngIf="proj.sloc!=0">{{proj.sloc}}</span>
-                          <span *ngIf="proj.sloc==0">Calculating...</span>
+                            *ngIf="proj.sloc>0">{{proj.sloc}}</span>
+                          <span *ngIf="proj.sloc==0 && proj.size>=0 && 104857600>proj.size">Calculating...</span>
+                          <span *ngIf="proj.sloc==-1 || 0>proj.size || proj.size>104857600">Cannot Calculate</span>
                         </p>
                       </li>
                     </ul>
