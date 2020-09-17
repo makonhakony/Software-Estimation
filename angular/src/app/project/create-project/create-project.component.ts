@@ -85,7 +85,8 @@ export class CreateProjectComponent extends AppComponentBase implements OnInit {
             // this.internalService.UploadProject(this.userID.toString(), this.data.title, this.fileToUpload).subscribe((result: any) => {
             //     console.log("after post:", result)
                 this._projectService.createWithLink(this.data) //actually this is file
-                    .subscribe(async () => {
+                    .subscribe(async (result) => {
+                        this.projectId =result
                         console.log("this data: ", this.data)
                         this.notify.info(this.l('SavedSuccessfully'));
 

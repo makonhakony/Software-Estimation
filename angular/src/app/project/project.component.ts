@@ -16,7 +16,7 @@ export interface ProjectListLoad extends ProjectListDto {
 }
 @Component({
     templateUrl: 'project.component.html',
-
+    styleUrls: ['project.component.scss'],
     animations: [appModuleAnimation()]
 })
 export class ProjectComponent implements OnInit {
@@ -66,12 +66,13 @@ export class ProjectComponent implements OnInit {
             data: { title: this.project.title, type: this.project.type, linkURL: this.project.linkURL, ProjectId: this.projectId, FileUpload: this.FileUpload }
         });
         dialogRef.afterClosed().subscribe(async result => {
-
+            //debugger
             console.log('after close:', result)
             this.projectId = result.projectId
             this.loadProject()
             if (result.data.type == "Link") {
                 this._internalService.Clonegit(this.userID.toString(), result.projectId, result.data.linkURL).subscribe(async (result1) => {
+                    
                     //START UCC HERE
                     console.log("1: ", result1)
                     this._projectService.modifySizeValue(this.projectId, result1.size).subscribe(()=>{
@@ -94,15 +95,20 @@ export class ProjectComponent implements OnInit {
             }
             else {
                 this._internalService.UploadProject(this.userID.toString(), result.projectId, result.FileUpload).subscribe(async (result1) => {
+                    
                     //START UCC HERE
-                    this.projectload = await this._internalService.load(this.userID, result.data.title)
+                    this._projectService.modifySizeValue(this.projectId, result1.size).subscribe(()=>{
+                        this.loadProject()
+                    })
+                    this.projectload = await this._internalService.load(this.userID, result.projectId)
                     this.isCalculating = true
-                    debugger
+                    //debugger
                     if (this.projectload) {
                         this.projectload.request.subscribe((result2) => {
 
                             this._projectService.modifySlocValue(this.projectId, result2.SLOC).subscribe(() => {
                                 console.log(this.projectId, result2.SLOC)
+                                this.loadProject()
                             })
 
                         })

@@ -40,7 +40,7 @@
     </div>
 </div>
 <div mat-dialog-actions>
-    <button mat-raised-button (click)="onNoClick()">No Thanks</button>
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
     <div *ngIf='SelectedValue.point ==0 ; else UpdateCost'>
         <button mat-raised-button color="warn" cdkFocusInitial (click)="GotoEstimation()">Go to calculation</button>
     </div>

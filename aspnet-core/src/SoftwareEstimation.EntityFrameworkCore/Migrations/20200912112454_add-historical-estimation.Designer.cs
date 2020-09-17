@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareEstimation.EntityFrameworkCore;
 
 namespace SoftwareEstimation.Migrations
 {
     [DbContext(typeof(SoftwareEstimationDbContext))]
-    partial class SoftwareEstimationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200912112454_add-historical-estimation")]
+    partial class addhistoricalestimation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1433,33 +1435,6 @@ namespace SoftwareEstimation.Migrations
                     b.ToTable("AppProjects");
                 });
 
-            modelBuilder.Entity("SoftwareEstimation.SharedEstimations.SharedEstimation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<Guid>("EstimationId");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<long>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EstimationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SharedEstimations");
-                });
-
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
                 {
                     b.HasBaseType("Abp.Application.Features.FeatureSetting");
@@ -1669,19 +1644,6 @@ namespace SoftwareEstimation.Migrations
                     b.HasOne("SoftwareEstimation.Plans.Plan")
                         .WithMany("UCP")
                         .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SoftwareEstimation.SharedEstimations.SharedEstimation", b =>
-                {
-                    b.HasOne("SoftwareEstimation.Plans.Plan", "Plans")
-                        .WithMany()
-                        .HasForeignKey("EstimationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SoftwareEstimation.Authorization.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

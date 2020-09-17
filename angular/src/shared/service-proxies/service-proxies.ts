@@ -205,6 +205,225 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class HistoEstimationServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param hist (optional) 
+     * @return Success
+     */
+    createHistoEst(hist: HistoInput | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/HistoEstimation/CreateHistoEst";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(hist);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateHistoEst(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateHistoEst(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateHistoEst(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getListHisto(): Observable<ListResultDtoOfHistoList> {
+        let url_ = this.baseUrl + "/api/services/app/HistoEstimation/GetListHisto";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetListHisto(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetListHisto(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfHistoList>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfHistoList>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetListHisto(response: HttpResponseBase): Observable<ListResultDtoOfHistoList> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ListResultDtoOfHistoList.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfHistoList>(<any>null);
+    }
+
+    /**
+     * @param type (optional) 
+     * @return Success
+     */
+    getAveragePf(type: string | null | undefined): Observable<HistoAverage> {
+        let url_ = this.baseUrl + "/api/services/app/HistoEstimation/GetAveragePf?";
+        if (type !== undefined)
+            url_ += "Type=" + encodeURIComponent("" + type) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAveragePf(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAveragePf(<any>response_);
+                } catch (e) {
+                    return <Observable<HistoAverage>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<HistoAverage>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAveragePf(response: HttpResponseBase): Observable<HistoAverage> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = HistoAverage.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<HistoAverage>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/HistoEstimation/Delete?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class PlanServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -3003,6 +3222,274 @@ export class ChangeUiThemeInput implements IChangeUiThemeInput {
 
 export interface IChangeUiThemeInput {
     theme: string;
+}
+
+export class HistoInput implements IHistoInput {
+    title: string | undefined;
+    description: string | undefined;
+    type: string | undefined;
+    time: number | undefined;
+    staff: number | undefined;
+    effort: number | undefined;
+    point: number | undefined;
+    pf: number | undefined;
+
+    constructor(data?: IHistoInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.type = _data["type"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
+            this.effort = _data["effort"];
+            this.point = _data["point"];
+            this.pf = _data["pf"];
+        }
+    }
+
+    static fromJS(data: any): HistoInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new HistoInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["type"] = this.type;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
+        data["effort"] = this.effort;
+        data["point"] = this.point;
+        data["pf"] = this.pf;
+        return data; 
+    }
+
+    clone(): HistoInput {
+        const json = this.toJSON();
+        let result = new HistoInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHistoInput {
+    title: string | undefined;
+    description: string | undefined;
+    type: string | undefined;
+    time: number | undefined;
+    staff: number | undefined;
+    effort: number | undefined;
+    point: number | undefined;
+    pf: number | undefined;
+}
+
+export class ListResultDtoOfHistoList implements IListResultDtoOfHistoList {
+    items: HistoList[] | undefined;
+
+    constructor(data?: IListResultDtoOfHistoList) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(HistoList.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfHistoList {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfHistoList();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfHistoList {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfHistoList();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfHistoList {
+    items: HistoList[] | undefined;
+}
+
+export class HistoList implements IHistoList {
+    title: string | undefined;
+    description: string | undefined;
+    type: string | undefined;
+    time: number | undefined;
+    staff: number | undefined;
+    effort: number | undefined;
+    point: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: string | undefined;
+
+    constructor(data?: IHistoList) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.type = _data["type"];
+            this.time = _data["time"];
+            this.staff = _data["staff"];
+            this.effort = _data["effort"];
+            this.point = _data["point"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): HistoList {
+        data = typeof data === 'object' ? data : {};
+        let result = new HistoList();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["type"] = this.type;
+        data["time"] = this.time;
+        data["staff"] = this.staff;
+        data["effort"] = this.effort;
+        data["point"] = this.point;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): HistoList {
+        const json = this.toJSON();
+        let result = new HistoList();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHistoList {
+    title: string | undefined;
+    description: string | undefined;
+    type: string | undefined;
+    time: number | undefined;
+    staff: number | undefined;
+    effort: number | undefined;
+    point: number | undefined;
+    isDeleted: boolean | undefined;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment | undefined;
+    creatorUserId: number | undefined;
+    id: string | undefined;
+}
+
+export class HistoAverage implements IHistoAverage {
+    notNull: boolean | undefined;
+    pf: number | undefined;
+
+    constructor(data?: IHistoAverage) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.notNull = _data["notNull"];
+            this.pf = _data["pf"];
+        }
+    }
+
+    static fromJS(data: any): HistoAverage {
+        data = typeof data === 'object' ? data : {};
+        let result = new HistoAverage();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["notNull"] = this.notNull;
+        data["pf"] = this.pf;
+        return data; 
+    }
+
+    clone(): HistoAverage {
+        const json = this.toJSON();
+        let result = new HistoAverage();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IHistoAverage {
+    notNull: boolean | undefined;
+    pf: number | undefined;
 }
 
 export class PlanInput implements IPlanInput {

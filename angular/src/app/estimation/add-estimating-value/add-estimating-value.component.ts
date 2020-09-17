@@ -36,7 +36,7 @@ export class AddEstimatingValueComponent {
     SelectedValue2:string=''
 
     options : any[] = [
-        {name : 'Schedule and Effort Point', value: 'Cocomo' ,point: this.data.ccm},
+        {name : 'Constructive Cost Model', value: 'Cocomo' ,point: this.data.ccm},
         {name: 'Use Case Point ', value:'UCP', point: this.data.ucp},
         {name: 'Function Point ', value :'FP', point: this.data.fp}
     ]

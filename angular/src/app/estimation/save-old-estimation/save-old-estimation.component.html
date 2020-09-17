@@ -1,0 +1,29 @@
+<!--component html goes here -->
+<mat-tab-group #tabGroup class="header-less-tabs">
+    <mat-tab label="First">
+        <h2>Estimation option</h2>
+        <ul>
+            <li>Skip this action in case you just want to evaluate the model point only</li>
+            <li>You can also estimate the model effort and schedule value by clicking on <b>Estimate</b></li>
+        </ul>
+        <button mat-raised-button (click)="UpdateEstimation(false)">Skip</button>
+        <button mat-raised-button color='warn' (click)="tabGroup.selectedIndex=1">Estimate</button>
+
+    </mat-tab>
+    <mat-tab label="Second">
+        <h2>Estimate Effort</h2>
+        <ul>
+            <li>To evaluate this, we will collect your personal historical estimation.</li>
+            <li *ngIf='hist.notNull'>You have peronal historical data in your account</li>
+            <li *ngIf='!hist.notNull'>You have no historical data! By default, we will use a default value for
+                evaluating or
+                you can <a [routerLink]="['/app/histoest']" (click)='onNoClick()'>Add new Historical Estimation</a></li>
+        </ul>
+        <p>Effort: <b>{{effort}}</b></p>
+        <p>Time : <b>{{time}}</b></p>
+        <p>Staff: <b>{{staff}}</b></p>
+        <button mat-raised-button (click)="tabGroup.selectedIndex=0">Back</button>
+        <button mat-raised-button color='warn' (click)="UpdateEstimation(true)">Save!</button>
+
+    </mat-tab>
+</mat-tab-group>

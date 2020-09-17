@@ -67,11 +67,14 @@ import { UnadjustedFpComponent } from './fp/unadjusted-fp/unadjusted-fp.componen
 import { CalFpComponent } from './fp/cal-fp/cal-fp.component';
 import { HelperModalComponent } from './estimation/helper-modal/helper-modal.component';
 import { SummaryReportComponent } from './estimation/summary-report/summary-report.component';
+
+import { SaveOldEstimationComponent } from './estimation/save-old-estimation/save-old-estimation.component';
 import { CustomSlocComponent } from './project/cocomo/custom-sloc/custom-sloc.component';
+import { CyclomaticComponent } from './project/cyclomatic/cyclomatic.component';
 import { HistoricalEstimationComponent } from './historical-estimation/historical-estimation.component';
 import { CreateNewHistoricalComponent } from './historical-estimation/create-new-historical/create-new-historical.component';
 import { CyclomaticService } from './project/cyclomatic/cyclomatic.service';
-import { CyclomaticComponent } from './project/cyclomatic/cyclomatic.component';
+
 
 @NgModule({
   declarations: [
@@ -120,6 +123,7 @@ import { CyclomaticComponent } from './project/cyclomatic/cyclomatic.component';
     AddEstimatingValueComponent,
     EstimationDetailComponent,
     SaveNewEstimationComponent,
+    SaveOldEstimationComponent,
     HelperModalComponent,
     SummaryReportComponent,
     //Clyclomatic
@@ -180,6 +184,7 @@ import { CyclomaticComponent } from './project/cyclomatic/cyclomatic.component';
     //Estimation
     CreateEstimationComponent,
     AddEstimatingValueComponent,
+    SaveOldEstimationComponent,
     SaveNewEstimationComponent,
     HelperModalComponent,
     //Historical

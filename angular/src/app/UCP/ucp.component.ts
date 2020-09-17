@@ -7,6 +7,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { MatDialog } from '@angular/material';
 import { SaveNewEstimationComponent } from '@app/estimation/save-new-estimation/save-new-estimation.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { SaveOldEstimationComponent } from '@app/estimation/save-old-estimation/save-old-estimation.component';
 
 @Component({
     moduleId: module.id,
@@ -148,45 +149,58 @@ export class UcpComponent extends AppComponentBase implements OnInit {
         this.Input.efR = this.EFs
         this.Input.tfR = this.TFs
         this.Input.ucpR = this.UCP
-        this._planService.setUcp(this.Input).subscribe(() => {
-            this.notify.info(this.l('SavedSuccessfully'));
-            this._router.navigate(['/app/estimation']) //not sure    
+        const dialogRef = this.dialog.open(SaveOldEstimationComponent, {
+            width: '550px',
+            data: { type: 'UCP', point: this.UCP }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result)
+            this.Input.effort = result.effort
+            this.Input.time = result.time
+            this.Input.staff = result.staff
+            this._planService.setUcp(this.Input).subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this._router.navigate(['/app/estimation']) //not sure    
+            })
         })
     }
 
     SaveNew() {
         //MISSINGGGGGGGGGGG
+        var u = []
+        var t = []
+        var e = []
+
+        Object.values(this.FormValue.UUCP).forEach((result: any) => {
+            u.push(Number(result))
+        })
+        Object.values(this.FormValue.TF).forEach((result: any) => {
+            t.push(result.rv)
+        })
+        Object.values(this.FormValue.EF).forEach((result: any) => {
+            e.push(result.rv)
+        })
+
+        console.log(u, t, e)
+        this.Input.uucp = u
+        this.Input.tf = t
+        this.Input.ef = e
+
+        this.Input.uucpR = this.UUCPs
+        this.Input.efR = this.EFs
+        this.Input.tfR = this.TFs
+        this.Input.ucpR = this.UCP
+        console.log(this.Input)
         const dialogRef = this.dialog.open(SaveNewEstimationComponent, {
             width: '550px',
-            data: {}
+            data: { type: 'UCP', point: this.UCP }
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result)
             this.Input.planID = result.planId
-            var u = []
-            var t = []
-            var e = []
-
-            Object.values(this.FormValue.UUCP).forEach((result: any) => {
-                u.push(Number(result))
-            })
-            Object.values(this.FormValue.TF).forEach((result: any) => {
-                t.push(result.rv)
-            })
-            Object.values(this.FormValue.EF).forEach((result: any) => {
-                e.push(result.rv)
-            })
-
-            console.log(u, t, e)
-            this.Input.uucp = u
-            this.Input.tf = t
-            this.Input.ef = e
-
-            this.Input.uucpR = this.UUCPs
-            this.Input.efR = this.EFs
-            this.Input.tfR = this.TFs
-            this.Input.ucpR = this.UCP
-            console.log(this.Input)
+            this.Input.effort = result.effort
+            this.Input.time = result.time
+            this.Input.staff = result.staff
             this._planService.setUcp(this.Input).subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this._router.navigate(['/app/estimation']) //not sure    

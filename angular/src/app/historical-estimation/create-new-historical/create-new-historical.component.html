@@ -1,19 +1,38 @@
 <!--component html goes here -->
 <h1 mat-dialog-title>Implement your old Estimation data </h1>
-        <div mat-dialog-content>
-            <p>Give me some information</p>
-            <mat-form-field class='col-md-6'>
-                <mat-label>Title</mat-label>
-                <input matInput [(ngModel)]="title" required>
-            </mat-form-field >
-            <mat-form-field class='col-md-6'>
-                <mat-label>Description</mat-label>
-                <textarea matInput [(ngModel)]="description"></textarea>
-            </mat-form-field>
-            
+<div mat-dialog-content>
+    <p>Give me some information</p>
+    <mat-form-field class='col-md-6'>
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="title" required>
+    </mat-form-field>
+    <mat-form-field class='col-md-6'>
+        <mat-label>Estimation point type</mat-label>
+        <mat-select [(ngModel)]=selectedType>
+            <mat-option *ngFor="let option of options" [value]="option.value">
+                {{option.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class='col-md-6'>
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="description" style="height: 90px;"></textarea>
+    </mat-form-field>
+    <mat-form-field class='col-md-2'>
+        <mat-label>Point value</mat-label>
+        <input matInput [(ngModel)]="point" type='number'>
+    </mat-form-field>
+    <mat-form-field class='col-md-2'>
+        <mat-label>Time devoted (month)</mat-label>
+        <input matInput [(ngModel)]="time" type='number'>
+    </mat-form-field>
+    <mat-form-field class='col-md-2'>
+        <mat-label>Number of staff (person)</mat-label>
+        <input matInput [(ngModel)]="staff" type='number'>
+    </mat-form-field>
+    <div mat-dialog-actions class='col-md-6 text-right'>
+        <button mat-raised-button (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Create Project</button>
+    </div>
+</div>
 
-        </div>
-        <div mat-dialog-actions>
-            <button mat-raised-button (click)="onNoClick()">No Thanks</button>
-            <button mat-raised-button color="warn" cdkFocusInitial (click)="save()">Create Project</button>
-        </div>

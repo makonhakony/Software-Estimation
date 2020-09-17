@@ -1,49 +1,96 @@
 <!--component html goes here -->
-<h1 mat-dialog-title>Save your result to Estimation </h1>
-<div mat-dialog-content>
-    <p>Give me some information</p>
-    <mat-form-field>
-        <mat-label>Choose one</mat-label>
-        <mat-select [(ngModel)]="selectedType">
+<mat-tab-group #tabGroup>
+    <mat-tab label="First">
+        <div style='overflow: hidden ;width:100%'>
+            <h1 mat-dialog-title>Save your result to Estimation </h1>
+            <div mat-dialog-content>
+                <p>Give me some information</p>
+                <mat-form-field>
+                    <mat-label>Choose one</mat-label>
+                    <mat-select [(ngModel)]="selectedType">
 
-            <mat-option *ngFor="let option of options" [value]="option">
-                {{option}}
-            </mat-option>
+                        <mat-option *ngFor="let option of options" [value]="option">
+                            {{option}}
+                        </mat-option>
 
-        </mat-select>
-    </mat-form-field>
-    <div *ngIf='selectedType=="Existed Estimation"'>
-        <mat-form-field>
-            <mat-label>Choose your estimation</mat-label>
-            <mat-select [(ngModel)]="selectedPlan">
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf='selectedType=="Existed Estimation"'>
+                    <mat-form-field>
+                        <mat-label>Choose your estimation</mat-label>
+                        <mat-select [(ngModel)]="selectedPlan">
 
-                <mat-option *ngFor="let plan of planList" [value]="plan">
-                    {{plan.title}}
-                </mat-option>
+                            <mat-option *ngFor="let plan of planList" [value]="plan">
+                                {{plan.title}}
+                            </mat-option>
 
-            </mat-select>
-        </mat-form-field>
-        <div mat-dialog-actions>
-            <button mat-raised-button (click)="onNoClick()">No Thanks</button>
-            <button mat-raised-button color="warn" cdkFocusInitial (click)="UpdateEstimation()">Create Estimation</button>
+                        </mat-select>
+                    </mat-form-field>
+                    <div mat-dialog-actions>
+                        <button mat-raised-button (click)="onNoClick()">Cancel</button>
+                        <button mat-raised-button color="warn" cdkFocusInitial (click)="tabGroup.selectedIndex=1">Create
+                            Estimation</button>
+                    </div>
+                </div>
+                <div *ngIf='selectedType=="New Estimation"'>
+                    <p>Give me some information</p>
+                    <mat-form-field>
+                        <mat-label>Title</mat-label>
+                        <input matInput [(ngModel)]="plan.title" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <textarea matInput [(ngModel)]="plan.description"></textarea>
+                    </mat-form-field>
+                    <div mat-dialog-actions>
+                        <button mat-raised-button (click)="onNoClick()">Cancel</button>
+                        <button mat-raised-button color="warn" cdkFocusInitial (click)="tabGroup.selectedIndex=1">Save
+                            to
+                            Estimation</button>
+                    </div>
+                </div>
+                <div *ngIf='selectedType==""'>
+
+                </div>
+            </div>
         </div>
-    </div>
-    <div *ngIf='selectedType=="New Estimation"'>
-        <p>Give me some information</p>
-        <mat-form-field>
-            <mat-label>Title</mat-label>
-            <input matInput [(ngModel)]="data.title" required>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Description</mat-label>
-            <textarea matInput [(ngModel)]="data.description"></textarea>
-        </mat-form-field>
-        <div mat-dialog-actions>
-            <button mat-raised-button (click)="onNoClick()">No Thanks</button>
-            <button mat-raised-button color="warn" cdkFocusInitial (click)="saveEstimation()">Save to Estimation</button>
+    </mat-tab>
+    <mat-tab label="Second">
+        <div style='overflow: hidden ;width:100%;'>
+            <h2>Estimation option</h2>
+            <ul>
+                <li>Skip this action in case you just want to evaluate the model point only</li>
+                <li>You can also estimate the model effort and schedule value by clicking on <b>Estimate</b></li>
+            </ul>
+            <div *ngIf='selectedType=="Existed Estimation"'>
+                <button mat-raised-button (click)="UpdateEstimation(false)">Skip</button>
+                <button mat-raised-button color='warn' (click)="tabGroup.selectedIndex=2">Estimate</button>
+            </div>
+            <div *ngIf='selectedType=="New Estimation"'>
+                <button mat-raised-button (click)="saveEstimation(false)">Skip</button>
+                <button mat-raised-button color='warn' (click)="tabGroup.selectedIndex=2">Estimate</button>
+            </div>
         </div>
-    </div>
-    <div *ngIf='selectedType==""'>
-
-    </div>
-</div>
+    </mat-tab>
+    <mat-tab label="Third">
+        <div style='overflow: hidden ;width:100%;'>
+            <h2>Estimate Effort</h2>
+            <ul>
+                <li>To evaluate this, we will collect your personal historical estimation.</li>
+                <li *ngIf='hist.notNull'>You have peronal historical data in your account</li>
+                <li *ngIf='!hist.notNull'>You have no historical data! By default, we will use a default value for
+                    evaluating or
+                    you can <a [routerLink]="['/app/histoest']" (click)='onNoClick()'>Add new Historical Estimation</a>
+                </li>
+            </ul>
+            <p>Effort: <b>{{effort}}</b></p>
+            <p>Time : <b>{{time}}</b></p>
+            <p>Staff: <b>{{staff}}</b></p>
+            <button mat-raised-button (click)="tabGroup.selectedIndex=1">Back</button>
+            <button mat-raised-button color='warn' (click)="UpdateEstimation(true)"
+                *ngIf='selectedType=="Existed Estimation"'>Save!</button>
+            <button mat-raised-button color='warn' (click)="UpdateEstimation(true)"
+                *ngIf='selectedType=="New Estimation"'>Save!</button>
+        </div>
+    </mat-tab>
+</mat-tab-group>

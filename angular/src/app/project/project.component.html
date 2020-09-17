@@ -15,7 +15,7 @@
           <i class="material-icons">compare</i>
         </button>
       </div>
-      
+
     </div>
     <div class="row">
       <mat-tab-group mat-align-tabs="center">
@@ -24,19 +24,30 @@
 
             <div class="card">
               <div class="block-header row">
-                <div class="col-md-6">
-                  <div class="header">
-                    <h2 class="project-title">
-                      {{proj.title}}
-                    </h2>
-                    
+                <div class="col-md-12">
+                  <div class="header" style='height:70px'>
+                    <div class='col-md-6'>
+                      <h2 class="project-title">
+                        {{proj.title}}
+                      </h2>
+                    </div>
+                    <div class="col-md-3">
+                      <mat-checkbox style="position: absolute;
+                        left: 80px;
+                        opacity: 100;" *ngIf="compare" (change)="OnCheck(proj.title)"></mat-checkbox>
+                    </div>
+                    <div class="col-md-3 text-center m-r--1">
+
+                      <button type="button" class="btn bg-pink waves-effect btn-sm"
+                        [routerLink]="['/app/project', proj.id]">
+                        <span>Details</span>
+                        <i class="fa fa-arrow-circle-right"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <mat-checkbox style="position: absolute;
-                    left: 80px;
-                    opacity: 100;" *ngIf="compare" (change)="OnCheck(proj.title)"></mat-checkbox>
-                </div>
+
+
               </div>
 
               <div class="row">
@@ -44,15 +55,15 @@
                   <div class="body">
                     <!-- <small class="project-description">{{proj.description}}</small> -->
                     <p>Your link:<b> {{proj.linkURL}} </b></p>
-                    
+
                     <!-- <div class="col-md-6 text-center"> -->
-                      <!-- <section *ngIf="projectload.data | async as user">
+                    <!-- <section *ngIf="projectload.data | async as user">
                         <h3>{{projectload.name}}</h3>
                         <p>Height: {{projectload.height}}</p>
                         <p>Mass: {{projectload.mass}}</p>
                         <p>Homeworld: {{projectload.homeworld}}</p>
                       </section> -->
-                      <!-- <div *ngIf = "proj.isReady; else CalculatingState">
+                    <!-- <div *ngIf = "proj.isReady; else CalculatingState">
                         <span>Calculated!</span>
                       </div>
                       <ng-template #CalculatingState>
@@ -73,24 +84,37 @@
                     </div> -->
                   </div>
                 </div>
-                <div class="col-md-4 text-center m-r--1">
-                  <div><p>Size: {{(proj.size/1024/1024).toFixed(1)}} MB</p></div>        
-                  <div><p>Sloc: {{proj.sloc}} lines of code</p></div>       
+                <div class="col-md-6 text-center m-r--1">
+                  <section id='header-strip'>
+                    <ul>
+                      <li>
+                        <p>Size (MB)</p>
+                        <p style='font-size: 30px;
+            font-weight: bold;
+            line-height: 1em;' class='slide-in-top'>{{(proj.size/1024/1024).toFixed(1)}}</p>
+                      </li>
+                      <li>
+                        <p>Number lines of code (lines)</p>
+                        <p style='font-size: 30px;
+            font-weight: bold;
+            line-height: 1em;' class='slide-in-top'>{{proj.sloc}}</p>
+                      </li>
+                    </ul>
+                  </section>
+                  <!-- <div>
+                    <p>Size: <b>{{(proj.size/1024/1024).toFixed(1)}} MB</b></p>
+                  </div>
+                  <div>
+                    <p>Sloc: <b>{{proj.sloc}} lines of code</b></p>
+                  </div> -->
                 </div>
-                <div class="col-md-2 text-center m-r--1">
 
-                  <button type="button" class="btn bg-pink waves-effect btn-sm"
-                    [routerLink]="['/app/project', proj.id]">
-                    <span>Details</span>
-                    <i class="fa fa-arrow-circle-right"></i>
-                  </button>
-                </div>
               </div>
             </div>
           </div>
         </mat-tab>
         <mat-tab label="Cyclomatic Complexity">
-            <cyclomatic style='display: inline-block; width: 100%;'></cyclomatic>
+          <cyclomatic style='display: inline-block; width: 100%;'></cyclomatic>
         </mat-tab>
         <!-- PLAN TAB -->
         <!-- <mat-tab label="My Future Plans">

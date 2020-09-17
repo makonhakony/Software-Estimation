@@ -5,6 +5,7 @@ using SoftwareEstimation.Authorization.Users;
 using SoftwareEstimation.MultiTenancy;
 using SoftwareEstimation.Projects;
 using SoftwareEstimation.Plans;
+using SoftwareEstimation.SharedEstimations;
 
 namespace SoftwareEstimation.EntityFrameworkCore
 {
@@ -16,6 +17,8 @@ namespace SoftwareEstimation.EntityFrameworkCore
         public virtual DbSet<UCPoint> UCPoints { get; set; }
         public virtual DbSet<Cocomo> Cocomos { get; set; }
         public virtual DbSet<FPoint> FPoints { get; set; }
+        public virtual DbSet<HistoEstimation> HistoEstimations { get; set; }
+        public virtual DbSet<SharedEstimation> SharedEstimations { get; set; }
         public SoftwareEstimationDbContext(DbContextOptions<SoftwareEstimationDbContext> options)
             : base(options)
         {

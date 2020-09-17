@@ -10,170 +10,181 @@
                     class="btn bg-black waves-effect waves-light"><i class="fa fa-arrow-circle-left"></i> Back to
                     estimation list</button>
                 <button type="button" [routerLink]="['/app/estimation/',planId,'summary']"
-                    class="btn bg-pink waves-effect waves-light"><i class="fa fa-info-circle"></i> Summary report</button>
+                    class="btn bg-pink waves-effect waves-light"><i class="fa fa-info-circle"></i> Summary
+                    report</button>
             </div>
 
         </div>
         <div class="row">
-            <div *ngIf='showedUCP'>
-                <div class='card main-content'>
-                    <div class='header row'>
-                        <div class='col-md-6'>
-                            <h2>Use Case Point</h2>
-                        </div>
-                        <div class='col-md-6 text-right'>
-                            <p><b>Creation Time: {{showedUCP.creationTime | date:'short'}}</b></p>
-                        </div>
-                    </div>
-                    <div class='body'>
-                        <div class="row">
-                            <div class="col-md-12">
+            <mat-tab-group mat-align-tabs="center">
 
-                                <section id='header-strip'>
-                                    <ul>
-                                        <li>
-                                            <p>Unadjusted use case point</p>
-                                            <p style='font-size: 60px;
+                <!-- PLAN TAB -->
+                <mat-tab label="Estimation Detail">
+                    <div style='width: 100%; overflow: hidden;' >
+                        <div *ngIf='showedUCP'>
+                            <div class='card main-content'>
+                                <div class='header row'>
+                                    <div class='col-md-6'>
+                                        <h2>Use Case Point</h2>
+                                    </div>
+                                    <div class='col-md-6 text-right'>
+                                        <p><b>Creation Time: {{showedUCP.creationTime | date:'short'}}</b></p>
+                                    </div>
+                                </div>
+                                <div class='body'>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <section id='header-strip'>
+                                                <ul>
+                                                    <li>
+                                                        <p>Unadjusted use case point</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;' class='slide-in-top'>{{showedUCP.uucp}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Technical factors</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Technical factors</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;' class='slide-in-top'>{{showedUCP.tf}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Environmental factors</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Environmental factors</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;' class='slide-in-top'>{{showedUCP.ef}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Use Case Point</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Use Case Point</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         color: rgb(255, 25, 25)' class='slide-in-top'>{{showedUCP.ucp}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Effort</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Effort</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         color: green' class='slide-in-top'>{{showedUCP.effort}}</p>
-                                        </li>
+                                                    </li>
 
-                                    </ul>
-                                </section>
+                                                </ul>
+                                            </section>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf='showedFP'>
-                <div class='card main-content'>
-                    <div class='header'>
-                        <div class='col-md-6'>
-                            <h2>Funtion point</h2>
-                        </div>
-                        <div class='col-md-6 text-right'>
-                            <p><b>Creation Time: {{showedFP.creationTime | date:'short'}}</b></p>
-                        </div>
-                    </div>
-                    <div class='body'>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <section id='header-strip'>
-                                    <ul>
-                                        <li>
-                                            <p>Unadjusted function point</p>
-                                            <p style='font-size: 60px;
+                        <div *ngIf='showedFP'>
+                            <div class='card main-content'>
+                                <div class='header'>
+                                    <div class='col-md-6'>
+                                        <h2>Funtion point</h2>
+                                    </div>
+                                    <div class='col-md-6 text-right'>
+                                        <p><b>Creation Time: {{showedFP.creationTime | date:'short'}}</b></p>
+                                    </div>
+                                </div>
+                                <div class='body'>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <section id='header-strip'>
+                                                <ul>
+                                                    <li>
+                                                        <p>Unadjusted function point</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         ' class='slide-in-top'>{{showedFP.ufp}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Complexity adjusted factors</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Complexity adjusted factors</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         ' class='slide-in-top'>{{showedFP.caf}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Function point</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Function point</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         color: rgb(255, 25, 25);' class='slide-in-top'>{{showedFP.fp}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Effort</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Effort</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         color: green;' class='slide-in-top'>{{showedFP.effort}}</p>
-                                        </li>
-                                    </ul>
+                                                    </li>
+                                                </ul>
 
-                                </section>
+                                            </section>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <div *ngIf='showedCCM'>
+                            <div class='card main-content'>
+                                <div class='header row'>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf='showedCCM'>
-                <div class='card main-content'>
-                    <div class='header row'>
-
-                        <div class='col-md-6'>
-                            <h2>Schedule and Effort (Cocomo point)</h2>
-                        </div>
-                        <div class='col-md-6 text-right'>
-                            <p><b>Creation Time: {{showedCCM.creationTime | date:'short'}}</b></p>
-                        </div>
-                    </div>
-                    <div class='body'>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <section id='header-strip'>
-                                    <ul>
-                                        <li>
-                                            <p>Sloc</p>
-                                            <p style='font-size: 60px;
+                                    <div class='col-md-6'>
+                                        <h2>Schedule and Effort (Cocomo point)</h2>
+                                    </div>
+                                    <div class='col-md-6 text-right'>
+                                        <p><b>Creation Time: {{showedCCM.creationTime | date:'short'}}</b></p>
+                                    </div>
+                                </div>
+                                <div class='body'>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <section id='header-strip'>
+                                                <ul>
+                                                    <li>
+                                                        <p>Sloc</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;' class='slide-in-top'>{{showedCCM.sloc}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Mode</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Mode</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;' class='slide-in-top'>{{mode}}</p>
-                                        </li>
-                                        <li>
-                                            <p>Model</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>Model</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;' class='slide-in-top'>{{model}}</p>
-                                        </li>
-                                        <li>
-                                            <p>effort</p>
-                                            <p style='font-size: 60px;
+                                                    </li>
+                                                    <li>
+                                                        <p>effort</p>
+                                                        <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
                                         color: green;' class='slide-in-top'>{{showedCCM.effort}}</p>
-                                        </li>
-                                    </ul>
+                                                    </li>
+                                                </ul>
 
-                                </section>
+                                            </section>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
                     </div>
-                </div>
-            </div>
+                </mat-tab>
+                <mat-tab label='Collaborators'>
 
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </div>

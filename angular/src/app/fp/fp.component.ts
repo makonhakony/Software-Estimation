@@ -6,6 +6,7 @@ import { PlanServiceProxy, FpInput, FpOutput } from '@shared/service-proxies/ser
 import { MatDialog } from '@angular/material';
 import { NgForm, ControlContainer } from '@angular/forms';
 import { SaveNewEstimationComponent } from '@app/estimation/save-new-estimation/save-new-estimation.component';
+import { SaveOldEstimationComponent } from '@app/estimation/save-old-estimation/save-old-estimation.component';
 
 @Component({
     moduleId: module.id,
@@ -152,48 +153,62 @@ export class FpComponent extends AppComponentBase implements OnInit {
         this.Input.cafR = this.CAFs
 
         this.Input.fpR = this.FP
-        this._planService.setFp(this.Input).subscribe(() => {
-            this.notify.info(this.l('SavedSuccessfully'));
-            this._router.navigate(['/app/estimation']) //not sure    
+        const dialogRef = this.dialog.open(SaveOldEstimationComponent, {
+            width: '550px',
+            data: { type: 'FP', point: this.FP }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result)
+            this.Input.effort = result.effort
+            this.Input.time = result.time
+            this.Input.staff = result.staff
+            this._planService.setFp(this.Input).subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this._router.navigate(['/app/estimation']) //not sure    
+            })
         })
     }
 
     SaveNew() {
         //MISSINGGGGGGGGGGG
+        var utmp = []
+        var c = []
+
+
+        Object.values(this.FormValue.UFP).forEach((result: any) => {
+            utmp.push(Number(result))
+        })
+        Object.values(this.FormValue.CAF).forEach((result: any) => {
+            c.push(result.rv)
+        })
+        var u = []
+        var k = 0
+        for (let i = 0; i < 5; i++) {
+            u.push([])
+            for (let j = 0; j < 3; j++) {
+                u[i].push(utmp[k])
+                k++
+            }
+        }
+        console.log(u, c)
+        this.Input.ufp = u
+        this.Input.caf = c
+
+        this.Input.ufpR = this.UFPs
+        this.Input.cafR = this.CAFs
+
+        this.Input.fpR = this.FP
         const dialogRef = this.dialog.open(SaveNewEstimationComponent, {
             width: '550px',
-            data: {}
+            data: { type: 'FP', point: this.FP }
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result)
             this.Input.planID = result.planId
-            var utmp = []
-            var c = []
 
-
-            Object.values(this.FormValue.UFP).forEach((result: any) => {
-                utmp.push(Number(result))
-            })
-            Object.values(this.FormValue.CAF).forEach((result: any) => {
-                c.push(result.rv)
-            })
-            var u = []
-            var k = 0
-            for (let i = 0; i < 5; i++) {
-                u.push([])
-                for (let j = 0; j < 3; j++) {
-                    u[i].push(utmp[k])
-                    k++
-                }
-            }
-            console.log(u, c)
-            this.Input.ufp = u
-            this.Input.caf = c
-
-            this.Input.ufpR = this.UFPs
-            this.Input.cafR = this.CAFs
-
-            this.Input.fpR = this.FP
+            this.Input.effort = result.effort
+            this.Input.time = result.time
+            this.Input.staff = result.staff
             console.log(this.Input)
             this._planService.setFp(this.Input).subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));

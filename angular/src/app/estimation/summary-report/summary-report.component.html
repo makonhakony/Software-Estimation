@@ -34,25 +34,25 @@
             </div>
             <div class='body row information-box'>
                 <div class='col-md-4'>
-                    Size (SLOC):
+                    Size (SLOC)
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedCCM.sloc}}
                 </div>
                 <div class='col-md-4'>
-                    Effort:
+                    Effort (Person-Month)
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedCCM.effort}}
                 </div>
                 <div class='col-md-4'>
-                    Time:
+                    Time (Month)
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedCCM.time}}
                 </div>
                 <div class='col-md-4'>
-                    Staff:
+                    Staff (Person)
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedCCM.staff}}
@@ -90,6 +90,24 @@
                 <div class='col-md-8 text-right'>
                     {{showedUCP.ef}}
                 </div>
+                <div class='col-md-4'>
+                    Effort (Person-Month)
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedUCP.effort}}
+                </div>
+                <div class='col-md-4'>
+                    Time (Month)
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedUCP.time}}
+                </div>
+                <div class='col-md-4'>
+                    Staff (Person)
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedUCP.staff}}
+                </div>
             </div>
 
         </div>
@@ -117,6 +135,24 @@
                 <div class='col-md-8 text-right'>
                     {{showedFP.caf}}
                 </div>
+                <div class='col-md-4'>
+                    Effort (Person-Month)
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedFP.effort}}
+                </div>
+                <div class='col-md-4'>
+                    Time (Month)
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedFP.time}}
+                </div>
+                <div class='col-md-4'>
+                    Staff (Person)
+                </div>
+                <div class='col-md-8 text-right'>
+                    {{showedFP.staff}}
+                </div>
             </div>
 
         </div>
@@ -130,60 +166,60 @@
                 <div class='col-md-4'>
                     Size(Sloc):
                 </div>
-                <div class='col-md-8 text-right' *ngIf='showedCCM'>
-                    {{showedCCM.sloc}}
+                <div class='col-md-8 text-right'>
+                    {{ccmSizeShowed}}
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
                     Total Use Case Point:
                 </div>
-                <div class='col-md-8 text-right' *ngIf='showedUCP'>
-                    {{showedUCP.ucp}}
+                <div class='col-md-8 text-right'>
+                    {{ucpSizeShowed}}
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
                     Total Function point:
                 </div>
-                <div class='col-md-8 text-right' *ngIf='showedFP'>
-                    {{showedFP.fp}}
+                <div class='col-md-8 text-right'>
+                    {{fpSizeShowed}}
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
                     Effort (Person-Month):
                 </div>
-                <div class='col-md-8 text-right' *ngIf='showedCCM'>
-                    {{showedCCM.effort}}
+                <div class='col-md-8 text-right'>
+                    {{plan.totalEffort}}
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
                     Time to develop (Month):
                 </div>
-                <div class='col-md-8 text-right' *ngIf='showedCCM'>
-                    {{showedCCM.time}} 
+                <div class='col-md-8 text-right' >
+                    {{plan.totalTime}} 
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
                     Staff:
                 </div>
-                <div class='col-md-8 text-right' *ngIf='showedCCM'>
-                    {{showedCCM.staff}} 
+                <div class='col-md-8 text-right' >
+                    {{plan.totalStaff}} 
                 </div>
             </div>
 
         </div>
         <textarea #summary style="opacity: .01; height:0; position:absolute; z-index: -1;">
             Summary 
-            Size(SLOC): {{showedCCM.sloc}}   
-            Total Use Case Point: {{showedUCP.ucp}} 
-            Total Function point: {{showedFP.fp}}
-            Effort (Person-Month): {{showedCCM.effort}}
-            Time to develop (Month): {{showedCCM.time}}
-            Person: {{showedCCM.staff}} 
+            Size(SLOC): {{ccmSizeShowed}}   
+            Total Use Case Point: {{ucpSizeShowed}} 
+            Total Function point: {{fpSizeShowed}}
+            Effort (Person-Month): {{plan.totalEffort}}
+            Time to develop (Month): {{plan.totalTime}}
+            Person: {{plan.totalStaff}} 
         </textarea>
         <div class='body text-center'>
             <button mat-raised-button color='primary' (click)='CopyClipboard(summary)'>Copy the summary to

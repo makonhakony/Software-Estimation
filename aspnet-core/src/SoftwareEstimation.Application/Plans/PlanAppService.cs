@@ -253,7 +253,7 @@ namespace SoftwareEstimation.Plans
                             }
                             te += Effort;
                             tt = Math.Max(tt, Time);
-                            ts = (int)(te / tt);
+                            ts = (int)Math.Round(te / tt);
 
                         }
                         

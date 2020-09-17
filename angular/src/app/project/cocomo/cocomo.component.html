@@ -119,14 +119,13 @@
                             <h4>Time Estimation: {{TimeResult}}</h4>
                             <h4>Number of staffs required: {{StaffResult}}</h4>
                             <div *ngIf='existed; else NewCreate'>
-                                <button mat-raised-button color='primary' (click)='UpdateEstimation()'>Save this to my
-                                    Estimation</button>
+                                <button mat-raised-button color='primary' (click)='UpdateEstimation()'>Save </button>
                             </div>
                             <ng-template #NewCreate>
                                 <button mat-raised-button color='primary' (click)='SaveNew()'>Save/Create
-                                    Estimation</button>
+                                    New</button>
                             </ng-template>
-                            <button mat-raised-button (click)='Refresh()'>Redo the Survey</button>
+                            <button mat-raised-button (click)='Refresh()'>Redo</button>
                         </mat-step>
                     </mat-horizontal-stepper>
 

@@ -26,6 +26,10 @@ export class SummaryReportComponent extends AppComponentBase implements OnInit {
     showedUCP:UCPoint
     showedCCM:any
     showedFP: FPoint
+
+    ucpSizeShowed: any 
+    fpSizeShowed: any 
+    ccmSizeShowed: any 
     ngOnInit(){
         this.plan = new PlanDetailOutput
         this.showedUCP = new UCPoint()
@@ -40,19 +44,28 @@ export class SummaryReportComponent extends AppComponentBase implements OnInit {
                 this.showedCCM = result.ccm.slice(-1)[0]
                 this.showedUCP = result.ucp.slice(-1)[0]
                 this.showedFP = result.fp.slice(-1)[0]
+                debugger
                 if (this.showedFP){
                 this.showedFP.caf = Number(this.showedFP.caf.toFixed(1))
                 this.showedFP.fp = Number(this.showedFP.fp.toFixed(1))
+                this.fpSizeShowed = this.showedFP.fp
+                } else {
+                    this.fpSizeShowed = 0
                 }
                 if (this.showedCCM){
                 this.showedCCM.effort=Number(this.showedCCM.effort.toFixed(1))
                 this.showedCCM.time=Number(this.showedCCM.time.toFixed(1))
-                
+                this.ccmSizeShowed = this.showedCCM.sloc
+                }else {
+                    this.ccmSizeShowed = 0
                 }
                 if (this.showedUCP){
                 this.showedUCP.ucp=Number(this.showedUCP.ucp.toFixed(1))
                 this.showedUCP.ef=Number(this.showedUCP.ef.toFixed(1))
                 this.showedUCP.tf=Number(this.showedUCP.tf.toFixed(1))
+                this.ucpSizeShowed = this.showedUCP.ucp
+                }else {
+                    this.ucpSizeShowed = 0
                 }
                 // debugger
             })

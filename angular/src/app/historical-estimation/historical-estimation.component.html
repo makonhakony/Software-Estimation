@@ -16,36 +16,47 @@
       <div class="row">
         <mat-tab-group mat-align-tabs="center">
           <mat-tab label="All Historical Estimation">
-            <div class="col-md-6" *ngFor="let est of estimationList"> 
+            <div class="col-md-4" *ngFor="let est of histoList"> 
               <div class="card">
                 <div class="block-header row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="header">
+                      <div class='col-md-6'>
                       <h2 class="project-title">
                         {{est.title}}
                       </h2>
-                      
+                    </div>
+                    <div class='col-md-6'>
+                      <span class='label bg-red' *ngIf='est.type == "UCP"'>Use case point</span>
+                      <span class='label bg-green' *ngIf='est.type == "FP"'>Function point</span>
+                    </div>
                     </div>
                   </div>
                 </div>
   
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="body">
-                      <small class="project-description">{{est.description}}</small>
+                      <pre class="project-description">{{est.description}}</pre>
+                      
+                      <span class='col-md-6'>Actual Effort: </span><span class='col-md-6 text-right'><b>{{est.effort}} person-month</b></span>
+                      <span class='col-md-6'>Actual Time: </span><span class='col-md-6 text-right'><b>{{est.time}} month(s)</b></span>
+                      <span class='col-md-6'>Actual Staff: </span><span class='col-md-6 text-right'><b>{{est.staff}} staff(s)</b></span>
+                      <span class='col-md-6'>Point: </span><span class='col-md-6 text-right'><b>{{est.point}}</b>  </span>
                       
                       
-                      
+                      <button mat-raised-button color='warn' (click)="DeleteHist(est.id)">Delete</button>
                     </div>
+                    
                   </div>
-                  <div class="col-md-2 text-center m-r--1">
+                  <!-- <div class="col-md-2 text-center m-r--1">
   
                     <button type="button" class="btn bg-pink waves-effect btn-sm"
                       [routerLink]="['/app/project', proj.id]">
                       <span>Details</span>
                       <i class="fa fa-arrow-circle-right"></i>
                     </button>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
