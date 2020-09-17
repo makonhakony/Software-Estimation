@@ -21,6 +21,49 @@
                 <!-- PLAN TAB -->
                 <mat-tab label="Estimation Detail">
                     <div style='width: 100%; overflow: hidden;' >
+                        <!-- TOTAL -->
+                        <div class='card main-content'>
+                            <div class='header row'>
+                                <div class='col-md-12 text-center'>
+                                    <h2>TOTAL ESTIMATION DETAIL</h2>
+                                </div>
+                                
+                            </div>
+                            <div class='body'>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <section id='header-strip'>
+                                            <ul>
+                                                <li>
+                                                    <b>TOTAL EFFORT</b>
+                                                    <p style='font-size: 60px;
+                                    font-weight: bold;
+                                    line-height: 1em;
+                                    color: crimson' class='slide-in-top'>{{plan.totalEffort}}</p>
+                                                </li>
+                                                <li>
+                                                    <b>TOTAL TIME</b>
+                                                    <p style='font-size: 60px;
+                                    font-weight: bold;
+                                    line-height: 1em;
+                                    color: crimson' class='slide-in-top'>{{plan.totalTime}}</p>
+                                                </li>
+                                                <li>
+                                                    <b>TOTAL STAFF</b>
+                                                    <p style='font-size: 60px;
+                                    font-weight: bold;
+                                    line-height: 1em;
+                                    color: crimson' class='slide-in-top'>{{plan.totalStaff}}</p>
+                                                </li>
+
+                                            </ul>
+                                        </section>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div *ngIf='showedUCP'>
                             <div class='card main-content'>
                                 <div class='header row'>
@@ -60,7 +103,7 @@
                                                         <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
-                                        color: rgb(255, 25, 25)' class='slide-in-top'>{{showedUCP.ucp}}</p>
+                                        color: darkslateblue' class='slide-in-top'>{{showedUCP.ucp}}</p>
                                                     </li>
                                                     <li>
                                                         <p>Effort</p>
@@ -112,7 +155,7 @@
                                                         <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;
-                                        color: rgb(255, 25, 25);' class='slide-in-top'>{{showedFP.fp}}</p>
+                                        color:darkslateblue;' class='slide-in-top'>{{showedFP.fp}}</p>
                                                     </li>
                                                     <li>
                                                         <p>Effort</p>
@@ -135,7 +178,7 @@
                                 <div class='header row'>
 
                                     <div class='col-md-6'>
-                                        <h2>Schedule and Effort (Cocomo point)</h2>
+                                        <h2>COCOMO</h2>
                                     </div>
                                     <div class='col-md-6 text-right'>
                                         <p><b>Creation Time: {{showedCCM.creationTime | date:'short'}}</b></p>
@@ -147,7 +190,7 @@
                                             <section id='header-strip'>
                                                 <ul>
                                                     <li>
-                                                        <p>Sloc</p>
+                                                        <p>SLOC</p>
                                                         <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;' class='slide-in-top'>{{showedCCM.sloc}}</p>
@@ -161,10 +204,11 @@
                                                     <li>
                                                         <p>Model</p>
                                                         <p style='font-size: 60px;
-                                        font-weight: bold;' class='slide-in-top'>{{model}}</p>
+                                        font-weight: bold;
+                                        line-height: 1em;' class='slide-in-top'>{{model}}</p>
                                                     </li>
                                                     <li>
-                                                        <p>effort</p>
+                                                        <p>Effort</p>
                                                         <p style='font-size: 60px;
                                         font-weight: bold;
                                         line-height: 1em;

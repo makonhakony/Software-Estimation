@@ -23,7 +23,7 @@
                     </mat-step>
                     <mat-step label="Result">
 
-                        <h4>Calculate Funtion Points</h4>
+                        <h4>Final Result</h4>
                         <cal-fp [UFP]='UFPs' [CAF]="CAFs" [FP]="FP"></cal-fp>
                         <div *ngIf="state; else savenew">
                             <button mat-raised-button color="accent" (click)="Update()">Update Result</button>

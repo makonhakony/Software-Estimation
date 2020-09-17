@@ -25,9 +25,13 @@ export class HistoricalEstimationComponent extends AppComponentBase implements O
 
         this.loadHisto()
     }
+    editMode :boolean[]=[]
     loadHisto(){
         this._histService.getListHisto().subscribe(result => {
             this.histoList = result.items
+            this.histoList.forEach(()=>{
+                this.editMode.push(false)
+            })
         })
     }
     histo: HistoInput

@@ -66,7 +66,7 @@ export class HomeComponent extends AppComponentBase implements OnInit {
             this.projectList = result.items
             await this.projectList.forEach(project => {
                 this.ProjectMoment(project)
-                this.PushToLanguageDict(this.TakeLanguage(project.languages))
+                //this.PushToLanguageDict(this.TakeLanguage(project.languages))
             })
             
             console.log(this.languageDictionary)

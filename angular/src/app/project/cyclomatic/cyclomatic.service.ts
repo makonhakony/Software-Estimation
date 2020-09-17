@@ -3,12 +3,16 @@ import { HttpClient, HttpParams, HttpErrorResponse, HttpHeaders } from "@angular
 import { catchError } from "rxjs/operators";
 import { throwError, Observable } from "rxjs";
 import { request } from "http";
+import { AppComponentBase } from "@shared/app-component-base";
 
 @Injectable()
-export class CyclomaticService {
+export class CyclomaticService  {
     constructor(
+        
         private http: HttpClient
-    ) { }
+    ) { 
+        
+    }
     
     handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
@@ -22,6 +26,7 @@ export class CyclomaticService {
                 `body was: ${error.error}`);
         }
         // return an observable with a user-facing error message
+        
         return throwError(
             'Something bad happened: ',error.error.message);
     };

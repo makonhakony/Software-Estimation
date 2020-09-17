@@ -96,7 +96,7 @@ export class CyclomaticComponent implements OnInit{
     TFile : number
     RFunction : Ratio
     TFunction : number
-
+    buttonDis: boolean = false
     showGraph:boolean =false
     CalCyclomatic(){
         this._internalService.CyclomaticCal(this.userid,this.selectedProject.id).subscribe(result =>{
@@ -105,7 +105,7 @@ export class CyclomaticComponent implements OnInit{
             this.RFunction = result["Ratio Result by Function"]
             this.TFunction = result.functions
             this.showGraph =true
-            
+            this.buttonDis = true
             this.InitGraph(this.RFile,this.TFile,this.RFunction,this.TFunction)
         })
     }

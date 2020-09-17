@@ -47,9 +47,8 @@ export class CocomoComponent implements OnInit {
     disableProject: boolean = false
     options2 = [
         { value: 'Basic COCOMO Model', description: 'Basic COCOMO can be used for quick and slightly rough calculations of Software Costs. Its accuracy is somewhat restricted due to the absence of sufficient factor considerations.', type: 0 },
-        { value: 'Intermediate COCOMO Model', description: 'Intermediate COCOMO can be used for more accurated calculations of Software Costs. It takes these Cost Drivers into account.', type: 1 },
-        { value: 'Detailed COCOMO model', description: 'Detailed COCOMO additionally accounts for the influence of individual project phases, i.e in case of Detailed it accounts for both these cost drivers and also calculations are performed phase wise henceforth producing a more accurate result. ', type: 2 }
-    ]
+        { value: 'Intermediate COCOMO Model', description: 'Intermediate COCOMO can be used for more accurated calculations of Software Costs. It takes these Cost Drivers into account.', type: 1 }
+        ]
 
     options = [
         { value: 'Organic Mode', description: 'Relatively small, simple software projects in which small teams with good application experience work to a set of less than rigid requirements.', type: 0 },

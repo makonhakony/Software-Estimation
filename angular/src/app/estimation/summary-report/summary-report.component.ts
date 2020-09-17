@@ -47,7 +47,7 @@ export class SummaryReportComponent extends AppComponentBase implements OnInit {
                 this.showedCCM = result.ccm.slice(-1)[0]
                 this.showedUCP = result.ucp.slice(-1)[0]
                 this.showedFP = result.fp.slice(-1)[0]
-                debugger
+                //debugger
                 if (this.showedFP) {
                     this.showedFP.caf = Number(this.showedFP.caf.toFixed(1))
                     this.showedFP.fp = Number(this.showedFP.fp.toFixed(1))

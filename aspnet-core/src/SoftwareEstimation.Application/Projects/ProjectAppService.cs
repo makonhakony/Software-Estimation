@@ -84,6 +84,11 @@ namespace SoftwareEstimation.Projects
 
         public void ModifySlocValue(string Id, int Sloc)
         {
+            var isOk = false;
+            if (Sloc > 0)
+            {
+                isOk = true;
+            }
             string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
             //Create SQL conection to your database here
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -92,10 +97,11 @@ namespace SoftwareEstimation.Projects
                 conn.Open();
                 // Create the Command and Parameter objects.
                 // Here change the columnames and table names as per you table
-                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.AppProjects SET [Sloc]=@Sloc, [isReady]=1 WHERE [Id]=@ProjectId", conn))
+                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.AppProjects SET [Sloc]=@Sloc, [isReady]=@isOk WHERE [Id]=@ProjectId", conn))
                 {
                     // Provide the query string with a parameter placeholder.
                     //Change the control name as per your design
+                    cmd.Parameters.AddWithValue("@isOk", isOk);
                     cmd.Parameters.AddWithValue("@projectId", Id);
                     cmd.Parameters.AddWithValue("@Sloc", Sloc);
                     
@@ -108,6 +114,11 @@ namespace SoftwareEstimation.Projects
 
         public void ModifySizeValue(string Id, float Size)
         {
+            var isOk = false;
+            if (Size > 0 & Size< 1024*1024*100)
+            {
+                isOk = true;
+            }
             string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
             //Create SQL conection to your database here
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -116,10 +127,11 @@ namespace SoftwareEstimation.Projects
                 conn.Open();
                 // Create the Command and Parameter objects.
                 // Here change the columnames and table names as per you table
-                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.AppProjects SET [Size]=@Size, [isCloned]=1 WHERE [Id]=@ProjectId", conn))
+                using (SqlCommand cmd = new SqlCommand("UPDATE dbo.AppProjects SET [Size]=@Size, [isCloned]=@isOk WHERE [Id]=@ProjectId", conn))
                 {
                     // Provide the query string with a parameter placeholder.
                     //Change the control name as per your design
+                    cmd.Parameters.AddWithValue("@isOk", isOk);
                     cmd.Parameters.AddWithValue("@projectId", Id);
                     cmd.Parameters.AddWithValue("@Size", Size);
 

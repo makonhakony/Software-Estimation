@@ -165,7 +165,7 @@
         <div class='body row information-box' style='font-weight: bold;'>
             <div class='col-md-12'>
                 <div class='col-md-4'>
-                    Size(Sloc)
+                    Size(SLOC)
                 </div>
                 <div class='col-md-8 text-right'>
                     {{ccmSizeShowed}}
@@ -223,11 +223,17 @@
             Person: {{plan.totalStaff}} 
         </textarea>
         <div class='body text-center'>
-            <button mat-raised-button color='primary' (click)='CopyClipboard(summary)'>Copy the summary to
+            <button mat-raised-button [routerLink]="['/app/estimation']" ><i class="fa fa-arrow-circle-left" aria-hidden="true" style='font-size: 120%; margin: 5px;'></i>
+                Back</button>
+            <button mat-raised-button color='primary' (click)='CopyClipboard(summary)'><i class="fa fa-clipboard" aria-hidden="true" style='font-size: 120%; margin: 5px;'></i>
+                Copy the summary to
                 clipboard</button>
-            <button mat-raised-button color='warn' (click)='generatePdf("open")'>Open PDF</button>
-            <button mat-raised-button color='warn' (click)='generatePdf("download")'>Download PDF</button>
-            <button mat-raised-button color='warn' (click)='generatePdf("print")'>Print PDF</button>
+            <button mat-raised-button color='warn' (click)='generatePdf("open")'><i class="fa fa-file-pdf-o" aria-hidden="true" style='font-size: 120%; margin: 5px;'></i>
+                Open PDF</button>
+            <button mat-raised-button color='warn' (click)='generatePdf("download")'><i class="fa fa-download" aria-hidden="true" style='font-size: 120%; margin: 5px;'></i>
+                Download PDF</button>
+            <button mat-raised-button color='warn' (click)='generatePdf("print")'><i class="fa fa-print" aria-hidden="true" style='font-size: 120%; margin: 5px;'></i>
+                Print PDF</button>
         </div>
     </div>
 </div>

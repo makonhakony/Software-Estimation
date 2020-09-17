@@ -29,7 +29,7 @@
                     </mat-select>
                 </mat-form-field>
                 <div *ngIf='selectedProject'>
-                    <button mat-raised-button color='warn' (click)='CalCyclomatic()'>
+                    <button mat-raised-button color='warn' (click)='CalCyclomatic()' [disabled]='buttonDis'>
                         Evaluate the Code Quality
                     </button>
                 </div>

@@ -30,7 +30,7 @@
                     </mat-step>
                     <mat-step label="Result">
 
-                        <h4>Calculate Adjusted Use-Case Points</h4>
+                        <h4>Final Result</h4>
                         <cal-ucp [UUCP]='UUCPs' [TF]="TFs" [EF]="EFs" [UCP]="UCP"></cal-ucp>
                         <div *ngIf="state; else savenew">
                             <button mat-raised-button color="accent" (click)="Update()">Estimate Effort</button>
