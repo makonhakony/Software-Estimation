@@ -121,7 +121,7 @@ namespace SoftwareEstimation.Plans
         private void setTotalEffort(float Effort, float Time, Guid PlanId, int type)
         {
             
-            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True; MultipleActiveResultSets=True";
+            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123; MultipleActiveResultSets=True";
             //Create SQL conection to your database here
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -280,7 +280,7 @@ namespace SoftwareEstimation.Plans
         //    //hmmmmmmmmmm...seem wrong...
         //    //var @planin = Plan.UpdatePlan(plan.Id, plan.Title, plan.Description, plan.UCPoint, plan.FPoint, plan.SEPoint, AbpSession.GetUserId());
         //    //await _planRepository.UpdateAsync(@planin);
-        //    string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
+        //    string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123";
         //    //Create SQL conection to your database here
         //    using (SqlConnection conn = new SqlConnection(connectionString))
         //    {
@@ -439,7 +439,7 @@ namespace SoftwareEstimation.Plans
         private int CountPlan()
         {
             
-            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;"))
+            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123"))
             using (SqlCommand cm = cn.CreateCommand())
             {
                 cm.CommandText = @"
@@ -455,7 +455,7 @@ namespace SoftwareEstimation.Plans
         private int CountProject()
         {
 
-            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;"))
+            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123"))
             using (SqlCommand cm = cn.CreateCommand())
             {
                 cm.CommandText = @"
@@ -471,7 +471,7 @@ namespace SoftwareEstimation.Plans
 
         private int CountUCP()
         {
-            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;"))
+            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123"))
             using (SqlCommand cm = cn.CreateCommand())
             {
                 cm.CommandText = @"
@@ -485,7 +485,7 @@ namespace SoftwareEstimation.Plans
         }
         private int CountCcm()
         {
-            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;"))
+            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123"))
             using (SqlCommand cm = cn.CreateCommand())
             {
                 cm.CommandText = @"
@@ -500,7 +500,7 @@ namespace SoftwareEstimation.Plans
 
         private int CountFP()
         {
-            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;"))
+            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123"))
             using (SqlCommand cm = cn.CreateCommand())
             {
                 cm.CommandText = @"
@@ -514,7 +514,7 @@ namespace SoftwareEstimation.Plans
         }
         private string getUsername()
         {
-            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;"))
+            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123"))
             using (SqlCommand cm = cn.CreateCommand())
             {
                 cm.CommandText = @"
@@ -528,7 +528,7 @@ namespace SoftwareEstimation.Plans
         }
         private string getUsersurname()
         {
-            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;"))
+            using (SqlConnection cn = new SqlConnection("Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123"))
             using (SqlCommand cm = cn.CreateCommand())
             {
                 cm.CommandText = @"

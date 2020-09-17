@@ -84,7 +84,7 @@ namespace SoftwareEstimation.Projects
 
         public void ModifySlocValue(string Id, int Sloc)
         {
-            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
+            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123";
             //Create SQL conection to your database here
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -108,7 +108,7 @@ namespace SoftwareEstimation.Projects
 
         public void ModifySizeValue(string Id, float Size)
         {
-            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
+            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123";
             //Create SQL conection to your database here
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -143,7 +143,7 @@ namespace SoftwareEstimation.Projects
 
         public void ModifyLanguageValue(string Id, string Languages)
         {
-            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=True;";
+            string connectionString = "Server=localhost; Database=SoftwareEstimationDb; Trusted_Connection=False; User ID=sa; password=reallyStrongPwd123";
             //Create SQL conection to your database here
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
