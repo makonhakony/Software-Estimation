@@ -74,6 +74,7 @@ import { CyclomaticComponent } from './project/cyclomatic/cyclomatic.component';
 import { HistoricalEstimationComponent } from './historical-estimation/historical-estimation.component';
 import { CreateNewHistoricalComponent } from './historical-estimation/create-new-historical/create-new-historical.component';
 import { CyclomaticService } from './project/cyclomatic/cyclomatic.service';
+import { ProjectErrorComponent } from './project/project-error/project-error.component';
 
 
 @NgModule({
@@ -109,6 +110,7 @@ import { CyclomaticService } from './project/cyclomatic/cyclomatic.service';
     ProjectCalInfoComponent,
     CocomoComponent,
     CustomSlocComponent,
+    ProjectErrorComponent,
     //UCP
     UcpComponent,
     UnadjustedUcpComponent,
@@ -135,7 +137,9 @@ import { CyclomaticService } from './project/cyclomatic/cyclomatic.service';
     CalFpComponent,
     //Historical
     HistoricalEstimationComponent,
-    CreateNewHistoricalComponent
+    CreateNewHistoricalComponent,
+    
+
   ],
   imports: [
     CommonModule,
@@ -180,6 +184,8 @@ import { CyclomaticService } from './project/cyclomatic/cyclomatic.service';
     ResetPasswordDialogComponent,
     //project
     CreateProjectComponent,
+    //ERROR
+    ProjectErrorComponent,
     CustomSlocComponent,
     //Estimation
     CreateEstimationComponent,
@@ -188,7 +194,8 @@ import { CyclomaticService } from './project/cyclomatic/cyclomatic.service';
     SaveNewEstimationComponent,
     HelperModalComponent,
     //Historical
-    CreateNewHistoricalComponent
+    CreateNewHistoricalComponent,
+    
     
   ],
   

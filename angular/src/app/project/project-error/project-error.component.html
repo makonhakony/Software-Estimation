@@ -1,0 +1,8 @@
+<div>
+    <h1>Error:</h1>
+        <p *ngIf="data.size > 100000000">Cannot analyze this project because its size is over the permitted size.</p>
+        <p *ngIf="data.size == -1">Wrong repository. Check your GitHub repository link.</p>
+        <p *ngIf="data.size == -2">This is the private repository. Try another repository.</p>
+        <p *ngIf="data.sloc == -1">Cannot calulate SLOC. Please try again or give us another link.</p>
+    
+</div>

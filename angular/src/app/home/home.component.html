@@ -23,7 +23,7 @@
                     <i class="material-icons">accessibility_new</i>
                 </div>
                 <div class="content">
-                    <div class="text">UCP EVALUATED</div>
+                    <div class="text">UCP Method</div>
                     <div class="number count-to" data-from="0" attr.data-to="{{number_ucp}}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     <i class="material-icons">functions</i>
                 </div>
                 <div class="content">
-                    <div class="text">FP EVALUATED</div>
+                    <div class="text">FP Method</div>
                     <div class="number count-to" data-from="0" attr.data-to="{{number_fp}}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     <i class="material-icons">av_timer</i>
                 </div>
                 <div class="content">
-                    <div class="text">COCOMO EVALUATED</div>
+                    <div class="text">COCOMO Method</div>
                     <div class="number count-to" data-from="0" attr.data-to="{{number_ccm}}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
@@ -212,7 +212,7 @@
                                     <th>Id</th>
                                     <th>Project title</th>
                                     <th>Creation Time</th>
-                                    <th>Point Types Evaluated</th>
+                                    <th>Method</th>
                                     <th>Creator</th>
                                 </tr>
                             </thead>
@@ -224,8 +224,7 @@
                                     <td>
                                         <span class="label bg-red" *ngIf='estimation.ucpLatest' style = 'margin-right: 5px;'>Use Case Point</span>
                                         <span class="label bg-green" *ngIf='estimation.fpLatest' style = 'margin-right: 5px;'>Function Point</span>
-                                        <span class="label bg-purple" *ngIf='estimation.ccmLatest' style = 'margin-right: 5px;'>Cocomo</span>
-                                        
+                                        <span class="label bg-purple" *ngIf='estimation.ccmLatest' style = 'margin-right: 5px;'>Cocomo</span>  
                                     </td>
                                     <td>{{name}} {{surname}}</td>
                                     
