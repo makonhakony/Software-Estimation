@@ -150,7 +150,7 @@ export class UcpComponent extends AppComponentBase implements OnInit {
         this.Input.tfR = this.TFs
         this.Input.ucpR = this.UCP
         const dialogRef = this.dialog.open(SaveOldEstimationComponent, {
-            width: '550px',
+            width: '750px',
             data: { type: 'UCP', point: this.UCP }
         });
         dialogRef.afterClosed().subscribe(result => {

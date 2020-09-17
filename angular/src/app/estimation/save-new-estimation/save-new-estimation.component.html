@@ -77,20 +77,33 @@
             <h2>Estimate Effort</h2>
             <ul>
                 <li>To evaluate this, we will collect your personal historical estimation.</li>
-                <li *ngIf='hist.notNull'>You have peronal historical data in your account</li>
-                <li *ngIf='!hist.notNull'>You have no historical data! By default, we will use a default value for
+                <li *ngIf='notNull'>You have peronal historical data in your account</li>
+                <li *ngIf='!notNull'>You have no historical data! By default, we will use a default value for
                     evaluating or
                     you can <a [routerLink]="['/app/histoest']" (click)='onNoClick()'>Add new Historical Estimation</a>
                 </li>
             </ul>
-            <p>Effort: <b>{{effort}}</b></p>
-            <p>Time : <b>{{time}}</b></p>
-            <p>Staff: <b>{{staff}}</b></p>
+            <mat-form-field appearance="fill" *ngIf ="notNull">
+                <mat-label>Historical Data</mat-label>
+                <mat-select [(ngModel)]="hists" multiple>
+                  <mat-option *ngFor="let h of histList" [value]="h.id">{{h.title}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            
             <button mat-raised-button (click)="tabGroup.selectedIndex=1">Back</button>
-            <button mat-raised-button color='warn' (click)="UpdateEstimation(true)"
-                *ngIf='selectedType=="Existed Estimation"'>Save!</button>
-            <button mat-raised-button color='warn' (click)="UpdateEstimation(true)"
-                *ngIf='selectedType=="New Estimation"'>Save!</button>
+            <button mat-raised-button color='warn' (click)="GetAverage();tabGroup.selectedIndex=3"
+                >OK</button>
+            
         </div>
+    </mat-tab>
+    <mat-tab label="Forth">
+        <p>Effort: <b>{{effort.toFixed(2)}}</b></p>
+        <p>Time : <b>{{time.toFixed(2)}}</b></p>
+        <p>Staff: <b>{{staff.toFixed(2)}}</b></p>
+        <button mat-raised-button (click)="tabGroup.selectedIndex=2">Back</button>
+        <button mat-raised-button color='warn' (click)="UpdateEstimation(true)"
+            *ngIf='selectedType=="Existed Estimation"'>Save!</button>
+        <button mat-raised-button color='warn' (click)="SaveEstiation(true)"
+            *ngIf='selectedType=="New Estimation"'>Save!</button>
     </mat-tab>
 </mat-tab-group>

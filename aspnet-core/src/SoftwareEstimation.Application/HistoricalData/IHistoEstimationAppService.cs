@@ -12,6 +12,7 @@ namespace SoftwareEstimation.HistoricalData
     {
         void CreateHistoEst(HistoInput hist);
         Task<ListResultDto<HistoList>> GetListHisto();
-        Task<HistoAverage> GetAveragePf(string Type);
+        Task<float> GetAveragePf(string Type, Guid[] id);
+        Task<ListResultDto<HistoListType>> GetListHistoByType(string type);
     }
 }

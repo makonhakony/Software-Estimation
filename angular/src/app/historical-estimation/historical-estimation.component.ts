@@ -2,7 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { CreateNewHistoricalComponent } from './create-new-historical/create-new-historical.component';
 import { MatDialog } from '@angular/material';
-import { HistoEstimationServiceProxy, HistoInput, HistoList } from '@shared/service-proxies/service-proxies';
+import { HistoDto, HistoEstimationServiceProxy, HistoInput, HistoList } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
@@ -60,6 +60,22 @@ export class HistoricalEstimationComponent extends AppComponentBase implements O
         this._histService.delete(id).subscribe(()=>{
             this.notify.info('Delete Successfully')
             this.loadHisto()
+        })
+    }
+    Update(i,title, description, type, effort, time, staff, point,id){
+        var histo = new HistoDto()
+        histo.title = title
+        histo.description = description
+        histo.type = type
+        histo.effort = effort
+        histo.time = time
+        histo.staff = staff
+        histo.point = point
+        histo.id = id
+        this.histoList[i].effort = effort
+        histo.pf = histo.effort/histo.point
+        this._histService.update(histo).subscribe(()=>{
+            this.notify.info("Information changed!")
         })
     }
 }

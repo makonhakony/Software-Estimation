@@ -39,13 +39,8 @@
               <div class="body">
                 <pre *ngIf='!editMode[i]'>{{est.description}}</pre>
                 <textarea *ngIf='editMode[i]' class='col-md-12' [(ngModel)]="est.description"></textarea>
-                <span class='col-md-6'>Actual Effort: </span><span class='col-md-6 text-right'><b
-                    *ngIf='!editMode[i]'>{{est.effort}}
-                    person-month</b><span *ngIf='editMode[i]'>
-                    <mat-form-field class="example-full-width " style='width:50%; text-align: right;'>
-                      <input matInput type='number' [(ngModel)]="est.effort">
-                    </mat-form-field>
-                  </span></span>
+                <span class='col-md-6'>Actual Effort: </span><span class='col-md-6 text-right'><b>{{est.time*est.staff}}
+                    person-month</b></span>
                 <span class='col-md-6'>Actual Time: </span><span class='col-md-6 text-right'><b
                     *ngIf='!editMode[i]'>{{est.time}}
                     month(s)</b><span *ngIf='editMode[i]'>
@@ -68,9 +63,14 @@
                   </span> </span>
 
 
-                <button mat-raised-button color='warn' (click)="DeleteHist(est.id)">Delete</button>
-                <button mat-raised-button color='warn' (click)="editMode[i] = true">Edit</button>
-                <button mat-raised-button color='warn' (click)="Update()" *ngIf='editMode[i]'>Save</button>
+                <button mat-raised-button color='warn' (click)="DeleteHist(est.id)" *ngIf='!editMode[i]'><i class="fa fa-trash" aria-hidden="true"></i>
+                  Delete</button>
+                <button mat-raised-button color='primary' (click)="editMode[i] = true" *ngIf='!editMode[i]'><i class="fa fa-pencil" aria-hidden="true"></i>
+                Edit</button>
+                <button mat-raised-button color='warn' (click)="editMode[i] = false" *ngIf='editMode[i]'><i class="fa fa-ban" aria-hidden="true"></i>
+                Cancel</button>
+                <button mat-raised-button color='primary' (click)="Update(i,est.title,est.description,est.type,est.time * est.staff, est.time,est.staff,est.point,est.id);editMode[i] = false" *ngIf='editMode[i]'><i class="fa fa-floppy-o" aria-hidden="true"></i>
+                Save</button>
               </div>
 
             </div>

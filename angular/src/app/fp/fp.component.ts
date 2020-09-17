@@ -154,7 +154,7 @@ export class FpComponent extends AppComponentBase implements OnInit {
 
         this.Input.fpR = this.FP
         const dialogRef = this.dialog.open(SaveOldEstimationComponent, {
-            width: '550px',
+            width: '750px',
             data: { type: 'FP', point: this.FP }
         });
         dialogRef.afterClosed().subscribe(result => {

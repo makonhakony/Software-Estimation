@@ -43,29 +43,38 @@ namespace SoftwareEstimation.HistoricalData
 
             return new ListResultDto<HistoList>(hists.MapTo<List<HistoList>>());
         }
-        public async Task<HistoAverage> GetAveragePf(string Type)
+        public async Task<float> GetAveragePf(string Type, Guid[] id)
         {
-            var res  = new HistoAverage();
+            
             var hist = await _histRepository
                 .GetAll()
                 .Where(h => (h.CreatorUserId == AbpSession.GetUserId() && h.Type == Type))
                 .ToListAsync();
             if (hist.Count() == 0)
-            {
-                res.notNull = false;
-                res.pf = (float)(20.0/8.0/30.0);
-                return res;
+            {    
+                return (float)(20.0 / 8.0 / 30.0);
             }
-            float sum = 0;
-            int count = 0;
-            foreach (HistoEstimation h in hist)
+            else
             {
-                sum += h.Pf;
-                count += 1;
+                float sum = 0;
+                int count = 0;
+                foreach (HistoEstimation h in hist)
+                {
+                    foreach(Guid i in id)
+                    {
+                        if (h.Id == i)
+                        {
+                            sum += h.Pf;
+                            count += 1;
+                        }
+                    }
+                    
+                }
+                
+                
+                
+                return sum / count;
             }
-            res.notNull = true;
-            res.pf = sum / count;
-            return res;
         }
         public async Task Delete(EntityDto<Guid> input)
         {
@@ -74,6 +83,21 @@ namespace SoftwareEstimation.HistoricalData
                 .Where(e => e.Id == input.Id)
                 .FirstOrDefaultAsync();
             await _histRepository.DeleteAsync(hist);
+        } 
+        public async Task Update(HistoDto histo)
+        {
+            var hist = HistoEstimation.UpdateHisto(histo.Id,AbpSession.GetUserId(), AbpSession.GetTenantId(),histo.Title, histo.Description, histo.Type, histo.Time, histo.Staff, histo.Effort, histo.Point, histo.Pf);
+            await _histRepository.UpdateAsync(hist);
+        }
+        public async Task<ListResultDto<HistoListType>> GetListHistoByType(string type)
+        {
+
+            var hists = await _histRepository
+                .GetAll()
+                .Where(e => (e.CreatorUserId == AbpSession.GetUserId()&&e.Type == type))          
+                .ToListAsync();
+
+            return new ListResultDto<HistoListType>(hists.MapTo<List<HistoListType>>());
         }
     }
 }

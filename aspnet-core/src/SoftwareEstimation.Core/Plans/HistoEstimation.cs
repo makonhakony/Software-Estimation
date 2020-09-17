@@ -40,5 +40,23 @@ namespace SoftwareEstimation.Plans
             };
             return hist;
         }
+        public static HistoEstimation UpdateHisto(Guid id, long userId, int tenantId,string title, string description, string type, float time, int staff, float effort, float point, float pf)
+        {
+            var @hist = new HistoEstimation
+            {
+                Id = id,
+                CreatorUserId = userId,
+                TenantId = tenantId,
+                Title = title,
+                Description = description,
+                Type = type,
+                Time = time,
+                Staff = staff,
+                Effort = effort,
+                Point = point,
+                Pf = pf
+            };
+            return hist;
+        }
     }
 }

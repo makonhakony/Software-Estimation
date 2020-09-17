@@ -130,11 +130,7 @@ export class SummaryReportComponent extends AppComponentBase implements OnInit {
                             text: 'Description: ' + this.plan.description
                         },
 
-                        {
-                            text: 'GitHub link: ' + (this.showedCCM) ? this.showedCCM.projects.linkURL : '',
-                            link: (this.showedCCM) ? this.showedCCM.projects.linkURL : '',
-                            color: 'blue',
-                        }
+                        
                         ]
                     ]
                 },
@@ -184,6 +180,12 @@ export class SummaryReportComponent extends AppComponentBase implements OnInit {
             }
             var c = this.getCCM()
             result.content.push(title, c)
+            var git ={
+                text: 'GitHub link: ' + (this.showedCCM) ? this.showedCCM.projects.linkURL : '',
+                link: (this.showedCCM) ? this.showedCCM.projects.linkURL : '',
+                color: 'blue',
+            }
+            result.content.columns[0].push(git)
         }
         var title = {
             text: 'Summary',

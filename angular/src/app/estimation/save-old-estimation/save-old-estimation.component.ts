@@ -1,7 +1,7 @@
 import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AppComponentBase } from '@shared/app-component-base';
-import { HistoAverage, HistoEstimationServiceProxy } from '@shared/service-proxies/service-proxies';
+import {  HistoEstimationServiceProxy, HistoListType } from '@shared/service-proxies/service-proxies';
 
 @Component({
     moduleId: module.id,
@@ -19,22 +19,25 @@ export class SaveOldEstimationComponent extends AppComponentBase implements OnIn
         super(injector)
     }
     
-    hist: HistoAverage
     effort: number =0 
     time: number =0 
     staff: number =0
     point: number =0 
+    hists: any[] = []
+    histList:HistoListType[] = []
+    notNull = false
     ngOnInit() {
-        this.hist = new HistoAverage()
         
-        this._histoService.getAveragePf(this.data.type).subscribe(result => {
-            this.hist = result
-            
-            this.point = this.data.point
-            this.effort = this.point * this.hist.pf
-            this.time = 3*this.effort**(1/3)
-            this.staff = Math.round(this.effort/this.time)
+        
+        this._histoService.getListHistoByType(this.data.type).subscribe((result)=>{
+            this.histList = result.items
             //debugger
+            if (this.histList.length == 0){
+                this.notNull = false
+            } else {
+                
+                this.notNull =true
+            }
         })
     }
     onNoClick(): void {
@@ -55,5 +58,14 @@ export class SaveOldEstimationComponent extends AppComponentBase implements OnIn
             this.staff = 0
         }
         this.dialogRef.close({ effort: this.effort, time: this.time, staff: this.staff })
+    }
+    GetAverage(){
+        this._histoService.getAveragePf(this.data.type,this.hists).subscribe(result => {
+                
+                this.point = this.data.point
+                this.effort = this.point * result
+                this.time = 3*this.effort**(1/3)
+                this.staff = Math.round(this.effort/this.time)
+            })
     }
 }

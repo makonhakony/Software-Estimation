@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit, Injector } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { PlanInput, PlanServiceProxy, ListResultDtoOfPlanListDto, PlanListDto, HistoEstimationServiceProxy, HistoAverage } from '@shared/service-proxies/service-proxies';
+import { PlanInput, PlanServiceProxy, ListResultDtoOfPlanListDto, PlanListDto, HistoEstimationServiceProxy, HistoList, HistoListType } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
+import { FormControl } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
@@ -24,27 +25,43 @@ export class SaveNewEstimationComponent extends AppComponentBase implements OnIn
     selectedPlan: PlanListDto
     planId: string
     plan : PlanInput
-    hist :HistoAverage
+    
     effort: number =0 
     time: number =0 
     staff: number =0
     point: number =0 
+    hists: any[] = []
+    histList:HistoListType[] = []
+    notNull = false
     ngOnInit() {
-        this.hist = new HistoAverage()
+        
+        //this.hist = new HistoAverage()
         this.plan = new PlanInput()
+        
         this.selectedPlan = new PlanListDto
         this._planService.getListPlan()
             .subscribe((result: ListResultDtoOfPlanListDto) => {
                 this.planList = result.items
+                
 
             });
-        this._histoService.getAveragePf(this.data.type).subscribe(result => {
-            this.hist = result
-            this.point = this.data.point
-            this.effort = this.point * this.hist.pf
-            this.time = 3*this.effort**(1/3)
-            this.staff = this.effort/this.time
+        this._histoService.getListHistoByType(this.data.type).subscribe((result)=>{
+            //debugger
+            this.histList = result.items
+            if (this.histList.length == 0){
+                this.notNull = false
+            } else {
+                
+                this.notNull =true
+            }
         })
+        // this._histoService.getAveragePf(this.data.type).subscribe(result => {
+        //     this.hist = result
+        //     this.point = this.data.point
+        //     this.effort = this.point * this.hist.pf
+        //     this.time = 3*this.effort**(1/3)
+        //     this.staff = this.effort/this.time
+        // })
     }
     onNoClick(): void {
         this.dialogRef.close();
@@ -76,6 +93,15 @@ export class SaveNewEstimationComponent extends AppComponentBase implements OnIn
             this.staff = 0
         }
         this.dialogRef.close({ planId: this.planId, effort: this.effort, time: this.time, staff: this.staff })
+    }
+    GetAverage(){
+        this._histoService.getAveragePf(this.data.type,this.hists).subscribe(result => {
+                
+                this.point = this.data.point
+                this.effort = this.point * result
+                this.time = 3*this.effort**(1/3)
+                this.staff = Math.round(this.effort/this.time)
+            })
     }
     options: any = ['Existed Estimation', 'New Estimation']
 }
