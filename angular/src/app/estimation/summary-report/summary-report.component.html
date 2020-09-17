@@ -14,7 +14,8 @@
             <div class='col-md-12' *ngIf="showedCCM">
                 <div *ngIf='showedCCM.projects'>
                     <div *ngIf='showedCCM.projects.type =="Link"'>
-                        <b>Project link:</b> <a href="{{showedCCM.projects.linkURL}}"> {{showedCCM.projects.linkURL}}</a>
+                        <b>Project link:</b> <a href="{{showedCCM.projects.linkURL}}">
+                            {{showedCCM.projects.linkURL}}</a>
                     </div>
                 </div>
             </div>
@@ -67,25 +68,25 @@
             </div>
             <div class='body row information-box'>
                 <div class='col-md-4'>
-                    Total Use case point:
+                    Total Use Case Point
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedUCP.ucp}}
                 </div>
                 <div class='col-md-4'>
-                    Unadjusted use case point:
+                    Unadjusted Use Case Point
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedUCP.uucp}}
                 </div>
                 <div class='col-md-4'>
-                    Technical Complexity Factors:
+                    Technical Complexity Factors
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedUCP.tf}}
                 </div>
                 <div class='col-md-4'>
-                    Environmental Complexity Factors:
+                    Environmental Complexity Factors
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedUCP.ef}}
@@ -118,19 +119,19 @@
             </div>
             <div class='body row information-box'>
                 <div class='col-md-4'>
-                    Total Function point:
+                    Total Function point
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedFP.fp}}
                 </div>
                 <div class='col-md-4'>
-                    Unadjusted function point:
+                    Unadjusted function point
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedFP.ufp}}
                 </div>
                 <div class='col-md-4'>
-                    Complexity Adjusted Factors:
+                    Complexity Adjusted Factors
                 </div>
                 <div class='col-md-8 text-right'>
                     {{showedFP.caf}}
@@ -164,7 +165,7 @@
         <div class='body row information-box' style='font-weight: bold;'>
             <div class='col-md-12'>
                 <div class='col-md-4'>
-                    Size(Sloc):
+                    Size(Sloc)
                 </div>
                 <div class='col-md-8 text-right'>
                     {{ccmSizeShowed}}
@@ -172,7 +173,7 @@
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
-                    Total Use Case Point:
+                    Total Use Case Point
                 </div>
                 <div class='col-md-8 text-right'>
                     {{ucpSizeShowed}}
@@ -180,7 +181,7 @@
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
-                    Total Function point:
+                    Total Function point
                 </div>
                 <div class='col-md-8 text-right'>
                     {{fpSizeShowed}}
@@ -188,7 +189,7 @@
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
-                    Effort (Person-Month):
+                    Effort (Person-Month)
                 </div>
                 <div class='col-md-8 text-right'>
                     {{plan.totalEffort}}
@@ -196,18 +197,18 @@
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
-                    Time to develop (Month):
+                    Time to develop (Month)
                 </div>
-                <div class='col-md-8 text-right' >
-                    {{plan.totalTime}} 
+                <div class='col-md-8 text-right'>
+                    {{plan.totalTime}}
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='col-md-4'>
-                    Staff:
+                    Staff (Person)
                 </div>
-                <div class='col-md-8 text-right' >
-                    {{plan.totalStaff}} 
+                <div class='col-md-8 text-right'>
+                    {{plan.totalStaff}}
                 </div>
             </div>
 
@@ -224,6 +225,9 @@
         <div class='body text-center'>
             <button mat-raised-button color='primary' (click)='CopyClipboard(summary)'>Copy the summary to
                 clipboard</button>
+            <button mat-raised-button color='warn' (click)='generatePdf("open")'>Open PDF</button>
+            <button mat-raised-button color='warn' (click)='generatePdf("download")'>Download PDF</button>
+            <button mat-raised-button color='warn' (click)='generatePdf("print")'>Print PDF</button>
         </div>
     </div>
 </div>
