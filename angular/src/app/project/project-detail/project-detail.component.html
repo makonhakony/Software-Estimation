@@ -25,7 +25,7 @@
                         <button type="button" class="btn bg-orange waves-effect waves-light"
                             (click)="calculateProject()"
                             [routerLink]="['/app/project', projectId,'detail',userID,project.title]"><i
-                                class="fa fa-info"></i> Print Sloc detail</button>
+                                class="fa fa-info"></i> Print UCC Detail</button>
                         <button type="button" class="btn bg-red waves-effect waves-light" (click)="deleteProject()"><i
                                 class="fa fa-remove"></i>Delete</button>
                     </div>
@@ -55,9 +55,9 @@
         <div class="body">
             <div class='row clear-fix'>
                 <div class='col-md-8'>
-                    <p>some information about this project:</p>
+                    <h5>Repository: <a href="{{project.linkURL}}">{{project.linkURL}}</a></h5>
+                    <p>Project's information:</p>
                     <pre>{{projectDetail}}</pre>
-                    <h5>link:<a href="{{project.linkURL}}">{{project.linkURL}}</a></h5>
                     <button mat-raised-button color="warn" (click)="toggle()"> Show list of file</button>
                 </div>
                 <div class = 'col-md-4'>

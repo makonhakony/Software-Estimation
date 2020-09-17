@@ -10,6 +10,7 @@ import { catchError } from 'rxjs/operators';
 import { InternalProjectService, Status, Pending } from './project.service';
 import { Router } from '@angular/router';
 import { title } from 'process';
+import { ProjectErrorComponent } from './project-error/project-error.component';
 
 export interface ProjectListLoad extends ProjectListDto {
     isCalculating: boolean
@@ -85,7 +86,7 @@ export class ProjectComponent implements OnInit {
                     if (this.projectload) {
                         this.projectload.request.subscribe((result2) => {
                             console.log("2: ", result2)
-                            this._projectService.modifySlocValue(this.projectId, result2.SLOC).subscribe(()=>{
+                            if (result2.SLOC != -1) this._projectService.modifySlocValue(this.projectId, result2.SLOC).subscribe(()=>{
                                 this.loadProject()
                             })
                         })
@@ -202,4 +203,17 @@ export class ProjectComponent implements OnInit {
         this._router.navigate(['/app/ucp'], { queryParams: { id: id, status: status, title: tit, description: des } }) //router query param not param!
 
     }
+
+    RaiseError(sloc,size){
+        const dialogRef = this.dialog.open(ProjectErrorComponent, {
+            width: '250px',
+            data: {sloc: sloc, size: size}
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+            
+          });
+    }
+    
 }
